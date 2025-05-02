@@ -1,52 +1,11 @@
 // import './style.css';
 import { readText } from './speak.ts';
+import { messageHistory as initialMessageHistory } from './Parametros.ts'; // Importar la variable original
 
+let url = 'http://192.168.1.15:41343/v1/chat/completions';
 
-let url = 'http://192.168.1.13:41343/v1/chat/completions';
-
-// Variable para almacenar el historial de mensajes
-let messageHistory: { role: string, content: string }[] = [
-    { role: "system", content: "Tu nombre es Asistente virtual Newrona. Responde siempre en español, de forma amigable, carismática y alegre. Puedes deducir información sencilla o de sentido común para enriquecer tus respuestas. Sé breve y directo, pero mantén un tono cálido y profesional." },
-
-    { role: "user", content: "¿Dónde se encuentran ubicados?" },
-    { role: "assistant", content: "Estamos en Bogotá, Cra 15 #82-84." },
-
-    { role: "user", content: "¿Qué es Newrona?" },
-    { role: "assistant", content: "Newrona es una empresa colombiana con 10 años de trayectoria en el mercado latinoamericano.Experta en el diseñando y desarrollando de experiencias interactivas, por medio de la apropiación de tecnologías inmersivas como Realidad Virtual, Realidad Aumentada, Metaverso, Maping, holografía e Inteligencia artificial." },
-
-    { role: "user", content: "¿Qué hacemos en Newrona?" },
-    { role: "assistant", content: "Transformamos ideas en proyectos interactivos usando tecnologías inmersivas para potenciar comunicación y procesos comerciales." },
-
-    { role: "user", content: "¿Cuánto tiempo demora una cotización?" },
-    { role: "assistant", content: "Hasta 8 días hábiles, dependiendo de los requerimientos del proyecto." },
-
-    { role: "user", content: "¿Qué son las tecnologías inmersivas?" },
-    { role: "assistant", content: "Son tecnologías que estimulan los sentidos para generar experiencias inmersivas." },
-
-    { role: "user", content: "¿Para qué usan estas tecnologías?" },
-    { role: "assistant", content: "Creamos experiencias sensoriales e interactivas que posicionan tu marca como innovadora." },
-
-    { role: "user", content: "¿Cuál es la diferencia entre RA y WebAR?" },
-    { role: "assistant", content: "La RA requiere apps dedicadas, mientras que la WebAR funciona desde el navegador." },
-
-    { role: "user", content: "¿Cuánto tiempo tarda un desarrollo en RA o RV?" },
-    { role: "assistant", content: "RA: 4 semanas o más. RV: 6 semanas o más. Depende de los retos del proyecto." },
-
-    { role: "user", content: "¿Se pueden hacer entrenamientos en RV?" },
-    { role: "assistant", content: "¡Claro! La RV permite simulaciones realistas para practicar en un entorno seguro, reduciendo riesgos laborales. De hecho, gracias a la Realidad Virtual, estudios comentan que existe una disminución del 43% en las lesiones laborales." },
-
-    { role: "user", content: "¿Qué diferencia hay entre un video normal y uno en RV?" },
-    { role: "assistant", content: "El primero te permite observar, el segundo te hace parte de la experiencia. ¡Es como estar allí!" },
-
-    { role: "user", content: "¿Por qué se habla tanto del metaverso?" },
-    { role: "assistant", content: "Es una red social virtual en crecimiento. Grandes empresas como Meta lo están impulsando." },
-
-    { role: "user", content: "¿Cómo usar el metaverso en mi organización?" },
-    { role: "assistant", content: "Puedes usarlo para Ferias, eventos virtuales, onboarding, lanzamientos de productos, Creación de campus universitarios virtuales y más." },
-
-    { role: "user", content: "¿Cuánto tarda un desarrollo en el metaverso?" },
-    { role: "assistant", content: "Desde 6 semanas en adelante, dependiendo de la complejidad del universo digital." },
-];
+// Crear una copia local de messageHistory para trabajar con ella
+let messageHistory = [...initialMessageHistory];
 
 // Funciones principales para enviar y recibir mensajes
 async function sendMensajeIA(): Promise<void> {
@@ -140,5 +99,46 @@ async function sendMensajeIA(): Promise<void> {
     }
 }
 
+// Agregar combinación de teclas para borrar el historial
+document.addEventListener('keydown', (event) => {
+    if (event.ctrlKey && event.code === 'Space') { // Detectar Ctrl + Espacio
+        event.preventDefault(); // Prevenir el comportamiento por defecto
+        messageHistory = [...initialMessageHistory]; // Restablecer el historial
+        showTooltip('Historial de mensajes restablecido.'); // Mostrar tooltip
+    }
+});
+
+// Función para mostrar un tooltip
+function showTooltip(message: string): void {
+    const tooltip = document.createElement('div');
+    tooltip.textContent = message;
+    tooltip.style.position = 'fixed';
+    tooltip.style.bottom = '20px';
+    tooltip.style.right = '20px';
+    tooltip.style.backgroundColor = '#333';
+    tooltip.style.color = '#fff';
+    tooltip.style.padding = '10px';
+    tooltip.style.borderRadius = '5px';
+    tooltip.style.boxShadow = '0 2px 5px rgba(0, 0, 0, 0.3)';
+    tooltip.style.zIndex = '1000';
+    tooltip.style.fontSize = '14px';
+    tooltip.style.opacity = '0';
+    tooltip.style.transition = 'opacity 0.3s';
+
+    document.body.appendChild(tooltip);
+
+    // Mostrar el tooltip
+    setTimeout(() => {
+        tooltip.style.opacity = '1';
+    }, 10);
+
+    // Ocultar y eliminar el tooltip después de 3 segundos
+    setTimeout(() => {
+        tooltip.style.opacity = '0';
+        setTimeout(() => {
+            tooltip.remove();
+        }, 300);
+    }, 3000);
+}
 
 (window as any).sendMensajeIA = sendMensajeIA;
