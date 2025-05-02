@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vite + TS</title>
+</head>
+
+<body>
+  <div class="three" id="app"></div>
+  <section class="row">
+    <div class="transcription">
+      <h3 class="text">Transcripcion</h3>
+      <textarea id="transcript" readonly></textarea>
+
+      <div class="botones">
+        <button id="startBtn">Escuchar</button>
+        <button id="stopBtn" disabled>Dejar de Escuchar</button>
+      </div>
+      <div class="botones">
+        <button id="senBtn" disabled onclick="disableButton(), sendMensajeIA()">Enviar</button>
+        <button id="clearBtn" disabled onclick="disableButton(), borrarTextArea()">Borrar</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="column">
+    <div class="salidatexto">
+      <h3 class="text">Respuesta</h3>
+      <div id="messageLabel"></div>
+    </div>
+
+    <div id="loader"></div>
+
+    <div class="salidatexto">
+      <h3 class="text">Razonamiento</h3>
+      <div id="Razonamiento"></div>
+    </div>
+  </section>
+
+  <script>
+
+    let btn;
+    let btn2;
+    document.addEventListener('DOMContentLoaded', () => {
+
+      btn = document.getElementById('senBtn');
+      btn2 = document.getElementById('clearBtn');
+      // btn.disabled = false;  
+    });
+    function disableButton() {
+      btn.disabled = true;
+      btn2.disabled = true;
+    }
+
+    function borrarTextArea() {
+      const div = document.getElementById('transcript');
+      if (div) {
+        div.value = '';        
+      }
+    }
+  </script>
+
+  <script type="module" src="/src/main.js"></script>
+  <script type="module" src="/src/peticiones_True-Stream.ts"></script>
+  <script src="/src/recorder.js"></script>
+</body>
+
+</html>
