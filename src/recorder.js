@@ -1,8 +1,12 @@
 let recognition = null;
 let transcriptText = '';
+let isRecognizing = false; // Bandera para evitar múltiples inicios
 
 // Función para iniciar el reconocimiento
 function startRecognition() {
+    if (isRecognizing) return; // Evitar múltiples inicios
+    isRecognizing = true;
+
     recognition = new webkitSpeechRecognition() || new SpeechRecognition();
     recognition.lang = 'es-ES'; // Configura el idioma
     recognition.continuous = true; // Permite la transcripción continua
@@ -34,9 +38,7 @@ function startRecognition() {
     recognition.onend = () => {
         console.log('Reconocimiento finalizado');
         document.getElementById('transcript').value = transcriptText;
-        // sendMensajeIA();
-        document.getElementById('senBtn').disabled = false;
-        document.getElementById('clearBtn').disabled = false;
+        isRecognizing = false;
     };
 
     recognition.start();
@@ -47,17 +49,20 @@ function stopRecognition() {
     if (recognition) {
         recognition.stop();
         recognition = null;
+        isRecognizing = false;
     }
 }
 
-document.getElementById('startBtn').addEventListener('click', () => {
-    startRecognition();
-    document.getElementById('startBtn').disabled = true;
-    document.getElementById('stopBtn').disabled = false;
+// Detectar la tecla Espacio para iniciar y detener el reconocimiento
+document.addEventListener('keydown', event => {
+    if (event.code === 'Space' && !isRecognizing) {
+        startRecognition();
+    }
 });
 
-document.getElementById('stopBtn').addEventListener('click', () => {
-    stopRecognition();
-    document.getElementById('startBtn').disabled = false;
-    document.getElementById('stopBtn').disabled = true;
+document.addEventListener('keyup', event => {
+    if (event.code === 'Space' && isRecognizing) {
+        stopRecognition();
+        // sendMensajeIA()
+    }
 });
