@@ -2,7 +2,7 @@
 import { readText } from './speak.ts';
 import { messageHistory as initialMessageHistory } from './Parametros.ts'; // Importar la variable original
 
-let url = 'http://192.168.1.15:41343/v1/chat/completions';
+let url = 'http://192.168.1.11:41343/v1/chat/completions';
 
 // Crear una copia local de messageHistory para trabajar con ella
 let messageHistory = [...initialMessageHistory];
@@ -10,12 +10,12 @@ let messageHistory = [...initialMessageHistory];
 // Funciones principales para enviar y recibir mensajes
 async function sendMensajeIA(): Promise<void> {
     const message = (document.getElementById('transcript') as HTMLTextAreaElement)?.value || '';
-    const loader = document.getElementById('loader');
+    // const loader = document.getElementById('loader');
     const razonamiento = document.getElementById('Razonamiento');
 
-    if (loader) {
-        loader.style.display = 'block';
-    }
+    // if (loader) {
+    //     loader.style.display = 'block';
+    // }
 
     try {
         // Actualizar el historial de mensajes con el nuevo mensaje del usuario
@@ -93,9 +93,9 @@ async function sendMensajeIA(): Promise<void> {
         console.error('Error:', error);
     } finally {
         // Ocultar el loader
-        if (loader) {
-            loader.style.display = 'none';
-        }
+        // if (loader) {
+        //     loader.style.display = 'none';
+        // }
     }
 }
 

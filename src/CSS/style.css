@@ -14,18 +14,22 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-html{
+html {
   display: flex;
-  align-items: center; /* Centra verticalmente el body */
+  align-items: center;
+  /* Centra verticalmente el body */
   justify-content: center;
 }
+
 body {
   margin: 0;
   padding: 0;
   display: flex;
-  align-items: center; /* Centra verticalmente el body */
+  align-items: center;
+  /* Centra verticalmente el body */
   justify-content: center;
   flex-direction: row;
+  width: 100vw;
 }
 
 section {
@@ -41,6 +45,7 @@ section.row {
   flex-direction: row;
   align-items: end;
 }
+
 section.column {
   flex-direction: column;
   justify-content: end;
@@ -50,48 +55,104 @@ section.column {
   max-height: 100vh; */
 }
 
-.transcription{
-  margin: 2rem 0rem;
-  display: flex;
+.transcription {
+  display: none;
+  width: 100vw;
+  height: 35vh;
+  /* background-color: white; */
+
+  background: rgba(0, 0, 0, 0.85);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(8.5px);
+  -webkit-backdrop-filter: blur(8.5px);
+  border-top-left-radius: 30px;
+  border-top-right-radius: 30px;
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+
+  /* display: flex; */
   flex-direction: column;
   align-items: center;
+  justify-content: end;
+  flex-direction: column;
+  /* gap: 1lh; */
+
+  position: relative;
+}
+
+.microfono {
+  display: flex;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
+  width: 120px;
+  height: 120px;
+  background-color: #7c0000;
+
+  border-radius: 50%;
+  top: -50px;
+
+  position: absolute;
+}
+
+.microfono img{
+  width: 60px;
+  height: auto;
+}
+
+.Text{
+  margin-bottom: 1lh;
+  width: 80vw;
+  height: 13vh;
+  background: rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(8.5px);
+  -webkit-backdrop-filter: blur(8.5px);
+  border-radius: 30px;
 }
 
 .text {
-  margin: 0;
   padding: 2rem 2rem;
   font-size: 1.2em;
   color: #fff;
 }
 
-textarea{
-  border: 2px solid #fff; /* Borde de 2px de color blanco */
-  border-radius: 8px; /* Bordes redondeados */
+textarea {
+  border: 2px solid #fff;
+  /* Borde de 2px de color blanco */
+  border-radius: 8px;
+  /* Bordes redondeados */
   background-color: #1a1a1a;
-  color: #fff; /* Color del texto */
+  color: #fff;
+  /* Color del texto */
 }
 
-.salidatexto{
+.salidatexto {
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
 }
-.salidatexto div{
+
+.salidatexto div {
   width: 500px;
   height: 100px;
-  border: 2px solid #fff; /* Borde de 2px de color blanco */
+  border: 2px solid #fff;
+  /* Borde de 2px de color blanco */
   padding: 15px 20px !important;
-  border-radius: 8px; /* Bordes redondeados */
-  padding: 10px; /* Espaciado interno */
-  background-color: #1a1a1a; /* Fondo opcional */
-  color: #fff; /* Color del texto */
+  border-radius: 8px;
+  /* Bordes redondeados */
+  padding: 10px;
+  /* Espaciado interno */
+  background-color: #1a1a1a;
+  /* Fondo opcional */
+  color: #fff;
+  /* Color del texto */
   overflow-y: auto;
   margin-bottom: 2rem;
 }
 
-.salidatexto h3{
+.salidatexto h3 {
   width: 200px;
   height: 50px;
   text-align: center;
@@ -110,9 +171,11 @@ button {
   cursor: pointer;
   transition: border-color 0.25s;
 }
+
 button:hover {
   border-color: #646cff;
 }
+
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
@@ -129,7 +192,7 @@ button:focus-visible {
   animation: spin 2s linear infinite;
 }
 
-#transcript{
+#transcript {
   width: 500px;
   height: 100px;
 }
@@ -148,32 +211,117 @@ button:focus-visible {
   max-width: 100%;
 }
 
+#slider-background {
+  width: 100vw;
+  height: 25lh;
+  background: #000000;
+  background: linear-gradient(0deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.sliderBody {
+  width: 70vw;
+  height: 8lh;
+  border-radius: 4lh;
+  border-color: #4C005E;
+  border-width: 4px;
+  border-style: solid;
+
+  background: linear-gradient(0deg, rgba(77, 0, 94, 0.3) 0%, rgba(0, 0, 0, 0) 100%);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(8.5px);
+  -webkit-backdrop-filter: blur(8.5px);
+
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  flex-direction: row;
+  gap: 1lh;
+
+  padding: 0 1.5lh;
+
+}
+
+.sliderCiruclo {
+  width: 6lh;
+  height: 6lh;
+  background: #4C005E;
+  border-radius: 3.5lh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  margin-left: 1lh;
+}
+
+.sliderImagen {
+  width: 3lh;
+}
+
+.sliderCirculoImagen {
+  width: 1.2lh;
+}
+
+.sliderTexto {
+  font-size: 1.8lh;
+  color: #fff;
+  text-align: center;
+  font-weight: bold;
+}
+
+.sliderTrack {
+  width: 95%;
+  height: 8lh;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  /* padding: 0 1.5lh; */
+}
+
+
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 /* Detectar orientación vertical para pantallas de 1920x1080 */
 @media screen and (min-height: 1080px) and (max-height: 1920px) and (orientation: portrait) {
   body {
-    flex-direction: column; /* Cambiar a columna */
+    flex-direction: column;
+    /* Cambiar a columna */
     justify-content: end;
     min-height: 100vh;
   }
 
   .botones {
     display: flex;
-    flex-direction: row; /* Cambiar a columna */
+    flex-direction: row;
+    /* Cambiar a columna */
     align-items: center;
     justify-content: center;
+
+    position: absolute;
+    bottom: 0;
   }
 
   .botones button {
-    min-width: 250px; /* Botones ocupan todo el ancho */
+    min-width: 250px;
+    /* Botones ocupan todo el ancho */
   }
 
   button {
-    width: 100%; /* Botones ocupan todo el ancho */
+    width: 100%;
+    /* Botones ocupan todo el ancho */
   }
 
   section {
@@ -181,6 +329,5 @@ button:focus-visible {
     min-height: auto;
     max-width: 1200px;
   }
-  
-}
 
+}

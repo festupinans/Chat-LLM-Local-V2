@@ -10,33 +10,48 @@
 
 <body>
   <div class="three" id="app"></div>
-  <section class="row">
-    <div class="transcription">
-      <h3 class="text">Transcripcion</h3>
-      <textarea id="transcript" readonly></textarea>
 
-      <!-- <div class="botones">
-        <button id="startBtn">Escuchar</button>
-        <button id="stopBtn" disabled>Dejar de Escuchar</button>
-      </div> -->
-      <div class="botones">
-        <button id="senBtn" disabled onclick="disableButton(), sendMensajeIA()">Enviar</button>
-        <button id="clearBtn" disabled onclick="disableButton(), borrarTextArea()">Borrar</button>
+
+  <section class="column" id="slider-background">
+
+    <!-- <div class="row" id="Transcripcion" style="display: none;">
+      <div class="transcription">
+        
+        <div class="botones">
+          Que pasa
+          <button id="senBtn" disabled onclick="disableButton(), sendMensajeIA()">Enviar</button>
+          <button id="clearBtn" disabled onclick="disableButton(), borrarTextArea()">Borrar</button>
+        </div>
+        <textarea id="transcript" readonly>Transcripción</textarea>
       </div>
+      <div class="salidatexto">
+        <div id="messageLabel">Respuesta</div>
+      </div>
+    </div> -->
+
+      <!-- <div class="transcription">
+      </div> -->
+
+    <div class="sliderBody" id="sliderBody">
+      <div class="sliderTrack" id="sliderTrack">
+        <div class="sliderCiruclo" id="sliderCiruclo">
+          <img src="/public/flecha.webp" alt="" class="sliderCirculoImagen">
+        </div>
+      </div>
+      <h1 class="sliderTexto">Quiero hablar contigo</h1>
+      <img src="/public/flechas.webp" alt="" class="sliderImagen" />
     </div>
   </section>
 
-  <section class="column">
-    <div class="salidatexto">
-      <h3 class="text">Respuesta</h3>
-      <div id="messageLabel"></div>
+  <section class="transcription" id="Transcripcion">
+    <div class="microfono">
+      <img src="/public/Microfono.png" alt="">
     </div>
+    <div class="Text Transcrito">
 
-    <div id="loader"></div>
+    </div>
+    <div class="Text Respuesta">
 
-    <div class="salidatexto">
-      <h3 class="text">Razonamiento</h3>
-      <div id="Razonamiento"></div>
     </div>
   </section>
 
@@ -58,7 +73,7 @@
     function borrarTextArea() {
       const div = document.getElementById('transcript');
       if (div) {
-        div.value = '';        
+        div.value = '';
       }
     }
   </script>
@@ -66,6 +81,7 @@
   <script type="module" src="/src/main.js"></script>
   <script type="module" src="/src/peticiones_True-Stream.ts"></script>
   <script src="/src/recorder.js"></script>
+  <script src="/src/SliderDrag.js"></script>
 </body>
 
 </html>
