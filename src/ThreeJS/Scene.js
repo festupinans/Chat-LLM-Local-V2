@@ -149,6 +149,7 @@ export function initScene() {
       } else {
         console.log("El modelo no tiene animaciones.");
       }
+      presentIntroduction();
     })
     .catch((error) => {
       console.error("No se pudo cargar el modelo:", error);

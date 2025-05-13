@@ -192,10 +192,10 @@ button:focus-visible {
   animation: spin 2s linear infinite;
 }
 
-#transcript {
+/* #transcript {
   width: 500px;
   height: 100px;
-}
+} */
 
 #Razonamiento {
   word-wrap: break-word;

@@ -1,114 +1,8 @@
 import { readText } from './speak';
 import { messageHistory as initialMessageHistory } from './Parametros';
-import { initInteraction } from './initInteraction';
+// import { initInteraction } from './initInteraction';
 
-<<<<<<< HEAD
-let url = 'http://192.168.1.11:41343/v1/chat/completions';
-
-// Crear una copia local de messageHistory para trabajar con ella
-let messageHistory = [...initialMessageHistory];
-
-// Funciones principales para enviar y recibir mensajes
-async function sendMensajeIA(): Promise<void> {
-    const message = (document.getElementById('transcript') as HTMLTextAreaElement)?.value || '';
-    // const loader = document.getElementById('loader');
-    const razonamiento = document.getElementById('Razonamiento');
-
-    // if (loader) {
-    //     loader.style.display = 'block';
-    // }
-
-    try {
-        // Actualizar el historial de mensajes con el nuevo mensaje del usuario
-        messageHistory.push({ role: 'user', content: message });
-
-        // Enviar el mensaje usando POST
-        const response = await fetch(url, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                model: 'deepseek-r1-distill-qwen-7b', // Ajusta el modelo según sea necesario
-                messages: messageHistory,
-                temperature: 0.7,
-                max_tokens: 512,
-                stream: true // Habilitar streaming
-            }),
-        });
-
-        if (!response.ok) {
-            throw new Error(`Error al enviar el mensaje: ${response.statusText}`);
-        }
-
-        // Procesar la respuesta en streaming
-        const reader = response.body?.getReader();
-        const decoder = new TextDecoder('utf-8');
-        let receivedMessage = '';
-        let receivedRazonamiento = '';
-        const labelElement = document.getElementById('messageLabel');
-        let pensando = true;
-
-        while (reader) {
-            const { done, value } = await reader.read();
-            if (done) break;
-
-            // Decodificar el fragmento recibido
-            const chunk = decoder.decode(value, { stream: true });
-
-            // Procesar cada línea del stream como JSON
-            const lines = chunk.split('\n').filter(line => line.trim() !== '');
-            for (const line of lines) {
-                if (line.startsWith('data:')) {
-                    const jsonString = line.replace('data:', '').trim();
-                    if (jsonString !== '[DONE]') {
-                        try {
-                            const parsed = JSON.parse(jsonString);
-                            const content = parsed.choices[0]?.delta?.content || '';
-
-                            // Mostrar el mensaje progresivamente
-                            if (labelElement && !pensando) {
-                                receivedMessage += content;
-                                labelElement.textContent = receivedMessage;
-                            }
-
-                            if (content === '</think>' || !pensando) {
-                                pensando = false;
-                            }
-
-                            if (pensando && razonamiento && content !== '<think>') {
-                                receivedRazonamiento += content;
-                                razonamiento.textContent = receivedRazonamiento;
-                            }
-                        } catch (error) {
-                            console.error('Error al parsear JSON:', error);
-                        }
-                    }
-                }
-            }
-        }
-        readText(receivedMessage); // Llamada a la función importada
-        pensando = true;
-
-        // Actualizar el historial de mensajes con la respuesta completa de la IA
-        messageHistory.push({ role: 'assistant', content: receivedMessage });
-    } catch (error) {
-        console.error('Error:', error);
-    } finally {
-        // Ocultar el loader
-        // if (loader) {
-        //     loader.style.display = 'none';
-        // }
-    }
-}
-
-// Agregar combinación de teclas para borrar el historial
-document.addEventListener('keydown', (event) => {
-    if (event.ctrlKey && event.code === 'Space') { // Detectar Ctrl + Espacio
-        event.preventDefault(); // Prevenir el comportamiento por defecto
-        messageHistory = [...initialMessageHistory]; // Restablecer el historial
-        showTooltip('Historial de mensajes restablecido.'); // Mostrar tooltip
-    }
-=======
-const API_CHAT = 'http://127.0.0.1:1234/v1/chat/completions';
+const API_CHAT = 'http://192.168.1.11:41343/v1/chat/completions';
 let messageHistory = [...initialMessageHistory];
 
 let initialPhase = true;
@@ -116,57 +10,56 @@ let subPhase = 0;
 const collected: { name?: string; email?: string; empresa?: string } = {};
 
 // DOM
-const startBtn = document.getElementById('startBtn') as HTMLButtonElement;
-const stopBtn = document.getElementById('stopBtn') as HTMLButtonElement;
+// const startBtn = document.getElementById('startBtn') as HTMLButtonElement;
+// const stopBtn = document.getElementById('stopBtn') as HTMLButtonElement;
 const senBtn = document.getElementById('senBtn') as HTMLButtonElement;
 const clearBtn = document.getElementById('clearBtn') as HTMLButtonElement;
 const transcriptTA = document.getElementById('transcript') as HTMLTextAreaElement;
 const messageLabel = document.getElementById('messageLabel')!;
-const razonamiento = document.getElementById('Razonamiento')!;
-const loader = document.getElementById('loader')!;
+// const razonamiento = document.getElementById('Razonamiento')!;
+// const loader = document.getElementById('loader')!;
 
 // Setup inicial
 document.addEventListener('DOMContentLoaded', () => {
-  loader.style.display = 'none';
-  bindButtons();
+  // loader.style.display = 'none';
+  // bindButtons();
   resetAll(); // Inicia la fase inicial
->>>>>>> cedf3ea75697c92f2631dd4e2cb6ce856b9a41bb
 });
 
-function bindButtons() {
-  startBtn.addEventListener('click', onStart);
-  stopBtn.addEventListener('click', onStop);
-  clearBtn.addEventListener('click', onClear);
-  senBtn.addEventListener('click', sendMensajeIA);
-  document.addEventListener('keydown', e => {
-    if (e.ctrlKey && e.code === 'Space') {
-      e.preventDefault();
-      resetAll();
-    }
-  });
-}
+// function bindButtons() {
+//   startBtn.addEventListener('click', onStart);
+//   stopBtn.addEventListener('click', onStop);
+//   clearBtn.addEventListener('click', onClear);
+//   senBtn.addEventListener('click', sendMensajeIA);
+//   document.addEventListener('keydown', e => {
+//     if (e.ctrlKey && e.code === 'Space') {
+//       e.preventDefault();
+//       resetAll();
+//     }
+//   });
+// }
 
 // Reconocimiento (idéntico al tuyo, sólo habilita sen/clear en onend)
 let recognition: any = null;
 let transcriptText = '';
-function onStart() {
-  transcriptText = '';
-  transcriptTA.value = '';
-  startRecognition();
-  startBtn.disabled = true;
-  stopBtn.disabled = false;
-}
-function onStop() {
-  stopRecognition();
-  startBtn.disabled = false;
-  stopBtn.disabled = true;
-}
-function onClear() {
-  transcriptText = '';
-  transcriptTA.value = '';
-  clearBtn.disabled = true;
-  senBtn.disabled = true;
-}
+// function onStart() {
+//   transcriptText = '';
+//   transcriptTA.value = '';
+//   startRecognition();
+//   startBtn.disabled = true;
+//   stopBtn.disabled = false;
+// }
+// function onStop() {
+//   stopRecognition();
+//   startBtn.disabled = false;
+//   stopBtn.disabled = true;
+// }
+// function onClear() {
+//   transcriptText = '';
+//   transcriptTA.value = '';
+//   clearBtn.disabled = true;
+//   senBtn.disabled = true;
+// }
 
 function startRecognition() {
   const SR = (window as any).webkitSpeechRecognition || (window as any).SpeechRecognition;
@@ -209,9 +102,9 @@ function presentIntroduction() {
 
 // Avanza la fase inicial preguntando uno a uno
 function askNext() {
-  transcriptTA.value = '';
-  clearBtn.disabled = true;
-  senBtn.disabled = true;
+  transcriptTA.value = '';                
+  // clearBtn.disabled = true;
+  // senBtn.disabled = true;
   switch (subPhase) {
     case 0:
       readText('Por favor dime tu nombre.');
@@ -221,12 +114,12 @@ function askNext() {
     case 2:
       break;
   }
-  startBtn.disabled = false;
-  stopBtn.disabled = true;
+  // startBtn.disabled = false;
+  // stopBtn.disabled = true;
 }
 
 async function sendMensajeNormal(): Promise<void> {
-  loader.style.display = 'block';
+  // loader.style.display = 'block';
   const msg = transcriptTA.value.trim();
   transcriptTA.value = '';
   messageHistory.push({ role: 'user', content: msg });
@@ -249,7 +142,7 @@ async function sendMensajeNormal(): Promise<void> {
   let thinking = true;
 
   messageLabel.textContent = '';
-  razonamiento.textContent = '';
+  // razonamiento.textContent = '';
 
   while (true) {
     const { done, value } = await reader.read();
@@ -272,7 +165,7 @@ async function sendMensajeNormal(): Promise<void> {
           thinking = false;
         } else {
           if (thinking) {
-            razonamiento.textContent += content;
+            // razonamiento.textContent += content;
           } else {
             messageLabel.textContent += content;
           }
@@ -287,16 +180,18 @@ async function sendMensajeNormal(): Promise<void> {
   readText(messageLabel.textContent!);
   messageHistory.push({ role: 'assistant', content: messageLabel.textContent! });
 
-  loader.style.display = 'none';
+  // loader.style.display = 'none';
 
   // Después de un intercambio normal, vuelve a habilitar escucha
-  startBtn.disabled = false;
+  // startBtn.disabled = false;
 }
 
 async function sendMensajeIA(): Promise<void> {
-  senBtn.disabled = true;
-  clearBtn.disabled = true;
-  startBtn.disabled = true;
+  // senBtn.disabled = true;
+  // clearBtn.disabled = true;
+  // startBtn.disabled = true;
+  console.log("cualquier bobada");
+  
 
   const text = transcriptTA.value.trim();
 
@@ -305,7 +200,7 @@ async function sendMensajeIA(): Promise<void> {
     if (subPhase === 0) {
       if (!text) {
         readText('No capturé nada. Intenta de nuevo.');
-        startBtn.disabled = false;
+        // startBtn.disabled = false;
         return;
       }
       collected.name = text;
@@ -316,7 +211,7 @@ async function sendMensajeIA(): Promise<void> {
     if (subPhase === 1) {
       if (!text) {
         readText('Por favor, ingresa tu correo electrónico.');
-        startBtn.disabled = false;
+        // startBtn.disabled = false;
         return;
       }
       collected.email = text;
@@ -327,7 +222,7 @@ async function sendMensajeIA(): Promise<void> {
     if (subPhase === 2) {
       if (!text) {
         readText('Por favor, ingresa el nombre de la empresa.');
-        startBtn.disabled = false;
+        // startBtn.disabled = false;
         return;
       }
       collected.empresa = text;
@@ -348,9 +243,9 @@ async function sendMensajeIA(): Promise<void> {
       transcriptTA.value = '';
       messageLabel.textContent = '';
       // Ahora habilita escuchar y enviar para el chat
-      startBtn.disabled = false;
-      senBtn.disabled = true;
-      clearBtn.disabled = true;
+      // startBtn.disabled = false;
+      // senBtn.disabled = true;
+      // clearBtn.disabled = true;
       return;
     }
   } else {
@@ -366,8 +261,9 @@ function resetAll() {
   messageHistory = [...initialMessageHistory];
   transcriptTA.value = '';
   messageLabel.textContent = '';
-  razonamiento.textContent = '';
-  presentIntroduction(); // Presentación inicial antes de todo
+  // razonamiento.textContent = '';
+  // presentIntroduction(); // Presentación inicial antes de todo
 }
 
 (window as any).sendMensajeIA = sendMensajeIA;
+(window as any).presentIntroduction = presentIntroduction;
