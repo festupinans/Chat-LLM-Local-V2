@@ -13,9 +13,10 @@ const collected: { name?: string; email?: string; empresa?: string } = {};
 // const startBtn = document.getElementById('startBtn') as HTMLButtonElement;
 // const stopBtn = document.getElementById('stopBtn') as HTMLButtonElement;
 const senBtn = document.getElementById('senBtn') as HTMLButtonElement;
-const clearBtn = document.getElementById('clearBtn') as HTMLButtonElement;
+// const clearBtn = document.getElementById('clearBtn') as HTMLButtonElement;
 const transcriptTA = document.getElementById('transcript') as HTMLTextAreaElement;
 const messageLabel = document.getElementById('messageLabel')!;
+let menssageLabelText = "";
 // const razonamiento = document.getElementById('Razonamiento')!;
 // const loader = document.getElementById('loader')!;
 
@@ -134,21 +135,25 @@ function askNext() {
   // stopBtn.disabled = true;
 }
 
-async function sendMensajeNormal(): Promise<void> {
+export async function sendMensajeNormal(): Promise<void> {
   // loader.style.display = 'block';
   const msg = transcriptTA.value.trim();
   transcriptTA.value = '';
   messageHistory.push({ role: 'user', content: msg });
 
+  console.log("Inicio mensaje normal");
+  console.log("Contenido: "+msg);
+  
+
   const resp = await fetch(API_CHAT, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      model: 'deepseek-r1-distill-qwen-7b',
+      model: 'gemma-3-4b-it-qat',
       messages: messageHistory,
       temperature: 0.7,
-      max_tokens: 1024,
-      stream: true
+      max_tokens: -1,
+      stream: false
     })
   });
   if (!resp.ok) throw new Error(resp.statusText);
@@ -158,6 +163,7 @@ async function sendMensajeNormal(): Promise<void> {
   let thinking = true;
 
   messageLabel.textContent = '';
+  menssageLabelText = "";
   // razonamiento.textContent = '';
 
   while (true) {
@@ -184,6 +190,7 @@ async function sendMensajeNormal(): Promise<void> {
             // razonamiento.textContent += content;
           } else {
             messageLabel.textContent += content;
+            menssageLabelText += content;
           }
         }
       } catch (error) {
@@ -193,7 +200,9 @@ async function sendMensajeNormal(): Promise<void> {
   }
 
   // Al finalizar, leer el mensaje final
-  readText(messageLabel.textContent!);
+  console.log(menssageLabelText);
+  readText(menssageLabelText);
+  
   messageHistory.push({ role: 'assistant', content: messageLabel.textContent! });
 
   // loader.style.display = 'none';
@@ -206,6 +215,7 @@ async function sendMensajeIA(): Promise<void> {
   console.log("Enviado mensaje");
 
   const text = transcriptTA.value.trim();
+  await sendMensajeNormal();
 
   if (initialPhase) {
     // Guarda según subPhase y avanza
@@ -271,5 +281,5 @@ function resetAll() {
   // presentIntroduction(); // Presentación inicial antes de todo
 }
 
-(window as any).sendMensajeIA = sendMensajeIA;
-(window as any).presentIntroduction = presentIntroduction;
+// (window as any).sendMensajeIA = sendMensajeIA;
+// (window as any).presentIntroduction = presentIntroduction;

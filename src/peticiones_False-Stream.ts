@@ -1,21 +1,16 @@
-import './style.css';
+// import './style.css';
+import { messageHistory as initialMessageHistory } from './Parametros';
+import { readText } from './speak';
 
-let url = 'http://192.168.1.18:41343/v1/chat/completions';
+let url = 'http://localhost:1234/v1/chat/completions';
 
 // Variable para almacenar el historial de mensajes
-let messageHistory: { role: string, content: string }[] = [
-    { role: "system", content: "Tu eres un asistente de IA filosofo, el cual siempre respondera en español." }
-];
+let messageHistory = [...initialMessageHistory];
 
 // Funciones principales para enviar y recibir mensajes
-async function sendMensajeIA(): Promise<void> {
+export async function sendMensajeIANormal(): Promise<void> {
     //   const message = (document.getElementById('messageInput') as HTMLInputElement)?.value || '';
     const message = (document.getElementById('transcript') as HTMLTextAreaElement)?.value || '';
-    const loader = document.getElementById('loader');
-
-    if (loader) {
-        loader.style.display = 'block';
-    }
 
     try {
         // Actualizar el historial de mensajes con el nuevo mensaje del usuario
@@ -48,14 +43,13 @@ async function sendMensajeIA(): Promise<void> {
         const labelElement = document.getElementById('messageLabel');
         if (labelElement) {
             labelElement.textContent = receivedMessage;
+            readText(receivedMessage);
         }
     } catch (error) {
         console.error('Error:', error);
     } finally {
         // Ocultar el loader
-        if (loader) {
-            loader.style.display = 'none';
-        }
+
     }
 }
 
@@ -76,11 +70,11 @@ async function processResponse(response: Response): Promise<string> {
 }
 
 // Agregar el controlador de eventos al botón
-document.addEventListener('DOMContentLoaded', () => {
-    const button = document.getElementById('sendMessageButton');
-    if (button) {
-        button.addEventListener('click', sendMensajeIA);
-    }
-});
+// document.addEventListener('DOMContentLoaded', () => {
+//     const button = document.getElementById('sendMessageButton');
+//     if (button) {
+//         button.addEventListener('click', sendMensajeIANormal);
+//     }
+// });
 
-(window as any).sendMensajeIA = sendMensajeIA;
+// (window as any).sendMensajeIA = sendMensajeIANormal;

@@ -1,3 +1,5 @@
+import { presentIntroduction } from './Introduccion';
+
 const thumb = document.getElementById("sliderCiruclo");
 const track = document.getElementById("sliderTrack");
 
@@ -35,6 +37,7 @@ const onDrag = (e) => {
     body.style.display = "none";
     transcripción.style.display = "flex";
     presentIntroduction();
+    // sendMensajeIA();
   }
 
   // Calcular el alpha del gradiente en función de la posición del thumb
