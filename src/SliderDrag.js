@@ -34,6 +34,7 @@ const onDrag = (e) => {
     console.log("Thumb está al final del track");
     body.style.display = "none";
     transcripción.style.display = "flex";
+    presentIntroduction();
   }
 
   // Calcular el alpha del gradiente en función de la posición del thumb

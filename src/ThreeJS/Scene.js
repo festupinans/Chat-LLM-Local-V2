@@ -61,8 +61,8 @@ export function initScene() {
     0.1,
     1000
   );
-  camera.position.z = 1.3;
-  camera.position.y = 2.3;
+  camera.position.z = 3;
+  camera.position.y = 1.3
 
   // Creamos el renderizador
   const renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -149,7 +149,7 @@ export function initScene() {
       } else {
         console.log("El modelo no tiene animaciones.");
       }
-      presentIntroduction();
+      // presentIntroduction();
     })
     .catch((error) => {
       console.error("No se pudo cargar el modelo:", error);

@@ -2,7 +2,7 @@ import { readText } from './speak';
 import { messageHistory as initialMessageHistory } from './Parametros';
 // import { initInteraction } from './initInteraction';
 
-const API_CHAT = 'http://192.168.1.11:41343/v1/chat/completions';
+const API_CHAT = 'http://127.0.0.1:1234/v1/chat/completions';
 let messageHistory = [...initialMessageHistory];
 
 let initialPhase = true;
@@ -23,11 +23,11 @@ const messageLabel = document.getElementById('messageLabel')!;
 document.addEventListener('DOMContentLoaded', () => {
   // loader.style.display = 'none';
   // bindButtons();
-  resetAll(); // Inicia la fase inicial
+  // resetAll(); // Inicia la fase inicial
 
   // --- AÑADIDO: envía con click o con tecla 'k' ---
   senBtn.addEventListener('click', () => {
-    stopRecognition();
+    // stopRecognition();
     sendMensajeIA();
   });
   document.addEventListener('keydown', e => {
@@ -147,7 +147,7 @@ async function sendMensajeNormal(): Promise<void> {
       model: 'deepseek-r1-distill-qwen-7b',
       messages: messageHistory,
       temperature: 0.7,
-      max_tokens: 512,
+      max_tokens: 1024,
       stream: true
     })
   });
@@ -203,7 +203,7 @@ async function sendMensajeNormal(): Promise<void> {
 }
 
 async function sendMensajeIA(): Promise<void> {
-  console.log("cualquier bobada");
+  console.log("Enviado mensaje");
 
   const text = transcriptTA.value.trim();
 
