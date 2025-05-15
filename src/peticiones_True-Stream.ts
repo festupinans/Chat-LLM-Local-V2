@@ -24,6 +24,20 @@ document.addEventListener('DOMContentLoaded', () => {
   // loader.style.display = 'none';
   // bindButtons();
   resetAll(); // Inicia la fase inicial
+
+  // --- AÑADIDO: envía con click o con tecla 'k' ---
+  senBtn.addEventListener('click', () => {
+    stopRecognition();
+    sendMensajeIA();
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key.toLowerCase() === 'k' && !e.repeat) {
+      e.preventDefault();
+      stopRecognition();
+      sendMensajeIA();
+    }
+  });
+  // ---------------------------------------------
 });
 
 // function bindButtons() {
@@ -61,29 +75,29 @@ let transcriptText = '';
 //   senBtn.disabled = true;
 // }
 
-function startRecognition() {
-  const SR = (window as any).webkitSpeechRecognition || (window as any).SpeechRecognition;
-  if (!SR) return console.error('SpeechRecognition no soportado');
-  recognition = new SR();
-  recognition.lang = 'es-ES';
-  recognition.continuous = true;
-  recognition.interimResults = true;
-  recognition.onresult = (ev: any) => {
-    let interim = '';
-    for (let i = ev.resultIndex; i < ev.results.length; i++) {
-      const part = ev.results[i][0].transcript;
-      if (ev.results[i].isFinal) transcriptText += part;
-      else interim += part;
-    }
-    transcriptTA.value = transcriptText + interim;
-  };
-  recognition.onend = () => {
-    clearBtn.disabled = transcriptText.trim() === '';
-    senBtn.disabled = transcriptText.trim() === '';
-  };
-  recognition.onerror = () => stopRecognition();
-  recognition.start();
-}
+// function startRecognition() {
+//   const SR = (window as any).webkitSpeechRecognition || (window as any).SpeechRecognition;
+//   if (!SR) return console.error('SpeechRecognition no soportado');
+//   recognition = new SR();
+//   recognition.lang = 'es-ES';
+//   recognition.continuous = true;
+//   recognition.interimResults = true;
+//   recognition.onresult = (ev: any) => {
+//     let interim = '';
+//     for (let i = ev.resultIndex; i < ev.results.length; i++) {
+//       const part = ev.results[i][0].transcript;
+//       if (ev.results[i].isFinal) transcriptText += part;
+//       else interim += part;
+//     }
+//     transcriptTA.value = transcriptText + interim;
+//   };
+//   recognition.onend = () => {
+//     clearBtn.disabled = transcriptText.trim() === '';
+//     senBtn.disabled = transcriptText.trim() === '';
+//   };
+//   recognition.onerror = () => stopRecognition();
+//   recognition.start();
+// }
 
 function stopRecognition() {
   if (recognition) {
@@ -110,8 +124,10 @@ function askNext() {
       readText('Por favor dime tu nombre.');
       break;
     case 1:
+      readText('Por favor ingresa tu correo electrónico.');
       break;
     case 2:
+      readText('Por favor ingresa el nombre de la empresa.');
       break;
   }
   // startBtn.disabled = false;
@@ -187,11 +203,7 @@ async function sendMensajeNormal(): Promise<void> {
 }
 
 async function sendMensajeIA(): Promise<void> {
-  // senBtn.disabled = true;
-  // clearBtn.disabled = true;
-  // startBtn.disabled = true;
   console.log("cualquier bobada");
-  
 
   const text = transcriptTA.value.trim();
 
@@ -200,7 +212,6 @@ async function sendMensajeIA(): Promise<void> {
     if (subPhase === 0) {
       if (!text) {
         readText('No capturé nada. Intenta de nuevo.');
-        // startBtn.disabled = false;
         return;
       }
       collected.name = text;
@@ -211,7 +222,6 @@ async function sendMensajeIA(): Promise<void> {
     if (subPhase === 1) {
       if (!text) {
         readText('Por favor, ingresa tu correo electrónico.');
-        // startBtn.disabled = false;
         return;
       }
       collected.email = text;
@@ -222,7 +232,6 @@ async function sendMensajeIA(): Promise<void> {
     if (subPhase === 2) {
       if (!text) {
         readText('Por favor, ingresa el nombre de la empresa.');
-        // startBtn.disabled = false;
         return;
       }
       collected.empresa = text;
@@ -232,6 +241,7 @@ async function sendMensajeIA(): Promise<void> {
         email: collected.email!,
         empresa: collected.empresa!
       };
+      console.log(datos);
       messageLabel.textContent = JSON.stringify(datos);
       await fetch('http://localhost:3000/api/robot', {
         method: 'POST',
@@ -242,10 +252,6 @@ async function sendMensajeIA(): Promise<void> {
       initialPhase = false;
       transcriptTA.value = '';
       messageLabel.textContent = '';
-      // Ahora habilita escuchar y enviar para el chat
-      // startBtn.disabled = false;
-      // senBtn.disabled = true;
-      // clearBtn.disabled = true;
       return;
     }
   } else {
