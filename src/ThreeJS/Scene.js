@@ -6,6 +6,7 @@ let habla = false; // Variable para controlar el estado de la animación
 let emissiveMaterial = null; // Referencia al material del modelo
 let animationFrameId = null; // ID del requestAnimationFrame
 let time = 0; // Tiempo para la animación
+export let NombresAnimaciones = [];
 
 function toggleAnimation(valor) {
   habla = valor; // Actualiza el estado de la animación
@@ -51,7 +52,7 @@ window.addEventListener("toggleAnimation", (event) => {
 export function initScene() {
   // Creamos la escena
   const scene = new THREE.Scene();
-  const color = new THREE.Color().setHex( 0xffffff );
+  const color = new THREE.Color().setHex(0xffffff);
   scene.background = color;
 
   // Creamos la cámara
@@ -62,7 +63,7 @@ export function initScene() {
     1000
   );
   camera.position.z = 3;
-  camera.position.y = 1.3
+  camera.position.y = 1.3;
 
   // Creamos el renderizador
   const renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -112,14 +113,13 @@ export function initScene() {
   // createGUI(directionalLight.color, "Directional Light Color");
 
   // Cargar un modelo 3D
-  loadModel("/models/cyborg.glb")
+  loadModel("/models/Animaciones.glb")
     .then(({ scene: model, animations }) => {
       scene.add(model);
 
       // Obtener el material emissive del modelo
       emissiveMaterial = model.children[0].children[2].material;
       // console.log(emissiveMaterial);
-      
 
       // Iniciar o detener la animación según el estado inicial de habla
       if (habla) {
@@ -135,8 +135,11 @@ export function initScene() {
         // Reproducir todas las animaciones en loop
         animations.forEach((clip) => {
           const action = mixer.clipAction(clip);
-          action.play();
+          // action.play();
+          console.log(action._clip.name);
+          NombresAnimaciones.push(action);
         });
+        console.log(NombresAnimaciones);
 
         // Actualizar el mixer en cada frame
         const clock = new THREE.Clock();
@@ -150,6 +153,12 @@ export function initScene() {
         console.log("El modelo no tiene animaciones.");
       }
       // presentIntroduction();
+      const valor = Math.floor(Math.random() * 2) + 1;
+      PlaAnim(valor, {
+        fadeDuration: 0.5,
+        loop: Infinity,
+        onFinished: () => alert("¡Animación terminada!"),
+      });
     })
     .catch((error) => {
       console.error("No se pudo cargar el modelo:", error);

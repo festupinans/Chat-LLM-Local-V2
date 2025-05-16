@@ -3,13 +3,15 @@ const synth = window.speechSynthesis;
 export function readText(
     text: string,
     rate: number = 1,
-    pitch: number = 1,
+    pitch: number = 1.5,
     voiceName?: "Microsoft Sabina - Spanish (Mexico)" // Nombre de la voz opcional
 ) {
     if (!text.trim()) {
         console.warn('El texto está vacío. No se puede leer.');
         return;
     }
+
+    synth.cancel(); // Detiene cualquier narración anterior, pausada o en curso
 
     const utterance = new SpeechSynthesisUtterance(text);
 
@@ -28,22 +30,40 @@ export function readText(
         }
     }
 
-    console.log(utterance.voice);
-    
-
     // Manejar eventos
     utterance.onstart = () => {
         console.log('Lectura iniciada.');
         window.dispatchEvent(new CustomEvent('toggleAnimation', { detail: true }));
+        
+        const valor = Math.floor(Math.random() * 2) + 4;
+        (window as any).PlaAnim(valor, {
+            fadeDuration: 0.5,
+            loop: Infinity,
+            onFinished: () => alert("¡Animación terminada!"),
+        });
     };
 
     utterance.onend = () => {
         console.log('Lectura finalizada.');
         window.dispatchEvent(new CustomEvent('toggleAnimation', { detail: false }));
+       
+        const valor = Math.floor(Math.random() * 2) + 1;
+        (window as any).PlaAnim(valor, {
+            fadeDuration: 0.5,
+            loop: Infinity,
+            onFinished: () => alert("¡Animación terminada!"),
+        });
     };
 
     utterance.onerror = (event) => {
         console.error('Error durante la síntesis de voz:', event.error);
+
+        const valor = Math.floor(Math.random() * 2) + 1;
+        (window as any).PlaAnim(valor, {
+            fadeDuration: 0.5,
+            loop: Infinity,
+            onFinished: () => alert("¡Animación terminada!"),
+        });
     };
 
     synth.speak(utterance);
@@ -69,7 +89,6 @@ export function listVoices() {
     voices.forEach((voice, index) => {
         console.log(`${index + 1}: ${voice.name} (${voice.lang})`);
         console.log(voice.name);
-        
     });
 }
 
