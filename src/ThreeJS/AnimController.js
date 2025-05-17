@@ -9,21 +9,37 @@ import { NombresAnimaciones } from "./Scene";
  * @param {number} [options.loop=Infinity] - Cantidad de repeticiones (Infinity para bucle infinito).
  * @param {function} [options.onFinished] - Callback cuando termina la animación (si no es infinita).
  */
+
+let animacionActual = null; // Guarda el índice de la animación activa
+
 function PlaAnim(i, options = {}) {
   const { fadeDuration = 0.3, loop = Infinity, onFinished = null } = options;
 
-  console.log(NombresAnimaciones[i]._clip.name);
-  if (!NombresAnimaciones[i]) {
-    console.warn("Animación no encontrada:", i);
+  // Validar índice y existencia de la animación
+  if (
+    typeof i !== "number" ||
+    i < 0 ||
+    i >= NombresAnimaciones.length ||
+    !NombresAnimaciones[i]
+  ) {
+    console.warn("Animación no encontrada o índice inválido:", i, NombresAnimaciones[i]);
     return;
   }
 
+  // Si la animación ya está activa, no hacer nada
+  if (animacionActual === i && NombresAnimaciones[i].isRunning()) {
+    console.log("La animación ya está activa:", NombresAnimaciones[i]._clip?.name);
+    return;
+  }
+
+  console.log("Reproduciendo animación:", NombresAnimaciones[i]._clip?.name);
+
   // Detener todas las animaciones activas con transición suave
-  NombresAnimaciones.forEach((anim, idx) => {
-    if (anim.isRunning()) {
+  NombresAnimaciones.forEach((anim) => {
+    if (anim && anim.isRunning()) {
       anim.fadeOut(fadeDuration);
       setTimeout(() => anim.stop(), fadeDuration * 1000);
-    } else {
+    } else if (anim) {
       anim.stop();
     }
   });
@@ -41,22 +57,13 @@ function PlaAnim(i, options = {}) {
   }
 
   // Opcional: callback al terminar (solo si no es infinito)
-  if (loop !== Infinity && typeof onFinished === "function") {
-    action._onFinished = () => {
-      onFinished();
-      action._onFinished = null;
-    };
-    action._listener = (e) => {
-      if (e.action === action && action._onFinished) {
-        action._onFinished();
-        action.getMixer().removeEventListener("finished", action._listener);
-      }
-    };
-    action.getMixer().addEventListener("finished", action._listener);
-  }
+  // ...
 
   // Iniciar la animación con transición suave
   action.reset().fadeIn(fadeDuration).play();
+
+  // Actualizar el índice de la animación activa
+  animacionActual = i;
 }
 
 window.PlaAnim = PlaAnim;
