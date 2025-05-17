@@ -6,6 +6,7 @@ const track           = document.getElementById("sliderTrack");
 const body            = document.getElementById("slider-background");
 const transcripcion   = document.getElementById("Transcripcion");
 const micOverlay    = document.getElementById("micOverlay");
+const nuevoOverlay    = document.getElementById("nuevoOverlay");
 
 // Nuevos elementos para texto e ícono
 const sliderTexto     = document.querySelector('.sliderTexto');

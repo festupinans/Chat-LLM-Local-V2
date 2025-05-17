@@ -13,7 +13,7 @@
   <div class="logo">
     <img src="public/logo.png">
   </div>
-
+  <img src="nuevo.png" alt="Micrófono" id="new">
   <section class="column" id="slider-background">
 
     <div class="sliderBody" id="sliderBody">
@@ -83,6 +83,14 @@
     if (clearBtn) {
       clearBtn.addEventListener('click', borrarTextArea);
     }
+
+    const newEl = document.getElementById('new');
+      if (newEl) {
+        newEl.addEventListener('click', () => {
+          window.location.reload();
+        });
+      }
+
   });
 
   function borrarTextArea() {
@@ -99,7 +107,6 @@
   <!-- <script type="module" src="/src/peticiones_True-Stream.ts"></script> -->
   <script src="/src/recorder.js"></script>
   <script type="module" src="/src/SliderDrag.js"></script>
-  <script type="module" src="/src/ThreeJS/AnimController.js"></script>
 </body>
 
 </html>

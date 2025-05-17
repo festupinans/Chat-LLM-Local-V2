@@ -159,8 +159,8 @@ section.column {
 
 /* Iconos todos al mismo tamaño */
 #micIcon{
-  width: 11vw;
-  height: 11vh;
+  width: 8vw;
+  height: 8vh;
   object-fit: contain;
   cursor: pointer;
   transition: transform 0.4s ease, opacity 0.4s ease;
@@ -305,11 +305,21 @@ button:focus-visible {
 #micOverlay {
   display: none;                /* oculto por defecto */
   position: absolute;
-  width: 11vw;                 /* mismo tamaño que tu .microfono img */
+  width: 8vw;                 /* mismo tamaño que tu .microfono img */
   top: 50%;       /* ajusta según corresponda */
   left: 10%;
   cursor: pointer;
   z-index: 20;                  /* por encima del slider */
+}
+
+#new {
+  display: none;                /* oculto por defecto */
+  position: absolute;
+  width: 12vw;
+  bottom: 5%;       /* ajusta según corresponda */
+  right: 5%;
+  cursor: pointer;
+  z-index: 88;                  /* por encima del slider */
 }
 
 /* Mantenemos oculta la transcripción entera */
@@ -450,7 +460,7 @@ button:focus-visible {
   width: 70%;
   margin-left: 15%;
   text-align: center;
-  font-size: calc(.9em + 2vw);
+  font-size: calc(1.1em + 2.5vw);
   color: #fff;
   pointer-events: none;
 }
@@ -466,11 +476,29 @@ button:focus-visible {
 
 /* Estilo genérico para los iconos del tutorial */
 #tutorialIcons img {
-  width: 48px; /* ajústalo a tu tamaño */
-  height: 48px;
+  width: 10vw; /* ajústalo a tu tamaño */
+  height: 10vh;
   object-fit: contain;
 }
 
+#tutorialText span.bold {
+  font-weight: 700;
+}
+/* Cuando un icono está en la tutorial, lo agrandamos y no clicable */
+.tutorial-icon {
+  position: absolute;
+  display: block;
+  z-index: 2000;
+  width: 8vw !important;   /* antes 48px */
+  height: 8vh !important;
+  pointer-events: none;     /* deshabilita clic mientras dure el tutorial */
+}
+
+/* Botón Siguiente deshabilitado */
+#tutorialNext:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
 
 /* Spotlight icon */
 #tutorialSpotlight {
@@ -493,6 +521,31 @@ button:focus-visible {
   border: none;
   cursor: pointer;
   z-index: 1001;
+}
+
+#tutorialSkip {
+  position: absolute;
+  margin: 0;
+  left: 0;
+  bottom: 1%;
+  width: 23vw;
+  height: 12vh;
+  /* Si tienes un icono “skip.png”, úsalo; si no, usa un fondo sólido y texto */
+  background: url('/public/omitir.png') no-repeat center/contain;
+  /* Si no usas imagen, descomenta estas dos líneas y ajusta colores: */
+  /* background: rgba(255,255,255,0.1);
+  color: #fff;
+  */
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  z-index: 1001;
+}
+
+/* Opcional: al pasar el ratón un ligero efecto */
+#tutorialSkip:hover,
+#tutorialNext:hover {
+  opacity: 0.8;
 }
 
 .tutorial-icon {
