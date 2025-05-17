@@ -4,71 +4,55 @@ import { readText } from './speak';
 
 let url = 'http://192.168.1.11:41343/v1/chat/completions';
 
-// Variable para almacenar el historial de mensajes
+// Copia del historial inicial
 let messageHistory = [...initialMessageHistory];
 
-// Funciones principales para enviar y recibir mensajes
 export async function sendMensajeIANormal(): Promise<void> {
-    //   const message = (document.getElementById('messageInput') as HTMLInputElement)?.value || '';
-    const message = (document.getElementById('transcript') as HTMLTextAreaElement)?.value || '';
-    (window as any).PlaAnim(3, {
-            fadeDuration: 0.5,
-            loop: Infinity,
-            onFinished: () => alert("¡Animación terminada!"),
-        });
-    try {
-        // Actualizar el historial de mensajes con el nuevo mensaje del usuario
-        messageHistory.push({ role: 'user', content: message });
+  const labelDiv = document.getElementById('messageLabel') as HTMLDivElement;
+  // Encontrar el <p> interno y extraer su texto
+  const userP = labelDiv.querySelector('p');
+  const userText = userP?.textContent?.trim() ?? '';
 
-        // Enviar el mensaje usando POST
-        const response = await fetch(url, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                model: 'deepseek-r1-distill-qwen-7b', // Ajusta el modelo según sea necesario
-                messages: messageHistory,
-                temperature: 0.7,
-                max_tokens: -1,
-                stream: false
-            }),
-        });
+  try {
+    // 1) Añadir el mensaje del usuario
+    messageHistory.push({ role: 'user', content: userText });
 
-        if (!response.ok) {
-            throw new Error(`Error al enviar el mensaje: ${response.statusText}`);
-        }
-
-        // Obtener la respuesta
-        const receivedMessage = await processResponse(response);
-
-        // Actualizar el historial de mensajes con la respuesta de la IA
-        messageHistory.push({ role: 'assistant', content: receivedMessage });
-
-        // Muestra la respuesta en la etiqueta P
-        const labelElement = document.getElementById('messageLabel');
-        if (labelElement) {
-            labelElement.textContent = receivedMessage;
-            readText(receivedMessage);
-        }
-    } catch (error) {
-        console.error('Error:', error);
-    } finally {
-        // Ocultar el loader
-
+    // 2) Enviar petición
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'deepseek-r1-distill-qwen-7b',
+        messages: messageHistory,
+        temperature: 0.7,
+        max_tokens: -1,
+        stream: false
+      }),
+    });
+    if (!response.ok) {
+      throw new Error(`Error al enviar el mensaje: ${response.statusText}`);
     }
+
+    // 3) Procesar respuesta
+    const receivedMessage = await processResponse(response);
+    messageHistory.push({ role: 'assistant', content: receivedMessage });
+
+    // 4) Mostrar respuesta como <p class="assistant">
+    labelDiv.innerHTML = `<p class="assistant">${receivedMessage}</p>`;
+    readText(receivedMessage);
+  } catch (error) {
+    console.error('Error:', error);
+  }
 }
 
-// Función para procesar la respuesta del servidor
 async function processResponse(response: Response): Promise<string> {
-    const lmStudioReceived = await response.json();
+  const lmStudioReceived = await response.json();
+  let content = lmStudioReceived.choices[0].message.content || "Respuesta no válida";
 
-    // Aquí puedes implementar el procesamiento específico de la respuesta
-    let content = lmStudioReceived.choices[0].message.content || "Respuesta no válida";
+  // Limpia etiquetas <think> y HTML
+  content = content
+    .replace(/<think>[\s\S]*?<\/think>/g, '')
+    .replace(/<[^>]*>/g, '');
 
-    // Eliminar etiquetas <think> y su contenido
-    content = content.replace(/<think>[\s\S]*?<\/think>/g, '');
-
-    // Eliminar cualquier otra etiqueta HTML no deseada
-    content = content.replace(/<[^>]*>/g, '');
-
-    return content;
+  return content;
 }

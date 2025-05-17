@@ -32,13 +32,27 @@ body {
   width: 100vw;
 }
 
+.logo{
+  width: 100vw;
+  position: absolute;
+  top: 2vh;
+  height: 3vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.logo img{
+  width: 25%;
+  height: 100%;
+}
+
 section {
   margin: 0;
   display: flex;
   align-items: center;
   min-width: 320px;
   min-height: 100vh;
-  max-width: 1200px;
+  /* max-width: 1200px; */
 }
 
 section.row {
@@ -58,29 +72,16 @@ section.column {
 .transcription {
   display: none;
   width: 100vw;
-  height: 35vh;
-  /* background-color: white; */
-
-  background: rgba(0, 0, 0, 0.85);
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-  backdrop-filter: blur(8.5px);
-  -webkit-backdrop-filter: blur(8.5px);
-  border-top-left-radius: 30px;
-  border-top-right-radius: 30px;
-  border-bottom-left-radius: 0px;
-  border-bottom-right-radius: 0px;
-
-  /* display: flex; */
   flex-direction: column;
   align-items: center;
-  justify-content: end;
+  justify-content: center;
   flex-direction: column;
   /* gap: 1lh; */
 
   position: relative;
 }
 
-.microfono {
+/* .microfono {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -98,23 +99,127 @@ section.column {
 .microfono img{
   width: 60px;
   height: auto;
+} */
+
+.cajaT{
+  margin-bottom: 25%;
+  display: flex;
+  flex-direction: column;
+  width: 80vw;
+  height: 25vh;
+  border: 1px solid #4C005E;
+  background: rgba(217, 217, 217, 0.60);
+  backdrop-filter: blur(24px);
+  border-radius: 5vw;
+  -webkit-backdrop-filter: blur(8.5px);
 }
 
 .Text{
-  margin-bottom: 1lh;
-  width: 80vw;
-  height: 13vh;
-  background: rgba(0, 0, 0, 0.1);
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-  backdrop-filter: blur(8.5px);
-  -webkit-backdrop-filter: blur(8.5px);
-  border-radius: 30px;
+  width: 80%;
+  height: 75%;
+  border-radius: 5vw;
+  padding: 5%;
+}
+
+#messageLabel p.final {
+  margin: 0;
+  padding: 1rem;
+  font-size: calc(.9em + 2vw);
+  color: #636363;
+}
+
+/* Y, si vas a usar estado interino, añade también: */
+#messageLabel p.interim {
+  margin: 0;
+  padding: 1rem;
+  font-size: calc(.9em + 2vw);
+  color: #999;        /* o el estilo que quieras */
+  font-style: italic;
 }
 
 .text {
   padding: 2rem 2rem;
   font-size: 1.2em;
   color: #fff;
+}
+
+.botones {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 2rem;
+  height: 25%;
+}
+
+/* Wrapper para el ícono de expandir */
+.expandWrapper {
+  position: relative;    /* ahora el expandMenu será relativo a aquí */
+  display: inline-block;
+}
+
+/* Iconos todos al mismo tamaño */
+#micIcon{
+  width: 11vw;
+  height: 11vh;
+  object-fit: contain;
+  cursor: pointer;
+  transition: transform 0.4s ease, opacity 0.4s ease;
+}
+
+#expandIcon {
+  width: 6vw;
+  height: 6vh;
+  object-fit: contain;
+  cursor: pointer;
+  transition: transform 0.4s ease, opacity 0.4s ease;
+}
+
+#sendBtn,
+#clearBtn {
+  width: 5vw;
+  height: 5vh;
+  object-fit: contain;
+  cursor: pointer;
+  transition: transform 0.4s ease, opacity 0.4s ease;
+}
+
+
+/* Rotación del + a × */
+#expandIcon.rotated {
+  transform: rotate(45deg);
+}
+
+/* Menú flotante posicionado respecto al wrapper */
+.expandMenu {
+  position: absolute;
+  bottom: calc(100% + 8px);  /* justo encima del expandIcon, con gap */
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+  z-index: 100;
+}
+
+.expandMenu.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Opcional: estilo para los íconos */
+.botones .img1 {
+  height: 100%;
+  width: auto;
+  cursor: pointer;
+}
+
+.botones .img2 {
+  height: 60%;
+  width: auto;
+  cursor: pointer;
 }
 
 textarea {
@@ -197,6 +302,21 @@ button:focus-visible {
   height: 100px;
 } */
 
+#micOverlay {
+  display: none;                /* oculto por defecto */
+  position: absolute;
+  width: 11vw;                 /* mismo tamaño que tu .microfono img */
+  top: 50%;       /* ajusta según corresponda */
+  left: 10%;
+  cursor: pointer;
+  z-index: 20;                  /* por encima del slider */
+}
+
+/* Mantenemos oculta la transcripción entera */
+#Transcripcion{
+  display: none;
+}
+
 #Razonamiento {
   word-wrap: break-word;
   overflow-wrap: break-word;
@@ -213,24 +333,22 @@ button:focus-visible {
 
 #slider-background {
   width: 100vw;
-  height: 25lh;
   background: #000000;
   background: linear-gradient(0deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%);
 
   display: flex;
-  justify-content: center;
+  justify-content: end;
   align-items: center;
 
 }
 
 .sliderBody {
-  width: 70vw;
-  height: 8lh;
-  border-radius: 4lh;
+  width: 60vw;
+  height: 5vh;
+  border-radius: 20vw;
   border-color: #4C005E;
   border-width: 4px;
   border-style: solid;
-
   background: linear-gradient(0deg, rgba(77, 0, 94, 0.3) 0%, rgba(0, 0, 0, 0) 100%);
   box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
   backdrop-filter: blur(8.5px);
@@ -240,42 +358,44 @@ button:focus-visible {
   justify-content: end;
   align-items: center;
   flex-direction: row;
-  gap: 1lh;
-
   padding: 0 1.5lh;
-
+  z-index: 10;
+  margin-bottom: 20vh;
 }
 
 .sliderCiruclo {
-  width: 6lh;
-  height: 6lh;
-  background: #4C005E;
-  border-radius: 3.5lh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-  margin-left: 1lh;
+  width: 7vw;
+    height: 4vh;
+    background: #4C005E;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    margin-left: 1lh;
 }
 
 .sliderImagen {
-  width: 3lh;
+  width: 10%;
 }
 
 .sliderCirculoImagen {
-  width: 1.2lh;
+  height: 60%;
+  transition: opacity 0.3s ease;
 }
 
 .sliderTexto {
-  font-size: 1.8lh;
-  color: #fff;
-  text-align: center;
-  font-weight: bold;
+    margin-left: 10%;
+    font-size: calc(.9em + 3vw);
+    transition: opacity 0.3s ease;
+    color: #fff;
+    text-align: center;
+    font-weight: bold;
+    width: 100%;
 }
 
 .sliderTrack {
   width: 95%;
-  height: 8lh;
   position: absolute;
   display: flex;
   align-items: center;
@@ -300,18 +420,6 @@ button:focus-visible {
     flex-direction: column;
     /* Cambiar a columna */
     justify-content: end;
-    min-height: 100vh;
-  }
-
-  .botones {
-    display: flex;
-    flex-direction: row;
-    /* Cambiar a columna */
-    align-items: center;
-    justify-content: center;
-
-    position: absolute;
-    bottom: 0;
   }
 
   .botones button {
@@ -324,10 +432,71 @@ button:focus-visible {
     /* Botones ocupan todo el ancho */
   }
 
-  section {
-    min-width: 320px;
-    min-height: auto;
-    max-width: 1200px;
-  }
+}
 
+/* ===== Tutorial Overlay ===== */
+#tutorialOverlay {
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background: #110C2BE5;
+  display: none;
+  z-index: 1000;
+}
+
+/* Texto superior, solo letra blanca */
+#tutorialText {
+  position: absolute;
+  top: 10%;
+  width: 70%;
+  margin-left: 15%;
+  text-align: center;
+  font-size: calc(.9em + 2vw);
+  color: #fff;
+  pointer-events: none;
+}
+#tutorialIcons {
+  position: absolute;
+  top: calc(10% + 2rem); /* por ejemplo 2rem debajo del texto */
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  z-index: 2001;
+}
+
+/* Estilo genérico para los iconos del tutorial */
+#tutorialIcons img {
+  width: 48px; /* ajústalo a tu tamaño */
+  height: 48px;
+  object-fit: contain;
+}
+
+
+/* Spotlight icon */
+#tutorialSpotlight {
+  display: block;
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  pointer-events: none;
+  z-index: 2001;
+}
+
+/* Botón Next en esquina inferior derecha */
+#tutorialNext {
+  position: absolute;
+  right: 5%;
+  bottom: 5%;
+  width: 7vw; 
+  height: 4vh;
+  background: url('/public/next.png') no-repeat center/contain;
+  border: none;
+  cursor: pointer;
+  z-index: 1001;
+}
+
+.tutorial-icon {
+  position: absolute;
+  z-index: 2000;
+  display: none;
 }

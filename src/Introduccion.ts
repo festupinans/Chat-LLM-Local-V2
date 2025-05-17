@@ -1,15 +1,15 @@
 import { readText } from './speak';
 import { sendMensajeIANormal } from './peticiones_False-Stream';
-// import { sendMensajeNormal } from './peticiones_True-Stream';
 
 let initialPhase = true;
 let subPhase = 0;
 const collected: { name?: string; email?: string; empresa?: string } = {};
-const transcriptTA = document.getElementById('transcript') as HTMLTextAreaElement;
-const messageLabel = document.getElementById('messageLabel')!;
+
+// Apuntamos al div que contendrá siempre un <p>
+const transcriptTA = document.getElementById('transcript')  as HTMLTextAreaElement;
+const messageLabel = document.getElementById('messageLabel') as HTMLDivElement;
 
 document.addEventListener('DOMContentLoaded', () => {
-  
   document.addEventListener('keydown', e => {
     if (e.key.toLowerCase() === 'k' && !e.repeat) {
       e.preventDefault();
@@ -18,16 +18,43 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
+const senBtn       = document.getElementById('sendBtn')  as HTMLButtonElement;
+const clearBtn     = document.getElementById('clearBtn') as HTMLButtonElement;
+
+document.addEventListener('DOMContentLoaded', () => {
+  resetAll();
+
+  senBtn.addEventListener('click', () => {
+    sendMensajeIA();
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key.toLowerCase() === 'k' && !e.repeat) {
+      e.preventDefault();
+      sendMensajeIA();
+    }
+  });
+});
+
+function resetAll() {
+  initialPhase = true;
+  subPhase     = 0;
+  clearMessageLabel();
+}
+
+
 export async function sendMensajeIA(): Promise<void> {
   console.log("Enviado mensaje Nuevo");
 
-  const text = transcriptTA.value.trim();
-//   await sendMensajeIANormal();
+  // 1) Leer el texto actual del <p> dentro de messageLabel
+  const p = messageLabel.querySelector('p');
+  const text = p?.textContent?.trim() ?? '';
 
-//   await sendMensajeNormal();
+  // 2) Mostrar inmediatamente lo que dictaste (si quieres sobreescribirlo)
+  //    Si prefieres no sobreescribir aquí, comenta esta línea:
+  // messageLabel.innerHTML = `<p class="userInput">${text || '[Sin texto]'}</p>`;
 
   if (initialPhase) {
-    // Guarda según subPhase y avanza
+    // Fase de recogida de datos
     if (subPhase === 0) {
       if (!text) {
         readText('No capturé nada. Intenta de nuevo.');
@@ -54,33 +81,35 @@ export async function sendMensajeIA(): Promise<void> {
         return;
       }
       collected.empresa = text;
-      // Formatea el JSON de una vez y envía
+
+      // Mostrar JSON en el mismo div
       const datos = {
         name: collected.name!,
         email: collected.email!,
         empresa: collected.empresa!
       };
-      console.log(datos);
-      messageLabel.textContent = JSON.stringify(datos);
+      messageLabel.innerHTML = `<p class="collectedData">${JSON.stringify(datos, null, 2)}</p>`;
+
       await fetch('http://localhost:3000/api/robot', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(datos)
       });
+
       readText('¡Perfecto! Ahora puedes preguntarme lo que desees.');
       initialPhase = false;
-      transcriptTA.value = '';
-      messageLabel.textContent = '';
+      // Preparamos para la siguiente entrada
+      clearMessageLabel();
       return;
     }
   } else {
+    // Post‑fase: mandamos a la IA normal
     await sendMensajeIANormal();
   }
 }
 
-// Avanza la fase inicial preguntando uno a uno
 function askNext() {
-  transcriptTA.value = '';                
+  clearMessageLabel();
   switch (subPhase) {
     case 0:
       readText('Por favor dime tu nombre.');
@@ -94,9 +123,14 @@ function askNext() {
   }
 }
 
+function clearMessageLabel() {
+  // Borramos cualquier <p> anterior y dejamos listo para nuevo texto
+  messageLabel.innerHTML = `<p class="userInput"></p>`;
+}
+
 export function presentIntroduction() {
-  readText('¡Hola! Soy NewRoman, tu asistente virtual. Estoy aquí para ayudarte. Antes de comenzar, necesito que me proporciones algunos datos. Empecemos.');
+  readText('A continuación, necesito que me proporciones algunos datos.');
   setTimeout(() => {
     askNext();
-  }, 3000); // Da tiempo para escuchar la introducción
+  }, 3000);
 }

@@ -1,68 +1,71 @@
-let recognition = null;
-let transcriptText = '';
-let isRecognizing = false; // Bandera para evitar múltiples inicios
+let recognition     = null;
+let transcriptText  = '';
+let isRecognizing  = false;
 
-// Función para iniciar el reconocimiento
+// Inicio de reconocimiento
 function startRecognition() {
-    if (isRecognizing) return; // Evitar múltiples inicios
-    isRecognizing = true;
+  if (isRecognizing) return;
+  isRecognizing = true;
 
-    recognition = new webkitSpeechRecognition() || new SpeechRecognition();
-    recognition.lang = 'es-ES'; // Configura el idioma
-    recognition.continuous = true; // Permite la transcripción continua
-    recognition.interimResults = true; // Muestra resultados intermedios
+  // Inicializa el API
+  recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+  recognition.lang = 'es-ES';
+  recognition.continuous = true;
+  recognition.interimResults = true;
 
-    // Reiniciar el texto de la transcripción
-    transcriptText = '';
-    document.getElementById('transcript').value = '';
+  transcriptText = '';
+  document.getElementById('messageLabel').textContent = '';
 
-    recognition.onresult = event => {
-        for (let i = event.resultIndex; i < event.results.length; ++i) {
-            if (event.results[i].isFinal) {
-                transcriptText += event.results[i][0].transcript;
-                document.getElementById('transcript').innerText = transcriptText;
-            } else {
-                document.getElementById('transcript').innerText = event.results[i][0].transcript;
-            }
-        }
-    };
+  recognition.onresult = event => {
+    for (let i = event.resultIndex; i < event.results.length; ++i) {
+      const texto = event.results[i][0].transcript;
+      if (event.results[i].isFinal) {
+        transcriptText += texto;
+      }
+      const label = document.getElementById('messageLabel');
+// Limpias hijos
+label.innerHTML = ''; 
+// Creas un párrafo interim
+const p = document.createElement('p');
+p.className = event.results[i].isFinal ? 'final' : 'interim';
+p.textContent = event.results[i].isFinal
+                ? transcriptText
+                : texto;
+label.appendChild(p);
+    }
+  };
 
-    recognition.onerror = event => {
-        console.error('Error:', event);
-    };
+  recognition.onerror = e => console.error('Speech error', e);
+  recognition.onend   = () => {
+    isRecognizing = false;
+    // Aquí podrías llamar a sendMensajeIA() si quieres auto‑enviar
+    console.log('Reconocimiento finalizado:', transcriptText);
+  };
 
-    recognition.onstart = () => {
-        console.log('Reconocimiento iniciado');
-    };
-
-    recognition.onend = () => {
-        console.log('Reconocimiento finalizado');
-        document.getElementById('transcript').value = transcriptText;
-        isRecognizing = false;
-    };
-
-    recognition.start();
+  recognition.start();
 }
 
-// Función para detener el reconocimiento
+// Detener reconocimiento
 function stopRecognition() {
-    if (recognition) {
-        recognition.stop();
-        recognition = null;
-        isRecognizing = false;
-    }
+  if (!recognition) return;
+  recognition.stop();
+  recognition = null;
+  // isRecognizing se pondrá a false en onend
 }
 
-// Detectar la tecla Espacio para iniciar y detener el reconocimiento
-document.addEventListener('keydown', event => {
-    if (event.code === 'Space' && !isRecognizing) {
-        startRecognition();
-    }
-});
+// Bindeo al icono
+const micIcon = document.getElementById('micIcon');
+micIcon.addEventListener('mousedown', startRecognition);
+micIcon.addEventListener('mouseup',   stopRecognition);
+micIcon.addEventListener('mouseleave', stopRecognition); // por si arrastras fuera
 
-document.addEventListener('keyup', event => {
-    if (event.code === 'Space' && isRecognizing) {
-        stopRecognition();
-        // sendMensajeIA()
-    }
-});
+// Para pantallas táctiles
+micIcon.addEventListener('touchstart', e => {
+  e.preventDefault();
+  startRecognition();
+}, { passive: false });
+
+micIcon.addEventListener('touchend', e => {
+  e.preventDefault();
+  stopRecognition();
+}, { passive: false });

@@ -10,27 +10,11 @@
 
 <body>
   <div class="three" id="app"></div>
-
+  <div class="logo">
+    <img src="public/logo.png">
+  </div>
 
   <section class="column" id="slider-background">
-
-    <!-- <div class="row" id="Transcripcion" style="display: none;">
-      <div class="transcription">
-        
-        <div class="botones">
-          Que pasa
-          <button id="senBtn" disabled onclick="disableButton(), sendMensajeIA()">Enviar</button>
-          <button id="clearBtn" disabled onclick="disableButton(), borrarTextArea()">Borrar</button>
-        </div>
-        <textarea id="transcript" readonly>Transcripción</textarea>
-      </div>
-      <div class="salidatexto">
-        <div id="messageLabel">Respuesta</div>
-      </div>
-    </div> -->
-
-      <!-- <div class="transcription">
-      </div> -->
 
     <div class="sliderBody" id="sliderBody">
       <div class="sliderTrack" id="sliderTrack">
@@ -42,45 +26,77 @@
       <img src="/public/flechas.webp" alt="" class="sliderImagen" />
     </div>
   </section>
-
+<img src="micro.png" alt="Micrófono" id="micOverlay">
   <section class="transcription" id="Transcripcion">
-    <div class="microfono">
+    <!-- <div class="microfono">
       <img src="/public/Microfono.png" alt="">
-    </div>
-    <div class="Text Transcrito" id="transcript">
+    </div> -->
+    <!-- <div class="Text Transcrito" id="transcript"> -->
       <!-- <button id="senBtn"></button> -->
-    </div>
-    <div class="Text Respuesta" id="messageLabel">
+    <!-- </div> -->
+     <div class="cajaT">
+  <div class="Text Respuesta" id="messageLabel"></div>
+  <div class="botones">
+    <img src="micro.png"   id="micIcon"    alt="Micrófono">
 
+    <!-- WRAPPER que contendrá el ícono y el menú -->
+    <div class="expandWrapper">
+      <img src="expandir.png" id="expandIcon" alt="Expandir">
+      <div class="expandMenu" id="expandMenu">
+        <img src="enviar.png" id="sendBtn"  alt="Enviar">
+        <img src="borrar.png" id="clearBtn" alt="Borrar">
+      </div>
     </div>
-    <button id="senBtn">btn</button>
+
+  </div>
+</div>
   </section>
 
+  <div id="tutorialOverlay">
+  <div id="tutorialText"></div>
+  <div id="tutorialIcons">
+  </div>
+  <button id="tutorialNext"></button>
+</div>
+
   <script>
+  let btn;
+  let btn2;
 
-    let btn;
-    let btn2;
-    document.addEventListener('DOMContentLoaded', () => {
+  document.addEventListener('DOMContentLoaded', () => {
+    const expandIcon = document.getElementById('expandIcon');
+    const expandMenu = document.getElementById('expandMenu');
+    let menuOpen = false;
 
-      btn = document.getElementById('senBtn');
-      btn2 = document.getElementById('clearBtn');
-      // btn.disabled = false;  
+    expandIcon.addEventListener('click', () => {
+      expandIcon.style.opacity = '0';
+      setTimeout(() => {
+        expandIcon.src = menuOpen ? 'expandir.png' : 'cerrar.png';
+        menuOpen = !menuOpen;
+        expandMenu.classList.toggle('open', menuOpen);
+        expandIcon.style.opacity = '1';
+      }, 400);
     });
-    function disableButton() {
-      btn.disabled = true;
-      btn2.disabled = true;
-    }
 
-    function borrarTextArea() {
-      const div = document.getElementById('transcript');
-      if (div) {
-        div.value = '';
-      }
+    // Aquí agregamos el listener directamente al botón clearBtn
+    const clearBtn = document.getElementById('clearBtn');
+    if (clearBtn) {
+      clearBtn.addEventListener('click', borrarTextArea);
     }
-  </script>
+  });
+
+  function borrarTextArea() {
+    const transcript = document.getElementById('transcript');
+    const messageLabel = document.getElementById('messageLabel');
+    
+    if (transcript) transcript.value = '';
+    if (messageLabel) messageLabel.innerHTML = '';
+  }
+</script>
 
   <script type="module" src="/src/main.js"></script>
   <script type="module" src="/src/peticiones_False-Stream.ts"></script>
+  <!-- <script type="module" src="/src/peticiones_True-Stream.ts"></script> -->
   <script src="/src/recorder.js"></script>
   <script type="module" src="/src/SliderDrag.js"></script>
   <script type="module" src="/src/ThreeJS/AnimController.js"></script>
