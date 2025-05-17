@@ -66,3 +66,24 @@ document.addEventListener('keyup', event => {
         // sendMensajeIA()
     }
 });
+
+const micButton = document.getElementById('Microfono');
+if (micButton) {
+    // Mouse
+    micButton.addEventListener('mousedown', () => {
+        if (!isRecognizing) startRecognition();
+    });
+    micButton.addEventListener('mouseup', () => {
+        if (isRecognizing) stopRecognition();
+    });
+
+    // Pantallas táctiles
+    micButton.addEventListener('touchstart', (e) => {
+        e.preventDefault(); // Evita el doble disparo en algunos navegadores
+        if (!isRecognizing) startRecognition();
+    });
+    micButton.addEventListener('touchend', (e) => {
+        e.preventDefault();
+        if (isRecognizing) stopRecognition();
+    });
+}

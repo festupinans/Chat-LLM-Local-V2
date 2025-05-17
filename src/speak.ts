@@ -58,8 +58,8 @@ export function readText(
     utterance.onerror = (event) => {
         console.error('Error durante la síntesis de voz:', event.error);
 
-        const valor = Math.floor(Math.random() * 2) + 1;
-        (window as any).PlaAnim(valor, {
+        // const valor = Math.floor(Math.random() * 2) + 1;
+        (window as any).PlaAnim(1, {
             fadeDuration: 0.5,
             loop: Infinity,
             onFinished: () => alert("¡Animación terminada!"),

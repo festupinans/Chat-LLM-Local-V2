@@ -2,7 +2,7 @@
 import { messageHistory as initialMessageHistory } from './Parametros';
 import { readText } from './speak';
 
-let url = 'http://192.168.1.11:41343/v1/chat/completions';
+let url = 'http://172.20.10.4:41343/v1/chat/completions';
 
 // Variable para almacenar el historial de mensajes
 let messageHistory = [...initialMessageHistory];
@@ -10,7 +10,7 @@ let messageHistory = [...initialMessageHistory];
 // Funciones principales para enviar y recibir mensajes
 export async function sendMensajeIANormal(): Promise<void> {
     //   const message = (document.getElementById('messageInput') as HTMLInputElement)?.value || '';
-    const message = (document.getElementById('transcript') as HTMLTextAreaElement)?.value || '';
+    const message = document.getElementById('messageLabel') as HTMLDivElement | null;
     (window as any).PlaAnim(3, {
             fadeDuration: 0.5,
             loop: Infinity,
@@ -18,7 +18,7 @@ export async function sendMensajeIANormal(): Promise<void> {
         });
     try {
         // Actualizar el historial de mensajes con el nuevo mensaje del usuario
-        messageHistory.push({ role: 'user', content: message });
+        messageHistory.push({ role: 'user', content: message?.innerText ?? ""});
 
         // Enviar el mensaje usando POST
         const response = await fetch(url, {
@@ -44,9 +44,9 @@ export async function sendMensajeIANormal(): Promise<void> {
         messageHistory.push({ role: 'assistant', content: receivedMessage });
 
         // Muestra la respuesta en la etiqueta P
-        const labelElement = document.getElementById('messageLabel');
-        if (labelElement) {
-            labelElement.textContent = receivedMessage;
+        // const labelElement = document.getElementById('messageLabel');
+        if (message) {
+            message.innerText = receivedMessage;
             readText(receivedMessage);
         }
     } catch (error) {

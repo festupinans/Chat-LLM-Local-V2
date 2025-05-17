@@ -12,7 +12,7 @@ import { NombresAnimaciones } from "./Scene";
 function PlaAnim(i, options = {}) {
   const { fadeDuration = 0.3, loop = Infinity, onFinished = null } = options;
 
-  console.log(NombresAnimaciones[i]._clip.name);
+  // console.log(NombresAnimaciones[i]._clip.name);
   if (!NombresAnimaciones[i]) {
     console.warn("Animación no encontrada:", i);
     return;
