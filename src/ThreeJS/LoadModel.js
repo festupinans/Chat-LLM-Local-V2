@@ -1,3 +1,4 @@
+import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { log } from 'three/tsl';
 
@@ -14,6 +15,14 @@ export function loadModel(path) {
     loader.load(
       path,
       (gltf) => {
+        // Cambia materiales y configura sombras
+        gltf.scene.traverse((child) => {
+          if (child.isMesh) {
+            // Configura sombras
+            child.castShadow = true;
+            child.receiveShadow = true;
+          }
+        });
         resolve({ scene: gltf.scene, animations: gltf.animations }); // Devuelve ambos
       },
       undefined,

@@ -2,7 +2,7 @@
 import { messageHistory as initialMessageHistory } from './Parametros';
 import { readText } from './speak';
 
-let url = 'http://192.168.1.11:41343/v1/chat/completions';
+let url = 'http://192.168.0.83:41343/v1/chat/completions';
 
 // Copia del historial inicial
 let messageHistory = [...initialMessageHistory];
@@ -56,3 +56,13 @@ async function processResponse(response: Response): Promise<string> {
 
   return content;
 }
+
+// Agregar el controlador de eventos al botón
+// document.addEventListener('DOMContentLoaded', () => {
+//     const button = document.getElementById('sendMessageButton');
+//     if (button) {
+//         button.addEventListener('click', sendMensajeIANormal);
+//     }
+// });
+
+// (window as any).sendMensajeIA = sendMensajeIANormal;
