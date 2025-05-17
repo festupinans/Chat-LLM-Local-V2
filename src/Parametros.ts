@@ -8,7 +8,7 @@ export let messageHistory: { role: string, content: string }[] = [
     { role: "system", content: "Puedes deducir información sencilla o de sentido común para enriquecer tus respuestas. Sé breve y directo, pero mantén un tono cálido y profesional." },
 
     { role: "user", content: "¿Dónde se encuentra ubicada Newrona?" },
-    { role: "assistant", content: "Estamos en Bogotá, Cra 15 #82-84." },
+    { role: "assistant", content: "Estamos en Bogotá, Calle 74a #22-31 oficina 311." },
 
     { role: "user", content: "¿Qué es Newrona?" },
     { role: "assistant", content: "Newrona es una empresa colombiana con 10 años de trayectoria en el mercado latinoamericano.Experta en el diseñando y desarrollando de experiencias interactivas, por medio de la apropiación de tecnologías inmersivas como Realidad Virtual, Realidad Aumentada, Metaverso, Maping, holografía e Inteligencia artificial." },

@@ -1,62 +1,87 @@
 import { presentIntroduction } from './Introduccion';
+import { startTutorial } from './tutorial';
 
-const thumb = document.getElementById("sliderCiruclo");
-const track = document.getElementById("sliderTrack");
+const thumb           = document.getElementById("sliderCiruclo");
+const track           = document.getElementById("sliderTrack");
+const body            = document.getElementById("slider-background");
+const transcripcion   = document.getElementById("Transcripcion");
+const micOverlay    = document.getElementById("micOverlay");
 
-const body = document.getElementById("slider-background");
-const transcripción = document.getElementById("Transcripcion");
+// Nuevos elementos para texto e ícono
+const sliderTexto     = document.querySelector('.sliderTexto');
+const sliderIconImg   = document.querySelector('#sliderCiruclo .sliderCirculoImagen');
+// Para centrar al vuelo
+const sliderBody      = document.querySelector('.sliderBody');
 
 let dragging = false;
+let done     = false;  // para disparar solo una vez
+
+// helper para await
+function delay(ms) {
+  return new Promise(res => setTimeout(res, ms));
+}
 
 const startDrag = (e) => {
   dragging = true;
-  e.preventDefault(); // Evita comportamientos predeterminados
+  e.preventDefault();
 };
 
 const stopDrag = () => {
   dragging = false;
 };
 
-const onDrag = (e) => {
+const onDrag = async (e) => {
   if (!dragging) return;
-
-  e.preventDefault(); // Evita que el movimiento afecte otros elementos
+  e.preventDefault();
 
   const rect = track.getBoundingClientRect();
   let x = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
 
-  // Limitar el movimiento dentro del track
   const offset = 100;
-  x = Math.max(offset, Math.min(x, rect.width - offset));
+  const maxX   = rect.width - offset;
+  x = Math.max(offset, Math.min(x, maxX));
+  if (x >= maxX && !done) {
+    done = true;
+    sliderBody.style.justifyContent = 'center';
+    sliderTexto.style.transition   = 'opacity 2s ease';
+    sliderIconImg.style.transition = 'opacity 2s ease';
+    sliderTexto.style.opacity      = '0';
+    sliderIconImg.style.opacity    = '0';
+    sliderTexto.textContent        = 'Hablemos';
+    sliderIconImg.src              = '/public/iniciar.png';
+    sliderTexto.style.opacity      = '1';
+    sliderIconImg.style.opacity    = '1';
+    await delay(1000);
+    thumb.style.left = `${maxX - thumb.offsetWidth/2}px`;
+    body.style.display         = "none";
+    startTutorial();
+    // micOverlay.style.display = 'block';
+    // // 3) Al hacer clic en el overlay, revelas la transcripción
+    // micOverlay.addEventListener('click', () => {
+    //   micOverlay.style.display = 'none';
+    //   transcripcion.style.display = 'flex';
+    // }, { once: true });
 
-  // Detectar si está al inicio o al final
-  if (x === offset) {
-    console.log("Thumb está al inicio del track");
-  } else if (x === rect.width - offset) {
-    console.log("Thumb está al final del track");
-    body.style.display = "none";
-    transcripción.style.display = "flex";
-    presentIntroduction();
-    // sendMensajeIA();
+    // presentIntroduction();
+    return;
   }
 
-  // Calcular el alpha del gradiente en función de la posición del thumb
-  let alpha = ((x - offset) / (rect.width - 2 * offset)).toFixed(2);
+  // --- FLUJO NORMAL mientras arrastras ---
+  let alpha = ((x - offset) / (rect.width - 2*offset)).toFixed(2);
   if (alpha >= 0.3) {
-    // Normalizar entre 0 y 1
-    body.style.background = `linear-gradient(0deg, rgba(77, 0, 94, ${alpha}) 0%, rgba(0, 0, 0, 0) 100%)`;
+    body.style.background =
+      `linear-gradient(0deg, rgba(77, 0, 94, ${alpha}) 0%, rgba(0, 0, 0, 0) 100%)`;
   }
 
-  // Mover el thumb
-  thumb.style.left = `${x - thumb.offsetWidth / 2}px`;
+  thumb.style.left = `${x - thumb.offsetWidth/2}px`;
 };
 
-// Eventos para mouse
+// Eventos ratón
 thumb.addEventListener("mousedown", startDrag);
-document.addEventListener("mouseup", stopDrag);
+document.addEventListener("mouseup",  stopDrag);
 document.addEventListener("mousemove", onDrag);
 
-// Eventos para dispositivos táctiles (configurando como no pasivos)
-thumb.addEventListener("touchstart", startDrag, { passive: false });
-document.addEventListener("touchend", stopDrag, { passive: false });
-document.addEventListener("touchmove", onDrag, { passive: false });
+// Eventos táctiles (no pasivos para permitir preventDefault)
+thumb.addEventListener("touchstart", startDrag,  { passive: false });
+document.addEventListener("touchend",   stopDrag,  { passive: false });
+document.addEventListener("touchmove",  onDrag,    { passive: false });
