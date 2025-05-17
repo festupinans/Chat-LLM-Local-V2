@@ -12,7 +12,7 @@ import { NombresAnimaciones } from "./Scene";
 
 let animacionActual = null; // Guarda el índice de la animación activa
 
-function PlaAnim(i, options = {}) {
+export function PlaAnim(i, options = {}) {
   const { fadeDuration = 0.3, loop = Infinity, onFinished = null } = options;
 
   // Validar índice y existencia de la animación

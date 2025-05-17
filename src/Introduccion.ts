@@ -132,5 +132,5 @@ export function presentIntroduction() {
   readText('A continuación, necesito que me proporciones algunos datos.');
   setTimeout(() => {
     askNext();
-  }, 3000);
+  }, 4000);
 }

@@ -2,7 +2,7 @@ import * as THREE from "three";
 import { loadModel } from "./LoadModel";
 import { createGUI } from "./dat";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
-
+import { PlaAnim } from "./AnimController";
 let habla = false; // Variable para controlar el estado de la animación
 let emissiveMaterial = null; // Referencia al material del modelo
 let animationFrameId = null; // ID del requestAnimationFrame
@@ -97,11 +97,11 @@ export function initScene() {
   scene.add(directionalLight);
 
   // // Crear GUI para la cámara
-  createGUI(camera.position, "Camera Position", {
-    x: { min: -10, max: 10, step: 0.1 },
-    y: { min: -10, max: 10, step: 0.1 },
-    z: { min: 0, max: 20, step: 0.1 },
-  });
+  // createGUI(camera.position, "Camera Position", {
+  //   x: { min: -10, max: 10, step: 0.1 },
+  //   y: { min: -10, max: 10, step: 0.1 },
+  //   z: { min: 0, max: 20, step: 0.1 },
+  // });
   // createGUI(camera, "Camera Settings", {
   //   fov: { min: 10, max: 120, step: 1 },
   //   near: { min: 0.1, max: 10, step: 0.1 },
@@ -109,20 +109,20 @@ export function initScene() {
   // });
 
   // Crear GUI para la luz ambiental
-  createGUI(ambientLight, "Ambient Light", {
-    intensity: { min: 0, max: 30, step: 0.1 },
-  });
-  createGUI(ambientLight.color, "Ambient Light Color");
+  // createGUI(ambientLight, "Ambient Light", {
+  //   intensity: { min: 0, max: 30, step: 0.1 },
+  // });
+  // createGUI(ambientLight.color, "Ambient Light Color");
 
   // // Crear GUI para la luz direccional
-  createGUI(directionalLight.position, "Directional Light Position", {
-    x: { min: -20, max: 20, step: 0.1 },
-    y: { min: -20, max: 20, step: 0.1 },
-    z: { min: -20, max: 20, step: 0.1 },
-  });
-  createGUI(directionalLight, "Directional Light", {
-    intensity: { min: 0, max: 30, step: 0.1 },
-  });
+  // createGUI(directionalLight.position, "Directional Light Position", {
+  //   x: { min: -20, max: 20, step: 0.1 },
+  //   y: { min: -20, max: 20, step: 0.1 },
+  //   z: { min: -20, max: 20, step: 0.1 },
+  // });
+  // createGUI(directionalLight, "Directional Light", {
+  //   intensity: { min: 0, max: 30, step: 0.1 },
+  // });
   // createGUI(directionalLight.color, "Directional Light Color");
 
   // Suelo y paredes (4 planos formando una caja)
@@ -136,60 +136,60 @@ export function initScene() {
   floor.receiveShadow = true;
   scene.add(floor);
 
-  // Pared trasera
-  const wallBack = new THREE.Mesh(floorGeometry, wallMaterial.clone());
-  wallBack.position.z = -1;
-  wallBack.position.y = 10;
-  wallBack.receiveShadow = true;
-  wallBack.rotation.x = 0;
-  scene.add(wallBack);
+  // // Pared trasera
+  // const wallBack = new THREE.Mesh(floorGeometry, wallMaterial.clone());
+  // wallBack.position.z = -3;
+  // wallBack.position.y = 10;
+  // wallBack.receiveShadow = true;
+  // wallBack.rotation.x = 0;
+  // scene.add(wallBack);
 
-  // Pared izquierda
-  const wallLeft = new THREE.Mesh(floorGeometry, wallMaterial.clone());
-  wallLeft.position.x = -1;
-  wallLeft.position.y = 10;
-  wallLeft.rotation.y = Math.PI / 2;
-  wallLeft.receiveShadow = true;
-  scene.add(wallLeft);
+  // // Pared izquierda
+  // const wallLeft = new THREE.Mesh(floorGeometry, wallMaterial.clone());
+  // wallLeft.position.x = -1.5;
+  // wallLeft.position.y = 10;
+  // wallLeft.rotation.y = Math.PI / 2;
+  // wallLeft.receiveShadow = true;
+  // scene.add(wallLeft);
 
-  // Pared derecha
-  const wallRight = new THREE.Mesh(floorGeometry, wallMaterial.clone());
-  wallRight.position.x = 1;
-  wallRight.position.y = 10;
-  wallRight.rotation.y = -Math.PI / 2;
-  wallRight.receiveShadow = true;
-  scene.add(wallRight);
+  // // Pared derecha
+  // const wallRight = new THREE.Mesh(floorGeometry, wallMaterial.clone());
+  // wallRight.position.x = 1.5;
+  // wallRight.position.y = 10;
+  // wallRight.rotation.y = -Math.PI / 2;
+  // wallRight.receiveShadow = true;
+  // scene.add(wallRight);
 
   // GUI para mover cada plano
-  createGUI(floor.position, "Piso posición", {
-    x: { min: -20, max: 20, step: 0.1 },
-    y: { min: -5, max: 20, step: 0.1 },
-    z: { min: -20, max: 20, step: 0.1 },
-  });
-  createGUI(wallBack.position, "Pared Trasera posición", {
-    x: { min: -20, max: 20, step: 0.1 },
-    y: { min: -5, max: 20, step: 0.1 },
-    z: { min: -20, max: 20, step: 0.1 },
-  });
-  createGUI(wallLeft.position, "Pared Izquierda posición", {
-    x: { min: -20, max: 20, step: 0.1 },
-    y: { min: -5, max: 20, step: 0.1 },
-    z: { min: -20, max: 20, step: 0.1 },
-  });
-  createGUI(wallRight.position, "Pared Derecha posición", {
-    x: { min: -20, max: 20, step: 0.1 },
-    y: { min: -5, max: 20, step: 0.1 },
-    z: { min: -20, max: 20, step: 0.1 },
-  });
+  // createGUI(floor.position, "Piso posición", {
+  //   x: { min: -20, max: 20, step: 0.1 },
+  //   y: { min: -5, max: 20, step: 0.1 },
+  //   z: { min: -20, max: 20, step: 0.1 },
+  // });
+  // createGUI(wallBack.position, "Pared Trasera posición", {
+  //   x: { min: -20, max: 20, step: 0.1 },
+  //   y: { min: -5, max: 20, step: 0.1 },
+  //   z: { min: -20, max: 20, step: 0.1 },
+  // });
+  // createGUI(wallLeft.position, "Pared Izquierda posición", {
+  //   x: { min: -20, max: 20, step: 0.1 },
+  //   y: { min: -5, max: 20, step: 0.1 },
+  //   z: { min: -20, max: 20, step: 0.1 },
+  // });
+  // createGUI(wallRight.position, "Pared Derecha posición", {
+  //   x: { min: -20, max: 20, step: 0.1 },
+  //   y: { min: -5, max: 20, step: 0.1 },
+  //   z: { min: -20, max: 20, step: 0.1 },
+  // });
 
   // Cargar un modelo 3D
-  loadModel("/models/Animaciones.glb")
+  loadModel("/models/Animaciones1.glb")
     .then(({ scene: model, animations }) => {
       scene.add(model);
       // model.castShadow = true;
       // model.receiveShadow = true;
-      console.log("Modelo");
-      console.log(model);
+      // console.log("Modelo");
+      // console.log(model);
 
       
 

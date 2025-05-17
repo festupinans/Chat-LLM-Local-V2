@@ -2,7 +2,7 @@
 import { messageHistory as initialMessageHistory } from './Parametros';
 import { readText } from './speak';
 
-let url = 'http://192.168.0.83:41343/v1/chat/completions';
+let url = 'http://127.0.0.1:1234/v1/chat/completions';
 
 // Copia del historial inicial
 let messageHistory = [...initialMessageHistory];

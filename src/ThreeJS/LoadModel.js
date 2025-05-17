@@ -20,7 +20,7 @@ export function loadModel(path) {
           if (child.isMesh) {
             // Configura sombras
             child.castShadow = true;
-            child.receiveShadow = true;
+            // child.receiveShadow = true;
           }
         });
         resolve({ scene: gltf.scene, animations: gltf.animations }); // Devuelve ambos
