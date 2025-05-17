@@ -1,6 +1,7 @@
 import * as THREE from "three";
 import { loadModel } from "./LoadModel";
 import { createGUI } from "./dat";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 
 let habla = false; // Variable para controlar el estado de la animación
 let emissiveMaterial = null; // Referencia al material del modelo
@@ -11,10 +12,10 @@ export let NombresAnimaciones = [];
 function toggleAnimation(valor) {
   habla = valor; // Actualiza el estado de la animación
   if (habla) {
-    console.log("Animación activada");
+    // console.log("Animación activada");
     startEmissiveAnimation();
   } else {
-    console.log("Animación desactivada");
+    // console.log("Animación desactivada");
     stopEmissiveAnimation();
   }
 }
@@ -68,6 +69,13 @@ export function initScene() {
   // Creamos el renderizador
   const renderer = new THREE.WebGLRenderer({ antialias: true });
   renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.shadowMap.enabled = true;
+  renderer.shadowMap.type = THREE.PCFSoftShadowMap; // Opcional: sombras suaves
+
+  // OrbitControls (inicialmente desactivados)
+  // let controlsEnabled = true;
+  // const controls = new OrbitControls(camera, renderer.domElement);
+  // controls.enabled = controlsEnabled;
 
   // Agregamos el canvas al DOM
   const container = document.getElementById("app"); // Seleccionamos el contenedor en index.html
@@ -76,46 +84,115 @@ export function initScene() {
   }
 
   // Agregamos luces
-  const ambientLight = new THREE.AmbientLight(0xffffff, 5);
+  const ambientLight = new THREE.AmbientLight(0xffffff, 1);
   scene.add(ambientLight);
 
   const directionalLight = new THREE.DirectionalLight(0xffffff, 5);
   directionalLight.position.set(5, 10, 7.5);
+  directionalLight.castShadow = true;
+  directionalLight.shadow.mapSize.width = 2048; // Mejor calidad de sombra
+  directionalLight.shadow.mapSize.height = 2048;
+  // directionalLight.shadow.camera.near = 0.5;
+  // directionalLight.shadow.camera.far = 50;
   scene.add(directionalLight);
 
   // // Crear GUI para la cámara
-  // createGUI(camera.position, "Camera Position", {
-  //   x: { min: -10, max: 10, step: 0.1 },
-  //   y: { min: -10, max: 10, step: 0.1 },
-  //   z: { min: 0, max: 20, step: 0.1 },
-  // });
+  createGUI(camera.position, "Camera Position", {
+    x: { min: -10, max: 10, step: 0.1 },
+    y: { min: -10, max: 10, step: 0.1 },
+    z: { min: 0, max: 20, step: 0.1 },
+  });
   // createGUI(camera, "Camera Settings", {
   //   fov: { min: 10, max: 120, step: 1 },
   //   near: { min: 0.1, max: 10, step: 0.1 },
   //   far: { min: 100, max: 2000, step: 10 },
   // });
 
-  // // Crear GUI para la luz ambiental
-  // createGUI(ambientLight, "Ambient Light", {
-  //   intensity: { min: 0, max: 30, step: 0.1 },
-  // });
-  // createGUI(ambientLight.color, "Ambient Light Color");
+  // Crear GUI para la luz ambiental
+  createGUI(ambientLight, "Ambient Light", {
+    intensity: { min: 0, max: 30, step: 0.1 },
+  });
+  createGUI(ambientLight.color, "Ambient Light Color");
 
   // // Crear GUI para la luz direccional
-  // createGUI(directionalLight.position, "Directional Light Position", {
-  //   x: { min: -20, max: 20, step: 0.1 },
-  //   y: { min: -20, max: 20, step: 0.1 },
-  //   z: { min: -20, max: 20, step: 0.1 },
-  // });
-  // createGUI(directionalLight, "Directional Light", {
-  //   intensity: { min: 0, max: 30, step: 0.1 },
-  // });
+  createGUI(directionalLight.position, "Directional Light Position", {
+    x: { min: -20, max: 20, step: 0.1 },
+    y: { min: -20, max: 20, step: 0.1 },
+    z: { min: -20, max: 20, step: 0.1 },
+  });
+  createGUI(directionalLight, "Directional Light", {
+    intensity: { min: 0, max: 30, step: 0.1 },
+  });
   // createGUI(directionalLight.color, "Directional Light Color");
+
+  // Suelo y paredes (4 planos formando una caja)
+  const floorGeometry = new THREE.PlaneGeometry(20, 20);
+  const wallMaterial = new THREE.MeshStandardMaterial({ color: 0xeeeeee });
+
+  // Piso
+  const floor = new THREE.Mesh(floorGeometry, wallMaterial.clone());
+  floor.rotation.x = -Math.PI / 2;
+  floor.position.y = 0;
+  floor.receiveShadow = true;
+  scene.add(floor);
+
+  // Pared trasera
+  const wallBack = new THREE.Mesh(floorGeometry, wallMaterial.clone());
+  wallBack.position.z = -1;
+  wallBack.position.y = 10;
+  wallBack.receiveShadow = true;
+  wallBack.rotation.x = 0;
+  scene.add(wallBack);
+
+  // Pared izquierda
+  const wallLeft = new THREE.Mesh(floorGeometry, wallMaterial.clone());
+  wallLeft.position.x = -1;
+  wallLeft.position.y = 10;
+  wallLeft.rotation.y = Math.PI / 2;
+  wallLeft.receiveShadow = true;
+  scene.add(wallLeft);
+
+  // Pared derecha
+  const wallRight = new THREE.Mesh(floorGeometry, wallMaterial.clone());
+  wallRight.position.x = 1;
+  wallRight.position.y = 10;
+  wallRight.rotation.y = -Math.PI / 2;
+  wallRight.receiveShadow = true;
+  scene.add(wallRight);
+
+  // GUI para mover cada plano
+  createGUI(floor.position, "Piso posición", {
+    x: { min: -20, max: 20, step: 0.1 },
+    y: { min: -5, max: 20, step: 0.1 },
+    z: { min: -20, max: 20, step: 0.1 },
+  });
+  createGUI(wallBack.position, "Pared Trasera posición", {
+    x: { min: -20, max: 20, step: 0.1 },
+    y: { min: -5, max: 20, step: 0.1 },
+    z: { min: -20, max: 20, step: 0.1 },
+  });
+  createGUI(wallLeft.position, "Pared Izquierda posición", {
+    x: { min: -20, max: 20, step: 0.1 },
+    y: { min: -5, max: 20, step: 0.1 },
+    z: { min: -20, max: 20, step: 0.1 },
+  });
+  createGUI(wallRight.position, "Pared Derecha posición", {
+    x: { min: -20, max: 20, step: 0.1 },
+    y: { min: -5, max: 20, step: 0.1 },
+    z: { min: -20, max: 20, step: 0.1 },
+  });
 
   // Cargar un modelo 3D
   loadModel("/models/Animaciones.glb")
     .then(({ scene: model, animations }) => {
       scene.add(model);
+      // model.castShadow = true;
+      // model.receiveShadow = true;
+      console.log("Modelo");
+      console.log(model);
+
+      
+
 
       // Obtener el material emissive del modelo
       emissiveMaterial = model.children[0].children[2].material;
@@ -178,4 +255,14 @@ export function initScene() {
     renderer.render(scene, camera);
   }
   animate();
+  // loadModel("/models/Caja.glb").then(({ scene: model, animations }) => {
+  //   scene.add(model);
+    
+  //   const color = new THREE.Color().setRGB(1, 1, 1);
+  //   model.children[0].material.color = color;
+  //   console.log(model);
+  //   model.castShadow = true;
+  //   model.receiveShadow = true;
+  //   // console.log(model.children[0].material.color);
+  // });
 }
