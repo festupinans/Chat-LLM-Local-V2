@@ -32,7 +32,7 @@ body {
   width: 100vw;
 }
 
-.logo{
+.logo {
   width: 100vw;
   position: absolute;
   top: 2vh;
@@ -41,7 +41,8 @@ body {
   justify-content: center;
   align-items: center;
 }
-.logo img{
+
+.logo img {
   width: 25%;
   height: 100%;
 }
@@ -101,7 +102,7 @@ section.column {
   height: auto;
 } */
 
-.cajaT{
+.cajaT {
   margin-bottom: 25%;
   display: flex;
   flex-direction: column;
@@ -114,7 +115,7 @@ section.column {
   -webkit-backdrop-filter: blur(8.5px);
 }
 
-.Text{
+.Text {
   width: 80%;
   height: 75%;
   border-radius: 5vw;
@@ -133,7 +134,8 @@ section.column {
   margin: 0;
   padding: 1rem;
   font-size: calc(.9em + 2vw);
-  color: #999;        /* o el estilo que quieras */
+  color: #999;
+  /* o el estilo que quieras */
   font-style: italic;
 }
 
@@ -153,12 +155,13 @@ section.column {
 
 /* Wrapper para el ícono de expandir */
 .expandWrapper {
-  position: relative;    /* ahora el expandMenu será relativo a aquí */
+  position: relative;
+  /* ahora el expandMenu será relativo a aquí */
   display: inline-block;
 }
 
 /* Iconos todos al mismo tamaño */
-#micIcon{
+#micIcon {
   width: 8vw;
   height: 8vh;
   object-fit: contain;
@@ -192,7 +195,8 @@ section.column {
 /* Menú flotante posicionado respecto al wrapper */
 .expandMenu {
   position: absolute;
-  bottom: calc(100% + 8px);  /* justo encima del expandIcon, con gap */
+  bottom: calc(100% + 8px);
+  /* justo encima del expandIcon, con gap */
   left: 50%;
   transform: translateX(-50%);
   display: flex;
@@ -303,27 +307,34 @@ button:focus-visible {
 } */
 
 #micOverlay {
-  display: none;                /* oculto por defecto */
+  display: none;
+  /* oculto por defecto */
   position: absolute;
-  width: 8vw;                 /* mismo tamaño que tu .microfono img */
-  top: 50%;       /* ajusta según corresponda */
+  width: 8vw;
+  /* mismo tamaño que tu .microfono img */
+  top: 50%;
+  /* ajusta según corresponda */
   left: 10%;
   cursor: pointer;
-  z-index: 20;                  /* por encima del slider */
+  z-index: 20;
+  /* por encima del slider */
 }
 
 #new {
-  display: none;                /* oculto por defecto */
+  display: none;
+  /* oculto por defecto */
   position: absolute;
   width: 12vw;
-  bottom: 5%;       /* ajusta según corresponda */
+  bottom: 5%;
+  /* ajusta según corresponda */
   right: 5%;
   cursor: pointer;
-  z-index: 88;                  /* por encima del slider */
+  z-index: 88;
+  /* por encima del slider */
 }
 
 /* Mantenemos oculta la transcripción entera */
-#Transcripcion{
+#Transcripcion {
   display: none;
 }
 
@@ -352,6 +363,14 @@ button:focus-visible {
 
 }
 
+.assistant {
+  color: #000000;
+  text-shadow: 0 0 #6d3e78;
+  font-size: 25px;
+  max-height: 200px; 
+  overflow-y: auto;  
+}
+
 .sliderBody {
   width: 60vw;
   height: 5vh;
@@ -375,14 +394,14 @@ button:focus-visible {
 
 .sliderCiruclo {
   width: 7vw;
-    height: 4vh;
-    background: #4C005E;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    margin-left: 1lh;
+  height: 4vh;
+  background: #4C005E;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  margin-left: 1lh;
 }
 
 .sliderImagen {
@@ -395,13 +414,13 @@ button:focus-visible {
 }
 
 .sliderTexto {
-    margin-left: 10%;
-    font-size: calc(.9em + 3vw);
-    transition: opacity 0.3s ease;
-    color: #fff;
-    text-align: center;
-    font-weight: bold;
-    width: 100%;
+  margin-left: 10%;
+  font-size: calc(.9em + 3vw);
+  transition: opacity 0.3s ease;
+  color: #fff;
+  text-align: center;
+  font-weight: bold;
+  width: 100%;
 }
 
 .sliderTrack {
@@ -446,8 +465,10 @@ button:focus-visible {
 
 /* ===== Tutorial Overlay ===== */
 #tutorialOverlay {
-  top: 0; left: 0;
-  width: 100vw; height: 100vh;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
   background: #110C2BE5;
   display: none;
   z-index: 1000;
@@ -464,9 +485,11 @@ button:focus-visible {
   color: #fff;
   pointer-events: none;
 }
+
 #tutorialIcons {
   position: absolute;
-  top: calc(10% + 2rem); /* por ejemplo 2rem debajo del texto */
+  top: calc(10% + 2rem);
+  /* por ejemplo 2rem debajo del texto */
   width: 100%;
   display: flex;
   justify-content: center;
@@ -476,7 +499,8 @@ button:focus-visible {
 
 /* Estilo genérico para los iconos del tutorial */
 #tutorialIcons img {
-  width: 10vw; /* ajústalo a tu tamaño */
+  width: 10vw;
+  /* ajústalo a tu tamaño */
   height: 10vh;
   object-fit: contain;
 }
@@ -484,14 +508,17 @@ button:focus-visible {
 #tutorialText span.bold {
   font-weight: 700;
 }
+
 /* Cuando un icono está en la tutorial, lo agrandamos y no clicable */
 .tutorial-icon {
   position: absolute;
   display: block;
   z-index: 2000;
-  width: 8vw !important;   /* antes 48px */
+  width: 8vw !important;
+  /* antes 48px */
   height: 8vh !important;
-  pointer-events: none;     /* deshabilita clic mientras dure el tutorial */
+  pointer-events: none;
+  /* deshabilita clic mientras dure el tutorial */
 }
 
 /* Botón Siguiente deshabilitado */
@@ -515,7 +542,7 @@ button:focus-visible {
   position: absolute;
   right: 5%;
   bottom: 5%;
-  width: 7vw; 
+  width: 7vw;
   height: 4vh;
   background: url('/public/next.png') no-repeat center/contain;
   border: none;

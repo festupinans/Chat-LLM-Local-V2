@@ -1,8 +1,9 @@
 // import './style.css';
 import { messageHistory as initialMessageHistory } from './Parametros';
 import { readText } from './speak';
+import { marked } from 'marked';
 
-let url = 'http://127.0.0.1:1234/v1/chat/completions';
+let url = 'http://192.168.1.15:41343/v1/chat/completions';
 
 // Copia del historial inicial
 let messageHistory = [...initialMessageHistory];
@@ -38,8 +39,11 @@ export async function sendMensajeIANormal(): Promise<void> {
     messageHistory.push({ role: 'assistant', content: receivedMessage });
 
     // 4) Mostrar respuesta como <p class="assistant">
-    labelDiv.innerHTML = `<p class="assistant">${receivedMessage}</p>`;
-    readText(receivedMessage);
+    labelDiv.innerHTML = `<div class="assistant">${marked(receivedMessage)}</div>`;
+    let t = textoLimpioString(receivedMessage)
+    readText(t);
+    console.log(t);
+    
   } catch (error) {
     console.error('Error:', error);
   }
@@ -57,6 +61,12 @@ async function processResponse(response: Response): Promise<string> {
   return content;
 }
 
+function textoLimpioString(texto: string){
+  const textoLimpio = texto
+  .replace(/\*\*(.*?)\*\*/g, '$1')
+  .replace(/`(.*?)`/g, '$1');
+  return textoLimpio;
+}
 // Agregar el controlador de eventos al botón
 // document.addEventListener('DOMContentLoaded', () => {
 //     const button = document.getElementById('sendMessageButton');
