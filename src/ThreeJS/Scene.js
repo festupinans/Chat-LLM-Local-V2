@@ -101,6 +101,57 @@ export function initScene() {
   // directionalLight.shadow.camera.far = 50;
   scene.add(directionalLight);
 
+  // --- GUI para luces ---
+  const folderLights = gui.addFolder("Luces");
+
+  // Luz Ambiental
+  const folderAmbient = folderLights.addFolder("Luz Ambiental");
+  const ambientParams = {
+    color: ambientLight.color.getHex(),
+    intensity: ambientLight.intensity,
+  };
+  folderAmbient.addColor(ambientParams, "color").onChange((value) => {
+    ambientLight.color.setHex(Number(value));
+  });
+  folderAmbient
+    .add(ambientParams, "intensity", 0, 10, 0.01)
+    .onChange((value) => {
+      ambientLight.intensity = value;
+    });
+
+  // Luz Direccional
+  const folderDirectional = folderLights.addFolder("Luz Direccional");
+  const directionalParams = {
+    color: directionalLight.color.getHex(),
+    intensity: directionalLight.intensity,
+    x: directionalLight.position.x,
+    y: directionalLight.position.y,
+    z: directionalLight.position.z,
+  };
+  folderDirectional.addColor(directionalParams, "color").onChange((value) => {
+    directionalLight.color.setHex(Number(value));
+  });
+  folderDirectional
+    .add(directionalParams, "intensity", 0, 10, 0.01)
+    .onChange((value) => {
+      directionalLight.intensity = value;
+    });
+  folderDirectional
+    .add(directionalParams, "x", -20, 20, 0.1)
+    .onChange((value) => {
+      directionalLight.position.x = value;
+    });
+  folderDirectional
+    .add(directionalParams, "y", -20, 20, 0.1)
+    .onChange((value) => {
+      directionalLight.position.y = value;
+    });
+  folderDirectional
+    .add(directionalParams, "z", -20, 20, 0.1)
+    .onChange((value) => {
+      directionalLight.position.z = value;
+    });
+
   // --- Carpeta unificada para la cámara ---
   const folderCamera = gui.addFolder("Cámara");
 
