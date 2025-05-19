@@ -71,7 +71,7 @@ export function initScene() {
   camera.position.z = 3;
   camera.position.y = 1.5;
   camera.zoom = 0.2;
-  camera.fov = 18
+  camera.fov = 19
   camera.updateProjectionMatrix()
 
   // Creamos el renderizador
@@ -95,17 +95,121 @@ export function initScene() {
   const ambientLight = new THREE.AmbientLight(0xffffff, 3);
   scene.add(ambientLight);
 
-  const directionalLight = new THREE.DirectionalLight(0xffffff, 5);
+  const directionalLight = new THREE.DirectionalLight(0xffffff, 2);
   directionalLight.position.set(5, 10, 7.5);
-  directionalLight.castShadow = true;
-  directionalLight.shadow.mapSize.width = 2048; // Mejor calidad de sombra
-  directionalLight.shadow.mapSize.height = 2048;
+  directionalLight.castShadow = false;
+  directionalLight.shadow.mapSize.width = 20; // Mejor calidad de sombra
+  directionalLight.shadow.mapSize.height = 20;
+  // directionalLight.shadow.bias = -0.001; 
   // directionalLight.shadow.camera.near = 0.5;
   // directionalLight.shadow.camera.far = 50;
-  scene.add(directionalLight);
+  // scene.add(directionalLight);
+
+  // const spotLight = new THREE.SpotLight(0xffffff, 20);
+  // spotLight.position.set(2, 3, 3);
+  // spotLight.angle = Math.PI / 1.36;
+  // spotLight.penumbra = 0.2;
+  // spotLight.decay = 2;
+  // spotLight.distance = 100;
+  // spotLight.castShadow = true;
+  // spotLight.shadow.mapSize.width = 2048;
+  // spotLight.shadow.mapSize.height = 2048;
+
+  const punto = new THREE.PointLight( 0xffffff, 1, 100 )
+  punto.position.set(2,3,4)
+  punto.intensity = 60
+  // punto.power = 1800
+  punto.decay = 1.5
+  punto.castShadow = true
+  punto.shadow.mapSize.width = 2048;
+  punto.shadow.mapSize.height = 2048;
+  punto.shadow.camera.near = 1
+  punto.shadow.camera.far = 500
+  punto.shadow.camera.left = 500
+  punto.shadow.camera.right = 500
+  punto.shadow.camera.top = 500
+  punto.shadow.camera.bottom = 500
+  console.log(punto);
+  
+  scene.add(punto)
+  const lightTarget = new THREE.Object3D();
+  lightTarget.position.set(0, 3, 0);
+  scene.add(lightTarget);
+  // spotLight.target = lightTarget;
+
+  // scene.add(spotLight);
 
   // --- GUI para luces ---
   const folderLights = gui.addFolder("Luces");
+
+  // const folderSpot = folderLights.addFolder("SpotLight");
+
+  // const spotParams = {
+  //   color: spotLight.color.getHex(),
+  //   intensity: spotLight.intensity,
+  //   angle: spotLight.angle,
+  //   penumbra: spotLight.penumbra,
+  //   distance: spotLight.distance,
+  //   decay: spotLight.decay,
+  //   posX: spotLight.position.x,
+  //   posY: spotLight.position.y,
+  //   posZ: spotLight.position.z,
+  // };
+
+  // folderSpot.addColor(spotParams, "color").onChange((value) => {
+  //   spotLight.color.setHex(Number(value));
+  // });
+  // folderSpot.add(spotParams, "intensity", 0, 50, 0.01).onChange((value) => {
+  //   spotLight.intensity = value;
+  // });
+  // folderSpot.add(spotParams, "angle", 0, Math.PI / 2, 0.01).onChange((value) => {
+  //   spotLight.angle = value;
+  // });
+  // folderSpot.add(spotParams, "penumbra", 0, 1, 0.01).onChange((value) => {
+  //   spotLight.penumbra = value;
+  // });
+  // folderSpot.add(spotParams, "distance", 0, 200, 1).onChange((value) => {
+  //   spotLight.distance = value;
+  // });
+  // folderSpot.add(spotParams, "decay", 1, 5, 0.1).onChange((value) => {
+  //   spotLight.decay = value;
+  // });
+  // folderSpot.add(spotParams, "posX", -20, 20, 0.1).onChange((value) => {
+  //   spotLight.position.x = value;
+  // });
+  // folderSpot.add(spotParams, "posY", -20, 20, 0.1).onChange((value) => {
+  //   spotLight.position.y = value;
+  // });
+  // folderSpot.add(spotParams, "posZ", -20, 20, 0.1).onChange((value) => {
+  //   spotLight.position.z = value;
+  // });
+
+  const folderTarget = folderLights.addFolder("Target SpotLight");
+  const targetParams = {
+    x: lightTarget.position.x,
+    y: lightTarget.position.y,
+    z: lightTarget.position.z,
+  };
+
+  folderTarget.add(targetParams, "x", -20, 20, 0.1).onChange((value) => {
+    lightTarget.position.x = value;
+  });
+  folderTarget.add(targetParams, "y", -20, 20, 0.1).onChange((value) => {
+    lightTarget.position.y = value;
+  });
+  folderTarget.add(targetParams, "z", -20, 20, 0.1).onChange((value) => {
+    lightTarget.position.z = value;
+  });
+
+
+  // Ejes para ver la dirección de la luz
+  // const lightHelper = new THREE.SpotLightHelper(spotLight);
+  // scene.add(lightHelper);
+
+  // Ejes en el target
+  const targetAxesHelper = new THREE.AxesHelper(1);
+  lightTarget.add(targetAxesHelper);
+
 
   // Luz Ambiental
   const folderAmbient = folderLights.addFolder("Luz Ambiental");
@@ -123,37 +227,37 @@ export function initScene() {
     });
 
   // Luz Direccional
-  const folderDirectional = folderLights.addFolder("Luz Direccional");
-  const directionalParams = {
-    color: directionalLight.color.getHex(),
-    intensity: directionalLight.intensity,
-    x: directionalLight.position.x,
-    y: directionalLight.position.y,
-    z: directionalLight.position.z,
-  };
-  folderDirectional.addColor(directionalParams, "color").onChange((value) => {
-    directionalLight.color.setHex(Number(value));
-  });
-  folderDirectional
-    .add(directionalParams, "intensity", 0, 10, 0.01)
-    .onChange((value) => {
-      directionalLight.intensity = value;
-    });
-  folderDirectional
-    .add(directionalParams, "x", -20, 20, 0.1)
-    .onChange((value) => {
-      directionalLight.position.x = value;
-    });
-  folderDirectional
-    .add(directionalParams, "y", -20, 20, 0.1)
-    .onChange((value) => {
-      directionalLight.position.y = value;
-    });
-  folderDirectional
-    .add(directionalParams, "z", -20, 20, 0.1)
-    .onChange((value) => {
-      directionalLight.position.z = value;
-    });
+  // const folderDirectional = folderLights.addFolder("Luz Direccional");
+  // const directionalParams = {
+  //   color: directionalLight.color.getHex(),
+  //   intensity: directionalLight.intensity,
+  //   x: directionalLight.position.x,
+  //   y: directionalLight.position.y,
+  //   z: directionalLight.position.z,
+  // };
+  // folderDirectional.addColor(directionalParams, "color").onChange((value) => {
+  //   directionalLight.color.setHex(Number(value));
+  // });
+  // folderDirectional
+  //   .add(directionalParams, "intensity", 0, 10, 0.01)
+  //   .onChange((value) => {
+  //     directionalLight.intensity = value;
+  //   });
+  // folderDirectional
+  //   .add(directionalParams, "x", -20, 20, 0.1)
+  //   .onChange((value) => {
+  //     directionalLight.position.x = value;
+  //   });
+  // folderDirectional
+  //   .add(directionalParams, "y", -20, 20, 0.1)
+  //   .onChange((value) => {
+  //     directionalLight.position.y = value;
+  //   });
+  // folderDirectional
+  //   .add(directionalParams, "z", -20, 20, 0.1)
+  //   .onChange((value) => {
+  //     directionalLight.position.z = value;
+  //   });
 
   // --- Carpeta unificada para la cámara ---
   const folderCamera = gui.addFolder("Cámara");
@@ -201,9 +305,11 @@ export function initScene() {
   // Suelo y paredes (4 planos formando una caja)
   const floorGeometry = new THREE.PlaneGeometry(20, 20);
   const wallMaterial = new THREE.MeshStandardMaterial({ color: 0xeeeeee });
-
+  
+  
   // Piso
   const floor = new THREE.Mesh(floorGeometry, wallMaterial.clone());
+  console.log(floor);
   floor.rotation.x = -Math.PI / 2;
   floor.position.y = 0;
   floor.receiveShadow = true;
@@ -211,8 +317,8 @@ export function initScene() {
 
   // Pared trasera
   const wallBack = new THREE.Mesh(floorGeometry, wallMaterial.clone());
-  wallBack.position.z = -.4;
-  wallBack.position.y = 10;
+  wallBack.position.z = -1.5;
+  wallBack.position.y = 0;
   wallBack.receiveShadow = true;
   wallBack.rotation.x = 0;
   // wallBack.scale.set(5,5,5)
@@ -246,11 +352,11 @@ export function initScene() {
   //   z: { min: -Math.PI, max: Math.PI, step: 0.01 },
   // });
 
-  createGUI(wallBack.position, "Pared Trasera posición", {
-    x: { min: -20, max: 20, step: 0.1 },
-    y: { min: -5, max: 20, step: 0.1 },
-    z: { min: -20, max: 20, step: 0.1 },
-  });
+  // createGUI(wallBack.position, "Pared Trasera posición", {
+  //   x: { min: -20, max: 20, step: 0.1 },
+  //   y: { min: -5, max: 20, step: 0.1 },
+  //   z: { min: -20, max: 20, step: 0.1 },
+  // });
   // createGUI(wallBack.rotation, "Pared Trasera rotación", {
   //   x: { min: -Math.PI, max: Math.PI, step: 0.01 },
   //   y: { min: -Math.PI, max: Math.PI, step: 0.01 },
@@ -300,16 +406,16 @@ export function initScene() {
   //     wallRight.rotation[axis] = THREE.MathUtils.degToRad(value);
   //   });
   // });
-
+  
   // Cargar un modelo 3D
   loadModel("/models/Animaciones1.glb")
     .then(({ scene: model, animations }) => {
       scene.add(model);
       // model.position.y =
-      model.scale.x = 1
-      model.scale.y = 1
-      model.scale.z = 1
-      // model.position.y = -3
+      model.scale.x = 1.2
+      model.scale.y = 1.2
+      model.scale.z = 1.2
+      model.position.z = -.5
       console.log()
       // model.castShadow = true;
       // model.receiveShadow = true;

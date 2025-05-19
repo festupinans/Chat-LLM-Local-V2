@@ -104,7 +104,7 @@ section.column {
 } */
 
 .cajaT {
-  margin-bottom: 25%;
+  margin-top: 45%;
   display: flex;
   flex-direction: column;
   width: 80vw;
@@ -313,7 +313,7 @@ button:focus-visible {
   position: absolute;
   width: 8vw;
   /* mismo tamaño que tu .microfono img */
-  top: 50%;
+  top: 75%;
   /* ajusta según corresponda */
   left: 10%;
   cursor: pointer;
