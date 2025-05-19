@@ -69,7 +69,10 @@ export function initScene() {
     100
   );
   camera.position.z = 3;
-  camera.position.y = 1.3;
+  camera.position.y = 1.5;
+  camera.zoom = 0.2;
+  camera.fov = 18
+  camera.updateProjectionMatrix()
 
   // Creamos el renderizador
   const renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -89,7 +92,7 @@ export function initScene() {
   }
 
   // Agregamos luces
-  const ambientLight = new THREE.AmbientLight(0xffffff, 1);
+  const ambientLight = new THREE.AmbientLight(0xffffff, 3);
   scene.add(ambientLight);
 
   const directionalLight = new THREE.DirectionalLight(0xffffff, 5);
@@ -157,9 +160,9 @@ export function initScene() {
 
   // Subcarpeta para posición
   const posCamera = folderCamera.addFolder("Posición");
-  posCamera.add(camera.position, "x", -10, 10, 0.1);
-  posCamera.add(camera.position, "y", -10, 10, 0.1);
-  posCamera.add(camera.position, "z", 0, 20, 0.1);
+  posCamera.add(camera.position, "x", -30, 30, 0.1);
+  posCamera.add(camera.position, "y", -30, 30, 0.1);
+  posCamera.add(camera.position, "z", 0, 100, 0.1);
 
   // Subcarpeta para rotación en grados
   const rotCameraDegrees = {
@@ -177,7 +180,7 @@ export function initScene() {
   // Subcarpeta para parámetros ópticos
   const opticsCamera = folderCamera.addFolder("Óptica");
   opticsCamera
-    .add(camera, "fov", 10, 120, 1)
+    .add(camera, "fov", 1, 120, 1)
     .onChange(() => camera.updateProjectionMatrix());
   opticsCamera
     .add(camera, "near", 0.01, 10, 0.1)
@@ -208,27 +211,28 @@ export function initScene() {
 
   // Pared trasera
   const wallBack = new THREE.Mesh(floorGeometry, wallMaterial.clone());
-  wallBack.position.z = -3;
+  wallBack.position.z = -.4;
   wallBack.position.y = 10;
   wallBack.receiveShadow = true;
   wallBack.rotation.x = 0;
+  // wallBack.scale.set(5,5,5)
   scene.add(wallBack);
 
   // Pared izquierda
-  const wallLeft = new THREE.Mesh(floorGeometry, wallMaterial.clone());
-  wallLeft.position.x = -1.5;
-  wallLeft.position.y = 10;
-  wallLeft.rotation.y = Math.PI / 2;
-  wallLeft.receiveShadow = true;
-  scene.add(wallLeft);
+  // const wallLeft = new THREE.Mesh(floorGeometry, wallMaterial.clone());
+  // wallLeft.position.x = -1.5;
+  // wallLeft.position.y = 10;
+  // wallLeft.rotation.y = Math.PI / 2;
+  // wallLeft.receiveShadow = true;
+  // scene.add(wallLeft);
 
   // Pared derecha
-  const wallRight = new THREE.Mesh(floorGeometry, wallMaterial.clone());
-  wallRight.position.x = 1.5;
-  wallRight.position.y = 10;
-  wallRight.rotation.y = -Math.PI / 2;
-  wallRight.receiveShadow = true;
-  scene.add(wallRight);
+  // const wallRight = new THREE.Mesh(floorGeometry, wallMaterial.clone());
+  // wallRight.position.x = 1.5;
+  // wallRight.position.y = 10;
+  // wallRight.rotation.y = -Math.PI / 2;
+  // wallRight.receiveShadow = true;
+  // scene.add(wallRight);
 
   // GUI para mover cada plano
   // createGUI(floor.position, "Piso posición", {
@@ -253,54 +257,60 @@ export function initScene() {
   //   z: { min: -Math.PI, max: Math.PI, step: 0.01 },
   // });
 
-  // --- Pared Izquierda ---
-  const folderLeft = gui.addFolder("Pared Izquierda");
+  // // --- Pared Izquierda ---
+  // const folderLeft = gui.addFolder("Pared Izquierda");
 
-  // Posición
-  const posLeft = folderLeft.addFolder("Posición");
-  posLeft.add(wallLeft.position, "x", -20, 20, 0.1);
-  posLeft.add(wallLeft.position, "y", -5, 20, 0.1);
-  posLeft.add(wallLeft.position, "z", -20, 20, 0.1);
+  // // Posición
+  // const posLeft = folderLeft.addFolder("Posición");
+  // posLeft.add(wallLeft.position, "x", -20, 20, 0.1);
+  // posLeft.add(wallLeft.position, "y", -5, 20, 0.1);
+  // posLeft.add(wallLeft.position, "z", -20, 20, 0.1);
 
-  // Rotación en grados
-  const rotLeftDegrees = {
-    x: THREE.MathUtils.radToDeg(wallLeft.rotation.x),
-    y: THREE.MathUtils.radToDeg(wallLeft.rotation.y),
-    z: THREE.MathUtils.radToDeg(wallLeft.rotation.z),
-  };
-  const rotLeft = folderLeft.addFolder("Rotación (°)");
-  ["x", "y", "z"].forEach((axis) => {
-    rotLeft.add(rotLeftDegrees, axis, -180, 180, 1).onChange((value) => {
-      wallLeft.rotation[axis] = THREE.MathUtils.degToRad(value);
-    });
-  });
+  // // Rotación en grados
+  // const rotLeftDegrees = {
+  //   x: THREE.MathUtils.radToDeg(wallLeft.rotation.x),
+  //   y: THREE.MathUtils.radToDeg(wallLeft.rotation.y),
+  //   z: THREE.MathUtils.radToDeg(wallLeft.rotation.z),
+  // };
+  // const rotLeft = folderLeft.addFolder("Rotación (°)");
+  // ["x", "y", "z"].forEach((axis) => {
+  //   rotLeft.add(rotLeftDegrees, axis, -180, 180, 1).onChange((value) => {
+  //     wallLeft.rotation[axis] = THREE.MathUtils.degToRad(value);
+  //   });
+  // });
 
   // --- Pared Derecha ---
-  const folderRight = gui.addFolder("Pared Derecha");
+  // const folderRight = gui.addFolder("Pared Derecha");
 
-  // Posición
-  const posRight = folderRight.addFolder("Posición");
-  posRight.add(wallRight.position, "x", -20, 20, 0.1);
-  posRight.add(wallRight.position, "y", -5, 20, 0.1);
-  posRight.add(wallRight.position, "z", -20, 20, 0.1);
+  // // Posición
+  // const posRight = folderRight.addFolder("Posición");
+  // posRight.add(wallRight.position, "x", -20, 20, 0.1);
+  // posRight.add(wallRight.position, "y", -5, 20, 0.1);
+  // posRight.add(wallRight.position, "z", -20, 20, 0.1);
 
-  // Rotación en grados
-  const rotRightDegrees = {
-    x: THREE.MathUtils.radToDeg(wallRight.rotation.x),
-    y: THREE.MathUtils.radToDeg(wallRight.rotation.y),
-    z: THREE.MathUtils.radToDeg(wallRight.rotation.z),
-  };
-  const rotRight = folderRight.addFolder("Rotación (°)");
-  ["x", "y", "z"].forEach((axis) => {
-    rotRight.add(rotRightDegrees, axis, -180, 180, 1).onChange((value) => {
-      wallRight.rotation[axis] = THREE.MathUtils.degToRad(value);
-    });
-  });
+  // // Rotación en grados
+  // const rotRightDegrees = {
+  //   x: THREE.MathUtils.radToDeg(wallRight.rotation.x),
+  //   y: THREE.MathUtils.radToDeg(wallRight.rotation.y),
+  //   z: THREE.MathUtils.radToDeg(wallRight.rotation.z),
+  // };
+  // const rotRight = folderRight.addFolder("Rotación (°)");
+  // ["x", "y", "z"].forEach((axis) => {
+  //   rotRight.add(rotRightDegrees, axis, -180, 180, 1).onChange((value) => {
+  //     wallRight.rotation[axis] = THREE.MathUtils.degToRad(value);
+  //   });
+  // });
 
   // Cargar un modelo 3D
   loadModel("/models/Animaciones1.glb")
     .then(({ scene: model, animations }) => {
       scene.add(model);
+      // model.position.y =
+      model.scale.x = 1
+      model.scale.y = 1
+      model.scale.z = 1
+      // model.position.y = -3
+      console.log()
       // model.castShadow = true;
       // model.receiveShadow = true;
       // console.log("Modelo");
