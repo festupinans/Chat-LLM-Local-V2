@@ -56,14 +56,13 @@ export function readText(
     };
 
     utterance.onerror = (event) => {
+        if (event.error === "interrupted") {
+            // Ignora el error causado por cancelaciones intencionales
+            return;
+        }
         console.error('Error durante la síntesis de voz:', event.error);
 
-        // const valor = Math.floor(Math.random() * 2) + 1;
-        // (window as any).PlaAnim(valor, {
-        //     fadeDuration: 0.5,
-        //     loop: Infinity,
-        //     onFinished: () => alert("¡Animación terminada!"),
-        // });
+        // ...otros manejos de error si los necesitas...
     };
 
     synth.speak(utterance);
