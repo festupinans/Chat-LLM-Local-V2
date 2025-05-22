@@ -6,7 +6,7 @@ import { PlaAnim } from "./AnimController";
 import * as dat from "dat.gui";
 
 // Instancia única de dat.GUI para toda la escena
-const gui = new dat.GUI();
+// const gui = new dat.GUI();
 
 let habla = false; // Variable para controlar el estado de la animación
 let emissiveMaterial = null; // Referencia al material del modelo
@@ -132,15 +132,15 @@ export function initScene() {
   console.log(punto);
   
   scene.add(punto)
-  const lightTarget = new THREE.Object3D();
-  lightTarget.position.set(0, 3, 0);
-  scene.add(lightTarget);
+  // const lightTarget = new THREE.Object3D();
+  // lightTarget.position.set(0, 3, 0);
+  // scene.add(lightTarget);
   // spotLight.target = lightTarget;
 
   // scene.add(spotLight);
 
   // --- GUI para luces ---
-  const folderLights = gui.addFolder("Luces");
+  // const folderLights = gui.addFolder("Luces");
 
   // const folderSpot = folderLights.addFolder("SpotLight");
 
@@ -184,22 +184,22 @@ export function initScene() {
   //   spotLight.position.z = value;
   // });
 
-  const folderTarget = folderLights.addFolder("Target SpotLight");
-  const targetParams = {
-    x: lightTarget.position.x,
-    y: lightTarget.position.y,
-    z: lightTarget.position.z,
-  };
+  // const folderTarget = folderLights.addFolder("Target SpotLight");
+  // const targetParams = {
+  //   x: lightTarget.position.x,
+  //   y: lightTarget.position.y,
+  //   z: lightTarget.position.z,
+  // };
 
-  folderTarget.add(targetParams, "x", -20, 20, 0.1).onChange((value) => {
-    lightTarget.position.x = value;
-  });
-  folderTarget.add(targetParams, "y", -20, 20, 0.1).onChange((value) => {
-    lightTarget.position.y = value;
-  });
-  folderTarget.add(targetParams, "z", -20, 20, 0.1).onChange((value) => {
-    lightTarget.position.z = value;
-  });
+  // folderTarget.add(targetParams, "x", -20, 20, 0.1).onChange((value) => {
+  //   lightTarget.position.x = value;
+  // });
+  // folderTarget.add(targetParams, "y", -20, 20, 0.1).onChange((value) => {
+  //   lightTarget.position.y = value;
+  // });
+  // folderTarget.add(targetParams, "z", -20, 20, 0.1).onChange((value) => {
+  //   lightTarget.position.z = value;
+  // });
 
 
   // Ejes para ver la dirección de la luz
@@ -207,24 +207,24 @@ export function initScene() {
   // scene.add(lightHelper);
 
   // Ejes en el target
-  const targetAxesHelper = new THREE.AxesHelper(1);
-  lightTarget.add(targetAxesHelper);
+  // const targetAxesHelper = new THREE.AxesHelper(1);
+  // lightTarget.add(targetAxesHelper);
 
 
   // Luz Ambiental
-  const folderAmbient = folderLights.addFolder("Luz Ambiental");
-  const ambientParams = {
-    color: ambientLight.color.getHex(),
-    intensity: ambientLight.intensity,
-  };
-  folderAmbient.addColor(ambientParams, "color").onChange((value) => {
-    ambientLight.color.setHex(Number(value));
-  });
-  folderAmbient
-    .add(ambientParams, "intensity", 0, 10, 0.01)
-    .onChange((value) => {
-      ambientLight.intensity = value;
-    });
+  // const folderAmbient = folderLights.addFolder("Luz Ambiental");
+  // const ambientParams = {
+  //   color: ambientLight.color.getHex(),
+  //   intensity: ambientLight.intensity,
+  // };
+  // folderAmbient.addColor(ambientParams, "color").onChange((value) => {
+  //   ambientLight.color.setHex(Number(value));
+  // });
+  // folderAmbient
+  //   .add(ambientParams, "intensity", 0, 10, 0.01)
+  //   .onChange((value) => {
+  //     ambientLight.intensity = value;
+  //   });
 
   // Luz Direccional
   // const folderDirectional = folderLights.addFolder("Luz Direccional");
@@ -260,47 +260,47 @@ export function initScene() {
   //   });
 
   // --- Carpeta unificada para la cámara ---
-  const folderCamera = gui.addFolder("Cámara");
+  // const folderCamera = gui.addFolder("Cámara");
 
   // Subcarpeta para posición
-  const posCamera = folderCamera.addFolder("Posición");
-  posCamera.add(camera.position, "x", -30, 30, 0.1);
-  posCamera.add(camera.position, "y", -30, 30, 0.1);
-  posCamera.add(camera.position, "z", 0, 100, 0.1);
+  // const posCamera = folderCamera.addFolder("Posición");
+  // posCamera.add(camera.position, "x", -30, 30, 0.1);
+  // posCamera.add(camera.position, "y", -30, 30, 0.1);
+  // posCamera.add(camera.position, "z", 0, 100, 0.1);
 
   // Subcarpeta para rotación en grados
-  const rotCameraDegrees = {
-    x: THREE.MathUtils.radToDeg(camera.rotation.x),
-    y: THREE.MathUtils.radToDeg(camera.rotation.y),
-    z: THREE.MathUtils.radToDeg(camera.rotation.z),
-  };
-  const rotCamera = folderCamera.addFolder("Rotación (°)");
-  ["x", "y", "z"].forEach((axis) => {
-    rotCamera.add(rotCameraDegrees, axis, -180, 180, 1).onChange((value) => {
-      camera.rotation[axis] = THREE.MathUtils.degToRad(value);
-    });
-  });
+  // const rotCameraDegrees = {
+  //   x: THREE.MathUtils.radToDeg(camera.rotation.x),
+  //   y: THREE.MathUtils.radToDeg(camera.rotation.y),
+  //   z: THREE.MathUtils.radToDeg(camera.rotation.z),
+  // };
+  // const rotCamera = folderCamera.addFolder("Rotación (°)");
+  // ["x", "y", "z"].forEach((axis) => {
+  //   rotCamera.add(rotCameraDegrees, axis, -180, 180, 1).onChange((value) => {
+  //     camera.rotation[axis] = THREE.MathUtils.degToRad(value);
+  //   });
+  // });
 
   // Subcarpeta para parámetros ópticos
-  const opticsCamera = folderCamera.addFolder("Óptica");
-  opticsCamera
-    .add(camera, "fov", 1, 120, 1)
-    .onChange(() => camera.updateProjectionMatrix());
-  opticsCamera
-    .add(camera, "near", 0.01, 10, 0.1)
-    .onChange(() => camera.updateProjectionMatrix());
-  opticsCamera
-    .add(camera, "far", 100, 2000, 10)
-    .onChange(() => camera.updateProjectionMatrix());
-  opticsCamera
-    .add(camera, "zoom", 0.1, 5, 0.01)
-    .onChange(() => camera.updateProjectionMatrix());
-  opticsCamera
-    .add(camera, "aspect", 0.1, 4, 0.01)
-    .onChange(() => camera.updateProjectionMatrix());
-  opticsCamera
-    .add(camera, "focus", 0, 100, 0.1)
-    .onChange(() => camera.updateProjectionMatrix());
+  // const opticsCamera = folderCamera.addFolder("Óptica");
+  // opticsCamera
+  //   .add(camera, "fov", 1, 120, 1)
+  //   .onChange(() => camera.updateProjectionMatrix());
+  // opticsCamera
+  //   .add(camera, "near", 0.01, 10, 0.1)
+  //   .onChange(() => camera.updateProjectionMatrix());
+  // opticsCamera
+  //   .add(camera, "far", 100, 2000, 10)
+  //   .onChange(() => camera.updateProjectionMatrix());
+  // opticsCamera
+  //   .add(camera, "zoom", 0.1, 5, 0.01)
+  //   .onChange(() => camera.updateProjectionMatrix());
+  // opticsCamera
+  //   .add(camera, "aspect", 0.1, 4, 0.01)
+  //   .onChange(() => camera.updateProjectionMatrix());
+  // opticsCamera
+  //   .add(camera, "focus", 0, 100, 0.1)
+  //   .onChange(() => camera.updateProjectionMatrix());
 
   // Suelo y paredes (4 planos formando una caja)
   const floorGeometry = new THREE.PlaneGeometry(20, 20);
