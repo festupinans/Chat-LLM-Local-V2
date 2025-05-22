@@ -90,11 +90,11 @@ export async function sendMensajeIA(): Promise<void> {
       };
       messageLabel.innerHTML = `<p class="collectedData">${JSON.stringify(datos, null, 2)}</p>`;
 
-      await fetch('http://localhost:3000/api/robot', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(datos)
-      });
+      // await fetch('http://localhost:3000/api/robot', {
+      //   method: 'POST',
+      //   headers: { 'Content-Type': 'application/json' },
+      //   body: JSON.stringify(datos)
+      // });
 
       readText('¡Perfecto! Ahora puedes preguntarme lo que desees.');
       initialPhase = false;
