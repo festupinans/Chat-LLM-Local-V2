@@ -78,7 +78,7 @@ export function initScene() {
   const renderer = new THREE.WebGLRenderer({ antialias: true });
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.shadowMap.enabled = true;
-  renderer.shadowMap.type = THREE.PCFSoftShadowMap; // Opcional: sombras suaves
+  renderer.shadowMap.type = THREE.VSMShadowMap ; // Opcional: sombras suaves
 
   // OrbitControls (inicialmente desactivados)
   // let controlsEnabled = true;
@@ -98,8 +98,8 @@ export function initScene() {
   const directionalLight = new THREE.DirectionalLight(0xffffff, 2);
   directionalLight.position.set(5, 10, 7.5);
   directionalLight.castShadow = false;
-  directionalLight.shadow.mapSize.width = 20; // Mejor calidad de sombra
-  directionalLight.shadow.mapSize.height = 20;
+  // directionalLight.shadow.mapSize.width = 20; // Mejor calidad de sombra
+  // directionalLight.shadow.mapSize.height = 20;
   // directionalLight.shadow.bias = -0.001; 
   // directionalLight.shadow.camera.near = 0.5;
   // directionalLight.shadow.camera.far = 50;
@@ -116,19 +116,24 @@ export function initScene() {
   // spotLight.shadow.mapSize.height = 2048;
 
   const punto = new THREE.PointLight( 0xffffff, 1, 100 )
-  punto.position.set(2,3,4)
+  punto.position.set(2,2,3)
   punto.intensity = 60
   // punto.power = 1800
-  punto.decay = 1.5
+  punto.decay = 2.5
   punto.castShadow = true
-  punto.shadow.mapSize.width = 2048;
-  punto.shadow.mapSize.height = 2048;
+  punto.shadow.mapSize.width = 256*2;
+  punto.shadow.mapSize.height = 256*2;
   punto.shadow.camera.near = 1
   punto.shadow.camera.far = 500
-  punto.shadow.camera.left = 500
-  punto.shadow.camera.right = 500
-  punto.shadow.camera.top = 500
-  punto.shadow.camera.bottom = 500
+  punto.shadow.camera.left = -10
+  punto.shadow.camera.right = 10
+  punto.shadow.camera.top = 10
+  punto.shadow.camera.bottom = -10
+  punto.shadow.radius = 10
+  punto.shadow.blurSamples = 10
+  punto.shadow.bias = -0.001;
+  punto.shadow.normalBias = 0.01;
+
   console.log(punto);
   
   scene.add(punto)
@@ -318,7 +323,7 @@ export function initScene() {
   // Pared trasera
   const wallBack = new THREE.Mesh(floorGeometry, wallMaterial.clone());
   wallBack.position.z = -1.5;
-  wallBack.position.y = 0;
+  // wallBack.position.y = ;
   wallBack.receiveShadow = true;
   wallBack.rotation.x = 0;
   // wallBack.scale.set(5,5,5)
