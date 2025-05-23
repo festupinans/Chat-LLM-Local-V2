@@ -1,5 +1,14 @@
 .three{
     position: fixed;
     z-index: -50;
+    padding-top: 0;
+}
+
+@media screen and (max-width: 930px) and (orientation: portrait) {
+    .three{
+    position: fixed;
+    z-index: -50;
     padding-top: 200px;
+}
+
 }
