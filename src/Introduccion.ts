@@ -1,5 +1,5 @@
 import { readText } from './speak';
-import { sendMensajeIANormal } from './peticiones_False-Stream';
+import { sendMensajeIANormal } from './Ollama';
 
 let initialPhase = true;
 let subPhase = 0;
