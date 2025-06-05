@@ -36,14 +36,14 @@ body {
   width: 100vw;
   position: absolute;
   top: 2vh;
-  height: 5vh;
+  height: 3vh;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .logo img {
-  width: 10%;
+  width: 20%;
   height: 100%;
 }
 
@@ -103,23 +103,29 @@ section.column {
 } */
 
 .cajaT {
-  margin-top: 20%;
+  margin-top: -40%;
   display: flex;
   flex-direction: column;
+  align-items: center;
   width: 60vw;
-  height: 40vh;
+  height: 20vh;
   border: 1px solid #4C005E;
-  background: rgba(217, 217, 217, 0.60);
-  backdrop-filter: blur(24px);
-  border-radius: 3vw;
-  -webkit-backdrop-filter: blur(8.5px);
+  background: rgba(217, 217, 217, 0.30);
+  backdrop-filter: blur(10px);
+  border-top-left-radius: 6vw;
+  border-top-right-radius: 0;
+  border-bottom-left-radius: 6vw;
+  border-bottom-right-radius: 6vw;
+  left:5vw;
+  position: absolute;
+  -webkit-backdrop-filter: blur(2px);
 }
 
 .Text {
-  width: 80%;
-  height: 50%;
-  border-radius: 5vw;
-  padding: 3%;
+    width: 80%;
+    height: 70%;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.30);
+    padding: 3%;
 }
 
 #messageLabel p.final {
@@ -150,18 +156,21 @@ section.column {
 }
 
 .botones {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 .5rem;
-  height: 25%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 .5rem;
+    height: 5%;
+    margin-left: -5em;
 }
-
-/* Wrapper para el ícono de expandir */
+/* Wrapper para el ícono de expandir */   
 .expandWrapper {
-  position: relative;
-  /* ahora el expandMenu será relativo a aquí */
-  display: inline-block;
+    position: relative;
+    width: 100%;
+    display: none;
+    justify-content: end;
+    margin-right: 15%;
+    margin-bottom: 5%;
 }
 
 /* Iconos todos al mismo tamaño */
@@ -171,10 +180,12 @@ section.column {
   object-fit: contain;
   cursor: pointer;
   transition: transform 0.4s ease, opacity 0.4s ease;
-  margin-bottom: 1%;
+  position: absolute;
+  bottom: -5em;
 }
 
 #expandIcon {
+  display: none;
   width: 6vw;
   height: 6vh;
   object-fit: contain;
@@ -184,11 +195,10 @@ section.column {
 
 #sendBtn,
 #clearBtn {
-  width: 5vw;
-  height: 5vh;
-  object-fit: contain;
-  cursor: pointer;
-  transition: transform 0.4s ease, opacity 0.4s ease;
+  width: 6vw;
+    object-fit: contain;
+    cursor: pointer;
+    transition: transform 0.4s ease, opacity 0.4s ease;
 }
 
 
@@ -377,40 +387,39 @@ button:focus-visible {
 }
 
 .sliderBody {
-  width: 40vw;
-  height: 10vh;
-  border-radius: 20vw;
-  border-color: #4C005E;
-  border-width: 4px;
-  border-style: solid;
-  background: linear-gradient(0deg, rgba(77, 0, 94, 0.3) 0%, rgba(0, 0, 0, 0) 100%);
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-  backdrop-filter: blur(8.5px);
-  -webkit-backdrop-filter: blur(8.5px);
-
-  display: flex;
-  justify-content: end;
-  align-items: center;
-  flex-direction: row;
-  padding: 0 1.5lh;
-  z-index: 10;
-  margin-bottom: 20vh;
+    width: 45vw;
+    height: 6vh;
+    border-radius: 20vw;
+    border-color: #4C005E;
+    border-width: 4px;
+    border-style: solid;
+    background: linear-gradient(0deg, rgba(77, 0, 94, 0.3) 0%, rgba(0, 0, 0, 0) 100%);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    backdrop-filter: blur(8.5px);
+    -webkit-backdrop-filter: blur(8.5px);
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    flex-direction: row;
+    padding: 0 1.5lh;
+    z-index: 10;
+    margin-bottom: 20vh;
 }
 
 .sliderCiruclo {
-  width: 4vw;
-  height: 9vh;
-  background: #4C005E;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-  margin-left: 1lh;
+    width: 8vw;
+    height: 5vh;
+    background: #4C005E;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    margin-left: 1lh;
 }
 
 .sliderImagen {
-  width: 10%;
+  width: 16%;
 }
 
 .sliderCirculoImagen {
@@ -882,12 +891,6 @@ section {
   height: 25%;
 }
 
-/* Wrapper para el ícono de expandir */
-.expandWrapper {
-  position: relative;
-  /* ahora el expandMenu será relativo a aquí */
-  display: inline-block;
-}
 
 /* Iconos todos al mismo tamaño */
 #micIcon {

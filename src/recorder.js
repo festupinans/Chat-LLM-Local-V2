@@ -2,14 +2,8 @@ let recognition = null;
 let transcriptText = "";
 let isRecognizing = false;
 
-// Inicio de reconocimiento
 function startRecognition() {
-  if (isRecognizing) return;
-  isRecognizing = true;
-
-  // Inicializa el API
-  recognition = new (window.SpeechRecognition ||
-    window.webkitSpeechRecognition)();
+  recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
   recognition.lang = "es-ES";
   recognition.continuous = true;
   recognition.interimResults = true;
@@ -24,9 +18,7 @@ function startRecognition() {
         transcriptText += texto;
       }
       const label = document.getElementById("messageLabel");
-      // Limpias hijos
       label.innerHTML = "";
-      // Creas un párrafo interim
       const p = document.createElement("p");
       p.className = event.results[i].isFinal ? "final" : "interim";
       p.textContent = event.results[i].isFinal ? transcriptText : texto;
@@ -35,44 +27,57 @@ function startRecognition() {
   };
 
   recognition.onerror = (e) => console.error("Speech error", e);
+
   recognition.onend = () => {
     isRecognizing = false;
-    // Aquí podrías llamar a sendMensajeIA() si quieres auto‑enviar
+    recognition = null;
     console.log("Reconocimiento finalizado:", transcriptText);
   };
 
   recognition.start();
+  isRecognizing = true;
+  console.log("Reconocimiento iniciado");
 }
 
-// Detener reconocimiento
 function stopRecognition() {
-  if (!recognition) return;
-  recognition.stop();
-  recognition = null;
-  // isRecognizing se pondrá a false en onend
+  if (recognition) {
+    recognition.stop(); // onend lo pondrá en null
+  }
 }
 
-// Bindeo al icono
-const micIcon = document.getElementById("micIcon");
-micIcon.addEventListener("mousedown", startRecognition);
-micIcon.addEventListener("mouseup", stopRecognition);
-micIcon.addEventListener("mouseleave", stopRecognition); // por si arrastras fuera
+// 🔁 Alternador
+let hasUsedToggleOnce = false;
 
-// Para pantallas táctiles
-micIcon.addEventListener(
-  "touchstart",
-  (e) => {
-    e.preventDefault();
-    startRecognition();
-  },
-  { passive: false }
-);
+function toggleRecognition() {
+  const contEnv = document.getElementById("envCont");
+  const micIcon = document.getElementById("micIcon");
 
-micIcon.addEventListener(
-  "touchend",
-  (e) => {
-    e.preventDefault();
+  if (!hasUsedToggleOnce) {
+    contEnv.style.display = 'none'; // Ocultar solo la primera vez
+    hasUsedToggleOnce = true;
+  }
+
+  if (isRecognizing) {
     stopRecognition();
-  },
-  { passive: false }
-);
+    micIcon.src = "micro.png"; // volver al ícono del micrófono
+    micIcon.style.width = '8vw';
+    micIcon.style.marginLeft = 'auto';
+    contEnv.style.display = 'flex';
+  } else {
+    startRecognition();
+    micIcon.src = "stopR.png"; // cambiar al ícono de detener
+    micIcon.style.width = '14vw';
+    micIcon.style.marginLeft = '-2em';    
+    contEnv.style.display = 'none';
+  }
+}
+
+// Evento único para clic o toque
+const micIcon = document.getElementById("micIcon");
+micIcon.addEventListener("click", toggleRecognition);
+
+// (Opcional) Para pantallas táctiles si necesitas compatibilidad extra
+micIcon.addEventListener("touchend", (e) => {
+  e.preventDefault();
+  toggleRecognition();
+}, { passive: false });

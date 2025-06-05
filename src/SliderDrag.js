@@ -55,15 +55,9 @@ const onDrag = async (e) => {
     await delay(1000);
     thumb.style.left = `${maxX - thumb.offsetWidth/2}px`;
     body.style.display         = "none";
-    startTutorial();
-    // micOverlay.style.display = 'block';
-    // // 3) Al hacer clic en el overlay, revelas la transcripción
-    // micOverlay.addEventListener('click', () => {
-    //   micOverlay.style.display = 'none';
-    //   transcripcion.style.display = 'flex';
-    // }, { once: true });
-
-    // presentIntroduction();
+    // startTutorial();
+    transcripcion.style.display = 'flex';
+    presentIntroduction();
     return;
   }
 

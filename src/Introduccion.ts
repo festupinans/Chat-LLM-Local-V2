@@ -129,8 +129,8 @@ function clearMessageLabel() {
 }
 
 export function presentIntroduction() {
-  readText('A continuación, necesito que me proporciones algunos datos.');
+  readText('¡Hola! Soy NewRoman, tu asistente virtual y estoy aquí para ayudarte, necesito que me proporciones algunos datos.');
   setTimeout(() => {
     askNext();
-  }, 4000);
+  }, 9000);
 }
