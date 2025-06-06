@@ -1,3 +1,37 @@
+@font-face {
+  font-family: 'Work Sans';
+  src: url('../fonts/WorkSans-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Work Sans';
+  src: url('../fonts/WorkSans-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Work Sans';
+  src: url('../fonts/WorkSans-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Work Sans';
+  src: url('../fonts/WorkSans-Light.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Work Sans';
+  src: url('../fonts/WorkSans-Italic.ttf') format('truetype');
+  font-weight: 400;
+  font-style: italic;
+}
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -36,14 +70,14 @@ body {
   width: 100vw;
   position: absolute;
   top: 2vh;
-  height: 5vh;
-  display: flex;
+  height: 3.2vh;
+  display:flex;
   justify-content: center;
   align-items: center;
 }
 
 .logo img {
-  width: 10%;
+  width: 25%;
   height: 100%;
 }
 
@@ -82,65 +116,134 @@ section.column {
   position: relative;
 }
 
-/* .microfono {
+.cajaD {
+  margin-top: -105%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  width: 120px;
-  height: 120px;
-  background-color: #7c0000;
-
-  border-radius: 50%;
-  top: -50px;
-
+  justify-content: center;
+  width:49vw;
+  line-height: 1;
+  height: 14vh;
+  border: 1px solid #6F00FF;
+  background: #9FA0DC4D;
+  backdrop-filter: blur(16.277387619018555px);
+  border-top-left-radius: 6vw;
+  border-top-right-radius: 6vw;
+  border-bottom-left-radius: 6vw;
+  border-bottom-right-radius: 0;
+  left:2vw;
   position: absolute;
+  -webkit-backdrop-filter: blur(2px);
+  
 }
 
-.microfono img{
-  width: 60px;
-  height: auto;
-} */
+.cajaD h2{
+  font-family: 'Work Sans';
+  color: #6F00FF;
+  font-weight: 600;
+  font-size: 2.3em;
+  padding: 1em 1em;
+}
 
 .cajaT {
-  margin-top: 20%;
+  margin-top: -30%;
   display: flex;
   flex-direction: column;
-  width: 60vw;
-  height: 40vh;
+  align-items: center;
+  width: 49vw;
+  height: 17vh;
   border: 1px solid #4C005E;
-  background: rgba(217, 217, 217, 0.60);
-  backdrop-filter: blur(24px);
-  border-radius: 3vw;
-  -webkit-backdrop-filter: blur(8.5px);
+  background: rgba(217, 217, 217, 0.30);
+  backdrop-filter: blur(10px);
+  border-top-left-radius: 6vw;
+  border-top-right-radius: 0;
+  border-bottom-left-radius: 6vw;
+  border-bottom-right-radius: 6vw;
+  left:2vw;
+  position: absolute;
+  -webkit-backdrop-filter: blur(2px);
 }
 
 .Text {
-  width: 80%;
-  height: 50%;
-  border-radius: 5vw;
-  padding: 3%;
+    width: 80%;
+    height: 55%;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.30);
+    padding: 3%;
 }
 
-#messageLabel p.final {
+.messageBubble {
+  border-top-left-radius: 0;
+  border-top-right-radius: 3vw;
+  border-bottom-left-radius: 3vw;
+  border-bottom-right-radius: 3vw;
+  background: rgba(159, 160, 220, 0.30);
+  width: 85%;
+  max-height: 100%;
+  max-width: 90%;
+  margin: 0.5rem auto; /* Centrado horizontal */
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+
+.messageBubble p.final {
   margin: 0;
   padding: 1rem .5rem 1rem .5rem;
-  font-size: calc(.5em + 1vw);
-  color: #636363;
+  font-size: calc(.6em + 1vw);
+  color: #000 !important;
+  font-family: "Work Sans";
       overflow: auto;
-    max-height: 100%;
+    max-height: 90%;
 }
 
 /* Y, si vas a usar estado interino, añade también: */
-#messageLabel p.interim {
+.messageBubble p.interim {
   margin: 0;
   padding: 1rem;
-  font-size: calc(.5em + 1vw);
-  color: #999;
-  /* o el estilo que quieras */
+  font-size: calc(.6em + 1vw);
+  color: #000 !important;
+  font-family: "Work Sans";
   font-style: italic;
   overflow: auto;
-    max-height: 100%;
+    max-height: 90%;
+}
+
+
+/*IA*/
+.messageIA {
+  border-top-left-radius: 3vw;
+  border-top-right-radius: 0;
+  border-bottom-left-radius: 3vw;
+  border-bottom-right-radius: 3vw;
+  background: rgba(83, 249, 210, 0.20);
+  width: 85%;
+  max-height: 100%;
+  overflow: auto;
+  max-width: 90%;
+  margin: 0.5rem auto; /* Centrado horizontal */
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+
+.messageIA p {
+  margin: 0;
+  padding: 1rem 0.5rem 1rem 0.5rem;
+  font-size: calc(.6em + 1vw);
+  color: #000 !important;
+  font-family: "Work Sans", sans-serif;
+  overflow: auto;
+  max-height: 90%;
+}
+
+.messageIA p.interim {
+  margin: 0;
+  padding: 1rem;
+  font-size: calc(.6em + 1vw);
+  color: #000 !important;
+  font-family: "Work Sans", sans-serif;
+  font-style: italic;
+  overflow: auto;
+  max-height: 90%;
 }
 
 .text {
@@ -150,18 +253,21 @@ section.column {
 }
 
 .botones {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 .5rem;
-  height: 25%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 .5rem;
+    height: 5%;
+    margin-left: -5em;
 }
-
-/* Wrapper para el ícono de expandir */
+/* Wrapper para el ícono de expandir */   
 .expandWrapper {
-  position: relative;
-  /* ahora el expandMenu será relativo a aquí */
-  display: inline-block;
+    position: relative;
+    width: 100%;
+    display: none;
+    justify-content: end;
+    margin-right: 15%;
+    margin-bottom: 5%;
 }
 
 /* Iconos todos al mismo tamaño */
@@ -171,10 +277,12 @@ section.column {
   object-fit: contain;
   cursor: pointer;
   transition: transform 0.4s ease, opacity 0.4s ease;
-  margin-bottom: 1%;
+  position: absolute;
+  bottom: -4em;
 }
 
 #expandIcon {
+  display: none;
   width: 6vw;
   height: 6vh;
   object-fit: contain;
@@ -184,11 +292,10 @@ section.column {
 
 #sendBtn,
 #clearBtn {
-  width: 5vw;
-  height: 5vh;
-  object-fit: contain;
-  cursor: pointer;
-  transition: transform 0.4s ease, opacity 0.4s ease;
+  width: 6vw;
+    object-fit: contain;
+    cursor: pointer;
+    transition: transform 0.4s ease, opacity 0.4s ease;
 }
 
 
@@ -355,6 +462,7 @@ button:focus-visible {
   overflow-wrap: break-word;
   white-space: normal;
   max-width: 100%;
+  min-height: 48%;
 }
 
 #slider-background {
@@ -377,40 +485,39 @@ button:focus-visible {
 }
 
 .sliderBody {
-  width: 40vw;
-  height: 10vh;
-  border-radius: 20vw;
-  border-color: #4C005E;
-  border-width: 4px;
-  border-style: solid;
-  background: linear-gradient(0deg, rgba(77, 0, 94, 0.3) 0%, rgba(0, 0, 0, 0) 100%);
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-  backdrop-filter: blur(8.5px);
-  -webkit-backdrop-filter: blur(8.5px);
-
-  display: flex;
-  justify-content: end;
-  align-items: center;
-  flex-direction: row;
-  padding: 0 1.5lh;
-  z-index: 10;
-  margin-bottom: 20vh;
+    width: 45vw;
+    height: 6vh;
+    border-radius: 20vw;
+    border-color: #4C005E;
+    border-width: 4px;
+    border-style: solid;
+    background: linear-gradient(0deg, rgba(77, 0, 94, 0.3) 0%, rgba(0, 0, 0, 0) 100%);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    backdrop-filter: blur(8.5px);
+    -webkit-backdrop-filter: blur(8.5px);
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    flex-direction: row;
+    padding: 0 1.5lh;
+    z-index: 10;
+    margin-bottom: 20vh;
 }
 
 .sliderCiruclo {
-  width: 4vw;
-  height: 9vh;
-  background: #4C005E;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-  margin-left: 1lh;
+    width: 8vw;
+    height: 5vh;
+    background: #4C005E;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    margin-left: 1lh;
 }
 
 .sliderImagen {
-  width: 10%;
+  width: 16%;
 }
 
 .sliderCirculoImagen {
@@ -435,6 +542,97 @@ button:focus-visible {
   align-items: center;
   justify-content: start;
   /* padding: 0 1.5lh; */
+}
+
+/*INFO*/
+/* Estilos para el botón de información */
+#infoButton {
+    position: absolute;
+    top: 5vh;
+    left: 5vw;
+    width: auto; /* O un tamaño fijo si lo prefieres, ej: 40px */
+    height: 5vh; /* Ajusta el tamaño del botón, ej: 40px */
+    cursor: pointer;
+    z-index: 1001; /* Asegura que esté por encima de otros elementos */
+    /* Asegúrate de que info.png esté en la raíz o ajusta la ruta */
+}
+
+/* Estilos para el modal de información */
+#infoModal {
+    position: fixed;
+    bottom: -25vh; /* Oculto inicialmente, se deslizará hacia arriba */
+    left: 0;
+    width: 100%;
+    height: 15vh;
+    background: #9B53F980; /* Color con transparencia */
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+    /* Box-shadow exacto proporcionado */
+    box-shadow: -2.17px 0px 4.341px 0px rgba(201, 201, 201, 0.10) inset, 
+                10.852px -10.852px 26.044px 0px rgba(255, 255, 255, 0.05) inset, 
+                -10.852px 10.852px 26.044px 0px rgba(255, 255, 255, 0.05) inset;
+    backdrop-filter: blur(16.277387619018555px);
+    -webkit-backdrop-filter: blur(16.277387619018555px); /* Para compatibilidad con Safari */
+    z-index: 1000; /* Por debajo del botón si es necesario, pero por encima de la mayoría */
+    display: flex; /* Para centrar el contenido */
+    justify-content: center;
+    align-items: center;
+    transition: bottom 0.5s ease-in-out; /* Animación de deslizamiento */
+    overflow: hidden; /* Asegura que nada se desborde durante la animación */
+}
+
+/* Contenido interno del modal para centrado y layout */
+.info-modal-content {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: center; /* Centra los paneles dentro del modal */
+    align-items: center;
+}
+
+.info-modal-left {
+    width: 65%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between; /* Centra los items verticalmente */
+    align-items: center; /* Centra los items horizontalmente */
+    padding: 3em;
+}
+.info-modal-right {
+    width: 35%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between; /* Centra los items verticalmente */
+    align-items: center; /* Centra los items horizontalmente */
+    padding: 3em;
+}
+
+.info-item {
+    display: flex;
+    align-items: center; /* Alinea ícono y texto */
+    margin-bottom: 10px; /* Espacio entre los elementos */
+    color: white; /* Color del texto */
+    font-size: 0.9em; /* Tamaño del texto */
+    font-family: 'Work Sans', sans-serif; /* Usar tu fuente definida */
+    text-align: center;
+}
+
+.info-item:last-child {
+    margin-bottom: 0; /* No hay margen inferior para el último elemento en cada columna */
+}
+
+.info-item img {
+    width: auto; /* O un tamaño fijo si lo prefieres, ej: 30px */
+    height: 3vh; /* Tamaño del ícono, ej: 30px */
+    margin-right: 5px; /* Espacio entre ícono y texto */
+    object-fit: contain; /* Asegura que la imagen se vea bien */
+}
+
+/* Línea divisora */
+.info-modal-divider {
+    width: 1px;
+    height: 80%; /* Altura de la línea divisora */
+    background-color: rgba(255, 255, 255, 0.2); /* Color y transparencia de la línea */
 }
 
 
@@ -589,12 +787,10 @@ button:focus-visible {
 
   :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
   font-weight: 400;
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  text-shadow: 2px 2px 2px #000;
   background-color: #242424;
 
   font-synthesis: none;
@@ -603,18 +799,9 @@ button:focus-visible {
   -moz-osx-font-smoothing: grayscale;
   background-color: #f9f9f9;
 }
-  .logo {
-  width: 100vw;
-  position: absolute;
-  top: 2vh;
-  height: 3vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 
 .logo img {
-  width: 25%;
+  width: 30%;
   height: 100%;
 }
 
@@ -671,7 +858,7 @@ section {
 
 .sliderTexto {
   margin-left: 10%;
-  font-size: calc(.9em + 3vw);
+  font-size: calc(.9em + 2vw);
   transition: opacity 0.3s ease;
   color: #fff;
   text-align: center;
@@ -831,39 +1018,25 @@ section {
   /* por encima del slider */
 }
 
-.cajaT {
-  margin-top: 45%;
-  display: flex;
-  flex-direction: column;
-  width: 80vw;
-  height: 25vh;
-  border: 1px solid #4C005E;
-  background: rgba(217, 217, 217, 0.60);
-  backdrop-filter: blur(24px);
-  border-radius: 5vw;
-  -webkit-backdrop-filter: blur(8.5px);
-}
-
 .Text {
   width: 80%;
   height: 55%;
-  border-radius: 5vw;
   padding: 5%;
 }
 
 #messageLabel p.final {
   margin: 0;
   padding: 1rem;
-  font-size: calc(.9em + 2vw);
-  color: #636363;
+  color: #000;
+  font-family: "Work Sans";
 }
 
 /* Y, si vas a usar estado interino, añade también: */
 #messageLabel p.interim {
   margin: 0;
   padding: 1rem;
-  font-size: calc(.9em + 2vw);
-  color: #999;
+  color: #000;
+  font-family: "Work Sans";
   /* o el estilo que quieras */
   font-style: italic;
 }
@@ -882,12 +1055,6 @@ section {
   height: 25%;
 }
 
-/* Wrapper para el ícono de expandir */
-.expandWrapper {
-  position: relative;
-  /* ahora el expandMenu será relativo a aquí */
-  display: inline-block;
-}
 
 /* Iconos todos al mismo tamaño */
 #micIcon {
