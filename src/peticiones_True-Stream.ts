@@ -97,6 +97,7 @@ async function sendMensajeIA(): Promise<void> {
         empresa: collected.empresa!
       };
       messageLabel.innerHTML = `<p class="collectedData">${JSON.stringify(datos, null, 2)}</p>`;
+      console.log(datos);
       await fetch('http://localhost:3000/api/robot', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
