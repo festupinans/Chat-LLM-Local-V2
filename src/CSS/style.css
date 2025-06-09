@@ -32,6 +32,7 @@
   font-weight: 400;
   font-style: italic;
 }
+
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -71,7 +72,7 @@ body {
   position: absolute;
   top: 2vh;
   height: 3.2vh;
-  display:flex;
+  display: flex;
   justify-content: center;
   align-items: center;
 }
@@ -122,7 +123,7 @@ section.column {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width:49vw;
+  width: 49vw;
   line-height: 1;
   height: 14vh;
   border: 1px solid #6F00FF;
@@ -132,13 +133,13 @@ section.column {
   border-top-right-radius: 6vw;
   border-bottom-left-radius: 6vw;
   border-bottom-right-radius: 0;
-  left:2vw;
+  left: 2vw;
   position: absolute;
   -webkit-backdrop-filter: blur(2px);
-  
+
 }
 
-.cajaD h2{
+.cajaD h2 {
   font-family: 'Work Sans';
   color: #6F00FF;
   font-weight: 600;
@@ -160,16 +161,16 @@ section.column {
   border-top-right-radius: 0;
   border-bottom-left-radius: 6vw;
   border-bottom-right-radius: 6vw;
-  left:2vw;
+  left: 2vw;
   position: absolute;
   -webkit-backdrop-filter: blur(2px);
 }
 
 .Text {
-    width: 80%;
-    height: 55%;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.30);
-    padding: 3%;
+  width: 80%;
+  height: 55%;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.30);
+  padding: 3%;
 }
 
 .messageBubble {
@@ -181,7 +182,8 @@ section.column {
   width: 85%;
   max-height: 100%;
   max-width: 90%;
-  margin: 0.5rem auto; /* Centrado horizontal */
+  margin: 0.5rem auto;
+  /* Centrado horizontal */
   box-sizing: border-box;
   overflow-y: auto;
 }
@@ -192,8 +194,8 @@ section.column {
   font-size: calc(.6em + 1vw);
   color: #000 !important;
   font-family: "Work Sans";
-      overflow: auto;
-    max-height: 90%;
+  overflow: auto;
+  max-height: 90%;
 }
 
 /* Y, si vas a usar estado interino, añade también: */
@@ -205,7 +207,7 @@ section.column {
   font-family: "Work Sans";
   font-style: italic;
   overflow: auto;
-    max-height: 90%;
+  max-height: 90%;
 }
 
 
@@ -220,7 +222,8 @@ section.column {
   max-height: 100%;
   overflow: auto;
   max-width: 90%;
-  margin: 0.5rem auto; /* Centrado horizontal */
+  margin: 0.5rem auto;
+  /* Centrado horizontal */
   box-sizing: border-box;
   overflow-y: auto;
 }
@@ -253,21 +256,22 @@ section.column {
 }
 
 .botones {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 .5rem;
-    height: 5%;
-    margin-left: -5em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 .5rem;
+  height: 5%;
+  margin-left: -5em;
 }
-/* Wrapper para el ícono de expandir */   
+
+/* Wrapper para el ícono de expandir */
 .expandWrapper {
-    position: relative;
-    width: 100%;
-    display: none;
-    justify-content: end;
-    margin-right: 15%;
-    margin-bottom: 5%;
+  position: relative;
+  width: 100%;
+  display: none;
+  justify-content: end;
+  margin-right: 15%;
+  margin-bottom: 5%;
 }
 
 /* Iconos todos al mismo tamaño */
@@ -293,9 +297,9 @@ section.column {
 #sendBtn,
 #clearBtn {
   width: 6vw;
-    object-fit: contain;
-    cursor: pointer;
-    transition: transform 0.4s ease, opacity 0.4s ease;
+  object-fit: contain;
+  cursor: pointer;
+  transition: transform 0.4s ease, opacity 0.4s ease;
 }
 
 
@@ -480,40 +484,40 @@ button:focus-visible {
   color: #000000;
   text-shadow: 0 0 #6d3e78;
   font-size: 25px;
-  max-height: 200px; 
-  overflow-y: auto;  
+  max-height: 200px;
+  overflow-y: auto;
 }
 
 .sliderBody {
-    width: 45vw;
-    height: 6vh;
-    border-radius: 20vw;
-    border-color: #4C005E;
-    border-width: 4px;
-    border-style: solid;
-    background: linear-gradient(0deg, rgba(77, 0, 94, 0.3) 0%, rgba(0, 0, 0, 0) 100%);
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-    backdrop-filter: blur(8.5px);
-    -webkit-backdrop-filter: blur(8.5px);
-    display: flex;
-    justify-content: end;
-    align-items: center;
-    flex-direction: row;
-    padding: 0 1.5lh;
-    z-index: 10;
-    margin-bottom: 20vh;
+  width: 45vw;
+  height: 6vh;
+  border-radius: 20vw;
+  border-color: #4C005E;
+  border-width: 4px;
+  border-style: solid;
+  background: linear-gradient(0deg, rgba(77, 0, 94, 0.3) 0%, rgba(0, 0, 0, 0) 100%);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(8.5px);
+  -webkit-backdrop-filter: blur(8.5px);
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  flex-direction: row;
+  padding: 0 1.5lh;
+  z-index: 10;
+  margin-bottom: 20vh;
 }
 
 .sliderCiruclo {
-    width: 8vw;
-    height: 5vh;
-    background: #4C005E;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    margin-left: 1lh;
+  width: 8vw;
+  height: 5vh;
+  background: #4C005E;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  margin-left: 1lh;
 }
 
 .sliderImagen {
@@ -547,92 +551,120 @@ button:focus-visible {
 /*INFO*/
 /* Estilos para el botón de información */
 #infoButton {
-    position: absolute;
-    top: 5vh;
-    left: 5vw;
-    width: auto; /* O un tamaño fijo si lo prefieres, ej: 40px */
-    height: 5vh; /* Ajusta el tamaño del botón, ej: 40px */
-    cursor: pointer;
-    z-index: 1001; /* Asegura que esté por encima de otros elementos */
-    /* Asegúrate de que info.png esté en la raíz o ajusta la ruta */
+  position: absolute;
+  top: 5vh;
+  left: 5vw;
+  width: auto;
+  /* O un tamaño fijo si lo prefieres, ej: 40px */
+  height: 5vh;
+  /* Ajusta el tamaño del botón, ej: 40px */
+  cursor: pointer;
+  z-index: 1001;
+  /* Asegura que esté por encima de otros elementos */
+  /* Asegúrate de que info.png esté en la raíz o ajusta la ruta */
 }
 
 /* Estilos para el modal de información */
 #infoModal {
-    position: fixed;
-    bottom: -25vh; /* Oculto inicialmente, se deslizará hacia arriba */
-    left: 0;
-    width: 100%;
-    height: 15vh;
-    background: #9B53F980; /* Color con transparencia */
-    border-top-left-radius: 30px;
-    border-top-right-radius: 30px;
-    /* Box-shadow exacto proporcionado */
-    box-shadow: -2.17px 0px 4.341px 0px rgba(201, 201, 201, 0.10) inset, 
-                10.852px -10.852px 26.044px 0px rgba(255, 255, 255, 0.05) inset, 
-                -10.852px 10.852px 26.044px 0px rgba(255, 255, 255, 0.05) inset;
-    backdrop-filter: blur(16.277387619018555px);
-    -webkit-backdrop-filter: blur(16.277387619018555px); /* Para compatibilidad con Safari */
-    z-index: 1000; /* Por debajo del botón si es necesario, pero por encima de la mayoría */
-    display: flex; /* Para centrar el contenido */
-    justify-content: center;
-    align-items: center;
-    transition: bottom 0.5s ease-in-out; /* Animación de deslizamiento */
-    overflow: hidden; /* Asegura que nada se desborde durante la animación */
+  position: fixed;
+  bottom: -25vh;
+  /* Oculto inicialmente, se deslizará hacia arriba */
+  left: 0;
+  width: 100%;
+  height: 15vh;
+  background: #9B53F980;
+  /* Color con transparencia */
+  border-top-left-radius: 30px;
+  border-top-right-radius: 30px;
+  /* Box-shadow exacto proporcionado */
+  box-shadow: -2.17px 0px 4.341px 0px rgba(201, 201, 201, 0.10) inset,
+    10.852px -10.852px 26.044px 0px rgba(255, 255, 255, 0.05) inset,
+    -10.852px 10.852px 26.044px 0px rgba(255, 255, 255, 0.05) inset;
+  backdrop-filter: blur(16.277387619018555px);
+  -webkit-backdrop-filter: blur(16.277387619018555px);
+  /* Para compatibilidad con Safari */
+  z-index: 1000;
+  /* Por debajo del botón si es necesario, pero por encima de la mayoría */
+  display: flex;
+  /* Para centrar el contenido */
+  justify-content: center;
+  align-items: center;
+  transition: bottom 0.5s ease-in-out;
+  /* Animación de deslizamiento */
+  overflow: hidden;
+  /* Asegura que nada se desborde durante la animación */
 }
 
 /* Contenido interno del modal para centrado y layout */
 .info-modal-content {
-    display: flex;
-    width: 100%;
-    height: 100%;
-    justify-content: center; /* Centra los paneles dentro del modal */
-    align-items: center;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  /* Centra los paneles dentro del modal */
+  align-items: center;
 }
 
 .info-modal-left {
-    width: 65%;
-    height: 100%;
-    display: flex;
-    justify-content: space-between; /* Centra los items verticalmente */
-    align-items: center; /* Centra los items horizontalmente */
-    padding: 3em;
+  width: 65%;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  /* Centra los items verticalmente */
+  align-items: center;
+  /* Centra los items horizontalmente */
+  padding: 3em;
 }
+
 .info-modal-right {
-    width: 35%;
-    height: 100%;
-    display: flex;
-    justify-content: space-between; /* Centra los items verticalmente */
-    align-items: center; /* Centra los items horizontalmente */
-    padding: 3em;
+  width: 35%;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  /* Centra los items verticalmente */
+  align-items: center;
+  /* Centra los items horizontalmente */
+  padding: 3em;
 }
 
 .info-item {
-    display: flex;
-    align-items: center; /* Alinea ícono y texto */
-    margin-bottom: 10px; /* Espacio entre los elementos */
-    color: white; /* Color del texto */
-    font-size: 0.9em; /* Tamaño del texto */
-    font-family: 'Work Sans', sans-serif; /* Usar tu fuente definida */
-    text-align: center;
+  display: flex;
+  align-items: center;
+  /* Alinea ícono y texto */
+  margin-bottom: 10px;
+  /* Espacio entre los elementos */
+  color: white;
+  /* Color del texto */
+  font-size: 0.9em;
+  /* Tamaño del texto */
+  font-family: 'Work Sans', sans-serif;
+  /* Usar tu fuente definida */
+  text-align: center;
 }
 
 .info-item:last-child {
-    margin-bottom: 0; /* No hay margen inferior para el último elemento en cada columna */
+  margin-bottom: 0;
+  /* No hay margen inferior para el último elemento en cada columna */
 }
 
 .info-item img {
-    width: auto; /* O un tamaño fijo si lo prefieres, ej: 30px */
-    height: 3vh; /* Tamaño del ícono, ej: 30px */
-    margin-right: 5px; /* Espacio entre ícono y texto */
-    object-fit: contain; /* Asegura que la imagen se vea bien */
+  width: auto;
+  /* O un tamaño fijo si lo prefieres, ej: 30px */
+  height: 3vh;
+  /* Tamaño del ícono, ej: 30px */
+  margin-right: 5px;
+  /* Espacio entre ícono y texto */
+  object-fit: contain;
+  /* Asegura que la imagen se vea bien */
 }
 
 /* Línea divisora */
 .info-modal-divider {
-    width: 1px;
-    height: 80%; /* Altura de la línea divisora */
-    background-color: rgba(255, 255, 255, 0.2); /* Color y transparencia de la línea */
+  width: 1px;
+  height: 80%;
+  /* Altura de la línea divisora */
+  background-color: rgba(255, 255, 255, 0.2);
+  /* Color y transparencia de la línea */
 }
 
 
@@ -783,407 +815,418 @@ button:focus-visible {
   display: none;
 }
 
+.loaderStart{
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #2d0d775f;
+}
+
 @media screen and (max-width: 930px) and (orientation: portrait) {
 
   :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  font-weight: 400;
+    font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+    font-weight: 400;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+    color-scheme: light dark;
+    color: rgba(255, 255, 255, 0.87);
+    background-color: #242424;
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background-color: #f9f9f9;
-}
-
-.logo img {
-  width: 30%;
-  height: 100%;
-}
-
-section {
-  margin: 0;
-  display: flex;
-  align-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-  /* max-width: 1200px; */
-}
-
-.sliderBody {
-  width: 60vw;
-  height: 5vh;
-  border-radius: 20vw;
-  border-color: #4C005E;
-  border-width: 4px;
-  border-style: solid;
-  background: linear-gradient(0deg, rgba(77, 0, 94, 0.3) 0%, rgba(0, 0, 0, 0) 100%);
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-  backdrop-filter: blur(8.5px);
-  -webkit-backdrop-filter: blur(8.5px);
-
-  display: flex;
-  justify-content: end;
-  align-items: center;
-  flex-direction: row;
-  padding: 0 1.5lh;
-  z-index: 10;
-  margin-bottom: 20vh;
-}
-
-.sliderCiruclo {
-  width: 7vw;
-  height: 4vh;
-  background: #4C005E;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-  margin-left: 1lh;
-}
-
-.sliderImagen {
-  width: 10%;
-}
-
-.sliderCirculoImagen {
-  height: 60%;
-  transition: opacity 0.3s ease;
-}
-
-.sliderTexto {
-  margin-left: 10%;
-  font-size: calc(.9em + 2vw);
-  transition: opacity 0.3s ease;
-  color: #fff;
-  text-align: center;
-  font-weight: bold;
-  width: 100%;
-}
-
-.sliderTrack {
-  width: 95%;
-  position: absolute;
-  display: flex;
-  align-items: center;
-  justify-content: start;
-  /* padding: 0 1.5lh; */
-}
-
-
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: #f9f9f9;
   }
 
-  100% {
-    transform: rotate(360deg);
+  .logo img {
+    width: 30%;
+    height: 100%;
   }
-}
 
-#tutorialText {
-  position: absolute;
-  top: 10%;
-  width: 70%;
-  margin-left: 15%;
-  text-align: center;
-  font-size: calc(1.1em + 2.5vw);
-  color: #fff;
-  pointer-events: none;
-}
+  section {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    min-width: 320px;
+    min-height: 100vh;
+    /* max-width: 1200px; */
+  }
 
-#tutorialIcons {
-  position: absolute;
-  top: calc(10% + 2rem);
-  /* por ejemplo 2rem debajo del texto */
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  gap: 2rem;
-  z-index: 2001;
-}
+  .sliderBody {
+    width: 60vw;
+    height: 5vh;
+    border-radius: 20vw;
+    border-color: #4C005E;
+    border-width: 4px;
+    border-style: solid;
+    background: linear-gradient(0deg, rgba(77, 0, 94, 0.3) 0%, rgba(0, 0, 0, 0) 100%);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    backdrop-filter: blur(8.5px);
+    -webkit-backdrop-filter: blur(8.5px);
 
-/* Estilo genérico para los iconos del tutorial */
-#tutorialIcons img {
-  width: 10vw;
-  /* ajústalo a tu tamaño */
-  height: 10vh;
-  object-fit: contain;
-}
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    flex-direction: row;
+    padding: 0 1.5lh;
+    z-index: 10;
+    margin-bottom: 20vh;
+  }
 
-#tutorialText span.bold {
-  font-weight: 700;
-}
+  .sliderCiruclo {
+    width: 7vw;
+    height: 4vh;
+    background: #4C005E;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    margin-left: 1lh;
+  }
 
-/* Cuando un icono está en la tutorial, lo agrandamos y no clicable */
-.tutorial-icon {
-  position: absolute;
-  display: block;
-  z-index: 2000;
-  width: 8vw !important;
-  /* antes 48px */
-  height: 8vh !important;
-  pointer-events: none;
-  /* deshabilita clic mientras dure el tutorial */
-}
+  .sliderImagen {
+    width: 10%;
+  }
 
-/* Botón Siguiente deshabilitado */
-#tutorialNext:disabled {
-  opacity: 0.5;
-  cursor: default;
-}
+  .sliderCirculoImagen {
+    height: 60%;
+    transition: opacity 0.3s ease;
+  }
 
-/* Spotlight icon */
-#tutorialSpotlight {
-  display: block;
-  position: absolute;
-  width: 50px;
-  height: 50px;
-  pointer-events: none;
-  z-index: 2001;
-}
+  .sliderTexto {
+    margin-left: 10%;
+    font-size: calc(.9em + 2vw);
+    transition: opacity 0.3s ease;
+    color: #fff;
+    text-align: center;
+    font-weight: bold;
+    width: 100%;
+  }
 
-/* Botón Next en esquina inferior derecha */
-#tutorialNext {
-  position: absolute;
-  right: 5%;
-  bottom: 5%;
-  width: 7vw;
-  height: 4vh;
-  background: url('/public/next.png') no-repeat center/contain;
-  border: none;
-  cursor: pointer;
-  z-index: 1001;
-}
+  .sliderTrack {
+    width: 95%;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    /* padding: 0 1.5lh; */
+  }
 
-#tutorialSkip {
-  position: absolute;
-  margin: 0;
-  left: 0;
-  bottom: 1%;
-  width: 23vw;
-  height: 12vh;
-  /* Si tienes un icono “skip.png”, úsalo; si no, usa un fondo sólido y texto */
-  background: url('/public/omitir.png') no-repeat center/contain;
-  /* Si no usas imagen, descomenta estas dos líneas y ajusta colores: */
-  /* background: rgba(255,255,255,0.1);
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  #tutorialText {
+    position: absolute;
+    top: 10%;
+    width: 70%;
+    margin-left: 15%;
+    text-align: center;
+    font-size: calc(1.1em + 2.5vw);
+    color: #fff;
+    pointer-events: none;
+  }
+
+  #tutorialIcons {
+    position: absolute;
+    top: calc(10% + 2rem);
+    /* por ejemplo 2rem debajo del texto */
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    z-index: 2001;
+  }
+
+  /* Estilo genérico para los iconos del tutorial */
+  #tutorialIcons img {
+    width: 10vw;
+    /* ajústalo a tu tamaño */
+    height: 10vh;
+    object-fit: contain;
+  }
+
+  #tutorialText span.bold {
+    font-weight: 700;
+  }
+
+  /* Cuando un icono está en la tutorial, lo agrandamos y no clicable */
+  .tutorial-icon {
+    position: absolute;
+    display: block;
+    z-index: 2000;
+    width: 8vw !important;
+    /* antes 48px */
+    height: 8vh !important;
+    pointer-events: none;
+    /* deshabilita clic mientras dure el tutorial */
+  }
+
+  /* Botón Siguiente deshabilitado */
+  #tutorialNext:disabled {
+    opacity: 0.5;
+    cursor: default;
+  }
+
+  /* Spotlight icon */
+  #tutorialSpotlight {
+    display: block;
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    pointer-events: none;
+    z-index: 2001;
+  }
+
+  /* Botón Next en esquina inferior derecha */
+  #tutorialNext {
+    position: absolute;
+    right: 5%;
+    bottom: 5%;
+    width: 7vw;
+    height: 4vh;
+    background: url('/public/next.png') no-repeat center/contain;
+    border: none;
+    cursor: pointer;
+    z-index: 1001;
+  }
+
+  #tutorialSkip {
+    position: absolute;
+    margin: 0;
+    left: 0;
+    bottom: 1%;
+    width: 23vw;
+    height: 12vh;
+    /* Si tienes un icono “skip.png”, úsalo; si no, usa un fondo sólido y texto */
+    background: url('/public/omitir.png') no-repeat center/contain;
+    /* Si no usas imagen, descomenta estas dos líneas y ajusta colores: */
+    /* background: rgba(255,255,255,0.1);
   color: #fff;
   */
-  border: none;
-  cursor: pointer;
-  font-size: 1rem;
-  z-index: 1001;
-}
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    z-index: 1001;
+  }
 
-/* Opcional: al pasar el ratón un ligero efecto */
-#tutorialSkip:hover,
-#tutorialNext:hover {
-  opacity: 0.8;
-}
+  /* Opcional: al pasar el ratón un ligero efecto */
+  #tutorialSkip:hover,
+  #tutorialNext:hover {
+    opacity: 0.8;
+  }
 
-.tutorial-icon {
-  position: absolute;
-  z-index: 2000;
-  display: none;
-}
-#micOverlay {
-  display: none;
-  /* oculto por defecto */
-  position: absolute;
-  width: 8vw;
-  /* mismo tamaño que tu .microfono img */
-  top: 75%;
-  /* ajusta según corresponda */
-  left: 10%;
-  cursor: pointer;
-  z-index: 20;
-  /* por encima del slider */
-}
+  .tutorial-icon {
+    position: absolute;
+    z-index: 2000;
+    display: none;
+  }
 
-#new {
-  display: none;
-  /* oculto por defecto */
-  position: absolute;
-  width: 12vw;
-  bottom: 5%;
-  /* ajusta según corresponda */
-  right: 5%;
-  cursor: pointer;
-  z-index: 88;
-  /* por encima del slider */
-}
+  #micOverlay {
+    display: none;
+    /* oculto por defecto */
+    position: absolute;
+    width: 8vw;
+    /* mismo tamaño que tu .microfono img */
+    top: 75%;
+    /* ajusta según corresponda */
+    left: 10%;
+    cursor: pointer;
+    z-index: 20;
+    /* por encima del slider */
+  }
 
-.Text {
-  width: 80%;
-  height: 55%;
-  padding: 5%;
-}
+  #new {
+    display: none;
+    /* oculto por defecto */
+    position: absolute;
+    width: 12vw;
+    bottom: 5%;
+    /* ajusta según corresponda */
+    right: 5%;
+    cursor: pointer;
+    z-index: 88;
+    /* por encima del slider */
+  }
 
-#messageLabel p.final {
-  margin: 0;
-  padding: 1rem;
-  color: #000;
-  font-family: "Work Sans";
-}
+  .Text {
+    width: 80%;
+    height: 55%;
+    padding: 5%;
+  }
 
-/* Y, si vas a usar estado interino, añade también: */
-#messageLabel p.interim {
-  margin: 0;
-  padding: 1rem;
-  color: #000;
-  font-family: "Work Sans";
-  /* o el estilo que quieras */
-  font-style: italic;
-}
+  #messageLabel p.final {
+    margin: 0;
+    padding: 1rem;
+    color: #000;
+    font-family: "Work Sans";
+  }
 
-.text {
-  padding: 2rem 2rem;
-  font-size: 1.2em;
-  color: #fff;
-}
+  /* Y, si vas a usar estado interino, añade también: */
+  #messageLabel p.interim {
+    margin: 0;
+    padding: 1rem;
+    color: #000;
+    font-family: "Work Sans";
+    /* o el estilo que quieras */
+    font-style: italic;
+  }
 
-.botones {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 2rem;
-  height: 25%;
-}
+  .text {
+    padding: 2rem 2rem;
+    font-size: 1.2em;
+    color: #fff;
+  }
 
-
-/* Iconos todos al mismo tamaño */
-#micIcon {
-  width: 8vw;
-  height: 8vh;
-  object-fit: contain;
-  cursor: pointer;
-  transition: transform 0.4s ease, opacity 0.4s ease;
-}
-
-#expandIcon {
-  width: 6vw;
-  height: 6vh;
-  object-fit: contain;
-  cursor: pointer;
-  transition: transform 0.4s ease, opacity 0.4s ease;
-}
-
-#sendBtn,
-#clearBtn {
-  width: 5vw;
-  height: 5vh;
-  object-fit: contain;
-  cursor: pointer;
-  transition: transform 0.4s ease, opacity 0.4s ease;
-}
+  .botones {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2rem;
+    height: 25%;
+  }
 
 
-/* Rotación del + a × */
-#expandIcon.rotated {
-  transform: rotate(45deg);
-}
+  /* Iconos todos al mismo tamaño */
+  #micIcon {
+    width: 8vw;
+    height: 8vh;
+    object-fit: contain;
+    cursor: pointer;
+    transition: transform 0.4s ease, opacity 0.4s ease;
+  }
 
-/* Menú flotante posicionado respecto al wrapper */
-.expandMenu {
-  position: absolute;
-  bottom: calc(100% + 8px);
-  /* justo encima del expandIcon, con gap */
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.5s ease;
-  z-index: 100;
-}
+  #expandIcon {
+    width: 6vw;
+    height: 6vh;
+    object-fit: contain;
+    cursor: pointer;
+    transition: transform 0.4s ease, opacity 0.4s ease;
+  }
 
-.expandMenu.open {
-  opacity: 1;
-  pointer-events: auto;
-}
+  #sendBtn,
+  #clearBtn {
+    width: 5vw;
+    height: 5vh;
+    object-fit: contain;
+    cursor: pointer;
+    transition: transform 0.4s ease, opacity 0.4s ease;
+  }
 
-/* Opcional: estilo para los íconos */
-.botones .img1 {
-  height: 100%;
-  width: auto;
-  cursor: pointer;
-}
 
-.botones .img2 {
-  height: 60%;
-  width: auto;
-  cursor: pointer;
-}
+  /* Rotación del + a × */
+  #expandIcon.rotated {
+    transform: rotate(45deg);
+  }
 
-textarea {
-  border: 2px solid #fff;
-  /* Borde de 2px de color blanco */
-  border-radius: 8px;
-  /* Bordes redondeados */
-  background-color: #1a1a1a;
-  color: #fff;
-  /* Color del texto */
-}
+  /* Menú flotante posicionado respecto al wrapper */
+  .expandMenu {
+    position: absolute;
+    bottom: calc(100% + 8px);
+    /* justo encima del expandIcon, con gap */
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
+    z-index: 100;
+  }
 
-.salidatexto {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-}
+  .expandMenu.open {
+    opacity: 1;
+    pointer-events: auto;
+  }
 
-.salidatexto div {
-  width: 500px;
-  height: 100px;
-  border: 2px solid #fff;
-  /* Borde de 2px de color blanco */
-  padding: 15px 20px !important;
-  border-radius: 8px;
-  /* Bordes redondeados */
-  padding: 10px;
-  /* Espaciado interno */
-  background-color: #1a1a1a;
-  /* Fondo opcional */
-  color: #fff;
-  /* Color del texto */
-  overflow-y: auto;
-  margin-bottom: 2rem;
-}
+  /* Opcional: estilo para los íconos */
+  .botones .img1 {
+    height: 100%;
+    width: auto;
+    cursor: pointer;
+  }
 
-.salidatexto h3 {
-  width: 200px;
-  height: 50px;
-  text-align: center;
-}
+  .botones .img2 {
+    height: 60%;
+    width: auto;
+    cursor: pointer;
+  }
 
-button {
-  width: 200px;
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  margin: 1rem;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
+  textarea {
+    border: 2px solid #fff;
+    /* Borde de 2px de color blanco */
+    border-radius: 8px;
+    /* Bordes redondeados */
+    background-color: #1a1a1a;
+    color: #fff;
+    /* Color del texto */
+  }
 
-button:hover {
-  border-color: #646cff;
-}
+  .salidatexto {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
 
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
+  .salidatexto div {
+    width: 500px;
+    height: 100px;
+    border: 2px solid #fff;
+    /* Borde de 2px de color blanco */
+    padding: 15px 20px !important;
+    border-radius: 8px;
+    /* Bordes redondeados */
+    padding: 10px;
+    /* Espaciado interno */
+    background-color: #1a1a1a;
+    /* Fondo opcional */
+    color: #fff;
+    /* Color del texto */
+    overflow-y: auto;
+    margin-bottom: 2rem;
+  }
+
+  .salidatexto h3 {
+    width: 200px;
+    height: 50px;
+    text-align: center;
+  }
+
+  button {
+    width: 200px;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    padding: 0.6em 1.2em;
+    margin: 1rem;
+    font-size: 1em;
+    font-weight: 500;
+    font-family: inherit;
+    background-color: #1a1a1a;
+    cursor: pointer;
+    transition: border-color 0.25s;
+  }
+
+  button:hover {
+    border-color: #646cff;
+  }
+
+  button:focus,
+  button:focus-visible {
+    outline: 4px auto -webkit-focus-ring-color;
+  }
 
 }

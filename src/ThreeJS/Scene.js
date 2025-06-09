@@ -68,6 +68,7 @@ export function initScene() {
   );
   camera.position.z = 3;
   camera.position.y = 1.5;
+  camera.position.x = -.6;
   camera.zoom = 0.2;
   camera.fov = 19
   camera.updateProjectionMatrix()
@@ -146,7 +147,8 @@ export function initScene() {
       model.scale.y = 1.2
       model.scale.z = 1.2
       model.position.z = -.5
-      console.log()
+      // model.position.x = 1;
+      // console.log()
 
       // Obtener el material emissive del modelo
       emissiveMaterial = model.children[0].children[2].material;
@@ -190,6 +192,8 @@ export function initScene() {
         loop: Infinity,
         onFinished: () => alert("¡Animación terminada!"),
       });
+      document.getElementById("loaderStart").style.display = "none";
+      document.getElementById("sliderBody").style.display = "flex";
     })
     .catch((error) => {
       console.error("No se pudo cargar el modelo:", error);

@@ -1,5 +1,5 @@
 // recorder.js
-import { sendMensajeIANormal } from './Ollama';
+import { sendMensajeIANormal, StopSendMensaje } from './Ollama';
 import { synth, isIASpeaking } from './speak'; 
 
 // ——————————————————————————————————————————————————————————————————————————
@@ -49,6 +49,12 @@ function startRecognition() {
     // DEBEMOS CANCELAR LA VOZ DE LA IA INMEDIATAMENTE.
     if (isIASpeaking) {
         console.log("IA estaba hablando, pero el usuario inició el reconocimiento. Cancelando voz de IA.");
+        const valor = Math.floor(Math.random() * 2) + 1;
+        PlaAnim(valor, {
+            fadeDuration: 0.5,
+            loop: Infinity,
+            onFinished: () => alert("¡Animación terminada!"),
+        });
         synth.cancel(); // Detiene la síntesis de voz actual
         // Opcional: Si quieres un reseteo más completo de la IA al interrumpirla así,
         // podrías llamar a resetAfterIA() aquí, pero synth.cancel() es lo mínimo necesario.
@@ -63,7 +69,7 @@ function startRecognition() {
 
   finalTranscript = ""; 
   messageLabel.innerHTML = "";
-  updateSendButtonState(); 
+//   updateSendButtonState(); 
 
   recognition.onresult = (event) => {
     let interimTranscript = ""; 
@@ -91,7 +97,7 @@ function startRecognition() {
     bubble.appendChild(p);
     messageLabel.appendChild(bubble);
 
-    updateSendButtonState();
+//     updateSendButtonState();
   };
 
   recognition.onerror = (e) => {
@@ -122,6 +128,7 @@ function stopRecognition() {
   if (recognition) {
     recognition.stop(); 
     isRecognizing = false;
+    updateSendButtonState();
   }
 }
 
@@ -156,7 +163,7 @@ function toggleRecognition() {
     synth.cancel(); 
     
     // Limpiar las burbujas de la IA inmediatamente
-    messageLabel.innerHTML = ""; 
+//     messageLabel.innerHTML = ""; 
     
     // Restablecer todo el estado de la IA
     resetAfterIA(); 
@@ -231,13 +238,13 @@ sendButton.addEventListener("click", () => {
     console.log(`Pregunta INTRO ${questionCount + 1}:`, finalTranscript);
     envCont.style.display = "none";
     questionCount++;
-    finalTranscript = ""; 
+//     finalTranscript = ""; 
     updateSendButtonState(); 
   } else {
   
     // FASE IA
     const userText = finalTranscript.trim(); 
-    messageLabel.innerHTML = ""; 
+//     messageLabel.innerHTML = ""; 
     envCont.style.display = "none"; 
 
     // 3) IA pensando
@@ -246,14 +253,14 @@ sendButton.addEventListener("click", () => {
 
     // Mostrar ícono “pensar.png”
     const thinkingWrapper = document.createElement("div");
-    thinkingWrapper.style.width = "80%";
+    thinkingWrapper.style.width = "90%";
     thinkingWrapper.style.display = "flex";
     thinkingWrapper.style.justifyContent = "flex-end";
     const thinkImg = document.createElement("img");
-    thinkImg.src = "pensar.png";
+    thinkImg.src = "Think.gif";
     thinkImg.alt = "IA Pensando...";
-    thinkImg.style.width = "8rem";
-    thinkImg.style.height = "8rem";
+    thinkImg.style.width = "5rem";
+    thinkImg.style.height = "5rem";
     thinkImg.style.objectFit = "contain";
     thinkingWrapper.appendChild(thinkImg);
     messageLabel.appendChild(thinkingWrapper);
@@ -310,9 +317,16 @@ function resetAfterIA() {
   micIcon.src = "micro.png"; // Volver al icono de micrófono normal
   micIcon.style.width = "8vw";
   micIcon.style.marginLeft = "auto";
-  finalTranscript = ""; // También limpia el finalTranscript al resetear
+//   finalTranscript = ""; // También limpia el finalTranscript al resetear
 
   envCont.style.display = "none";
+  const valor = Math.floor(Math.random() * 2) + 1;
+        PlaAnim(valor, {
+            fadeDuration: 0.5,
+            loop: Infinity,
+            onFinished: () => alert("¡Animación terminada!"),
+        });
+  StopSendMensaje();
   updateSendButtonState();   
 }
 
