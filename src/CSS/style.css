@@ -492,10 +492,10 @@ button:focus-visible {
   width: 45vw;
   height: 6vh;
   border-radius: 20vw;
-  border-color: #4C005E;
-  border-width: 4px;
+  border-color: #ffffff;
+  border-width: 1px;
   border-style: solid;
-  background: linear-gradient(0deg, rgba(77, 0, 94, 0.3) 0%, rgba(0, 0, 0, 0) 100%);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.00) -122.92%, rgba(255, 255, 255, 0.15) -22.18%, rgba(255, 255, 255, 0.30) 100%);
   box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
   backdrop-filter: blur(8.5px);
   -webkit-backdrop-filter: blur(8.5px);
@@ -509,9 +509,9 @@ button:focus-visible {
 }
 
 .sliderCiruclo {
-  width: 8vw;
-  height: 5vh;
-  background: #4C005E;
+  width: 80px;
+  height: 80px;
+  background: #110C2B;
   border-radius: 50%;
   display: flex;
   justify-content: center;
@@ -519,6 +519,7 @@ button:focus-visible {
   position: absolute;
   margin-left: 1lh;
 }
+
 
 .sliderImagen {
   width: 16%;
@@ -815,14 +816,18 @@ button:focus-visible {
   display: none;
 }
 
-.loaderStart{
+.loaderStart {
   position: absolute;
   width: 100vw;
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #2d0d775f;
+  background: white;
+  z-index: 99999999999;
+}
+.loaderStart img{
+  width: 20vw;
 }
 
 @media screen and (max-width: 930px) and (orientation: portrait) {
@@ -860,10 +865,10 @@ button:focus-visible {
     width: 60vw;
     height: 5vh;
     border-radius: 20vw;
-    border-color: #4C005E;
-    border-width: 4px;
+    border-color: #ffffff;
+    border-width: 1px;
     border-style: solid;
-    background: linear-gradient(0deg, rgba(77, 0, 94, 0.3) 0%, rgba(0, 0, 0, 0) 100%);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.00) -122.92%, rgba(255, 255, 255, 0.15) -22.18%, rgba(255, 255, 255, 0.30) 100%);
     box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
     backdrop-filter: blur(8.5px);
     -webkit-backdrop-filter: blur(8.5px);
@@ -880,7 +885,7 @@ button:focus-visible {
   .sliderCiruclo {
     width: 7vw;
     height: 4vh;
-    background: #4C005E;
+    background: #110C2B;
     border-radius: 50%;
     display: flex;
     justify-content: center;
