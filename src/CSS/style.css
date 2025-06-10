@@ -68,17 +68,15 @@ body {
 }
 
 .logo {
-  width: 100vw;
   position: absolute;
   top: 2vh;
-  height: 3.2vh;
+  height: 2.4vh;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .logo img {
-  width: 25%;
   height: 100%;
 }
 
@@ -276,13 +274,14 @@ section.column {
 
 /* Iconos todos al mismo tamaño */
 #micIcon {
-  width: 8vw;
   height: 8vh;
+  width: 15vw;
   object-fit: contain;
   cursor: pointer;
   transition: transform 0.4s ease, opacity 0.4s ease;
   position: absolute;
   bottom: -4em;
+  margin-left: -2em;
 }
 
 #expandIcon {
@@ -554,10 +553,10 @@ button:focus-visible {
 #infoButton {
   position: absolute;
   top: 5vh;
-  left: 5vw;
+  left: 6vw;
   width: auto;
   /* O un tamaño fijo si lo prefieres, ej: 40px */
-  height: 5vh;
+  height: 3.5vh;
   /* Ajusta el tamaño del botón, ej: 40px */
   cursor: pointer;
   z-index: 1001;
@@ -826,7 +825,8 @@ button:focus-visible {
   background: white;
   z-index: 99999999999;
 }
-.loaderStart img{
+
+.loaderStart img {
   width: 20vw;
 }
 
@@ -1106,8 +1106,6 @@ button:focus-visible {
 
   /* Iconos todos al mismo tamaño */
   #micIcon {
-    width: 8vw;
-    height: 8vh;
     object-fit: contain;
     cursor: pointer;
     transition: transform 0.4s ease, opacity 0.4s ease;

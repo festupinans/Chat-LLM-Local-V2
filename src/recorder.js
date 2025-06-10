@@ -175,20 +175,20 @@ function toggleRecognition() {
       hasUsedToggleOnce = true;
     }
     startRecognition();
-    micIcon.src = "stopR.png";
+    micIcon.src = "stopR.gif";
     envCont.style.display = "none"; 
     return;
   }
   if (isRecognizing && questionCount < 3) {
     stopRecognition();
-    micIcon.src = "micro.png";
+    micIcon.src = "micro.gif";
     return;
   }
 
   // 2) FASE IA (questionCount >= 3)
   if (!isRecognizing && questionCount >= 3) {
     startRecognition();
-    micIcon.src = "stopR.png";
+    micIcon.src = "stopR.gif";
     envCont.style.display = "none"; 
     return;
   }
@@ -197,15 +197,11 @@ function toggleRecognition() {
     stopRecognition();
     const userText = finalTranscript.trim(); 
     if (!userText) {
-      micIcon.src = "micro.png";
-      micIcon.style.width = "8vw";
-      micIcon.style.marginLeft = "auto";
+      micIcon.src = "micro.gif";
       updateSendButtonState(); 
       return;
     }
-    micIcon.src = "micro.png"; 
-    micIcon.style.width = "8vw";
-    micIcon.style.marginLeft = "auto";
+    micIcon.src = "micro.gif"; 
     updateSendButtonState(); 
     return;
   }
@@ -246,9 +242,9 @@ sendButton.addEventListener("click", () => {
 
     // 3) IA pensando
     isIAThinking = true;
-    micIcon.src = "cancelR.png"; // Micrófono con "X" de cancelar
+    micIcon.src = "cancelR.gif"; // Micrófono con "X" de cancelar
 
-    // Mostrar ícono “pensar.png”
+    // Mostrar ícono “pensar.gif”
     const thinkingWrapper = document.createElement("div");
     thinkingWrapper.style.width = "90%";
     thinkingWrapper.style.display = "flex";
@@ -311,13 +307,12 @@ function resetAfterIA() {
   
   isIAThinking = false;
   isIAResponding = false;
-  micIcon.src = "micro.png"; // Volver al icono de micrófono normal
-  micIcon.style.width = "8vw";
+  micIcon.src = "micro.gif"; // Volver al icono de micrófono normal
   micIcon.style.marginLeft = "auto";
 //   finalTranscript = ""; // También limpia el finalTranscript al resetear
 
   envCont.style.display = "none";
-//   PlayIdel();
+    PlayIdel();
   StopSendMensaje();
   updateSendButtonState();   
 }
@@ -336,10 +331,10 @@ function checkAndShowNewChatButton() {
             newChatButton.alt = "Nuevo Chat";
             // Estilos CSS para posicionamiento
             newChatButton.style.position = "absolute";
-            newChatButton.style.top = "5vh";
+            newChatButton.style.top = "4vh";
             newChatButton.style.right = "4vw";
             newChatButton.style.width = "auto"; // O un tamaño fijo si lo prefieres
-            newChatButton.style.height = "5vh"; // Ajusta el tamaño del botón
+            newChatButton.style.height = "4vh"; // Ajusta el tamaño del botón
             newChatButton.style.cursor = "pointer"; // Indica que es clickeable
             newChatButton.style.zIndex = "1000"; // Asegura que esté por encima de otros elementos
             newChatButton.style.display = "block"; // Asegúrate de que esté visible
