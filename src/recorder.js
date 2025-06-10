@@ -1,6 +1,7 @@
 // recorder.js
 import { sendMensajeIANormal, StopSendMensaje } from './Ollama';
 import { synth, isIASpeaking } from './speak'; 
+import { PlayIdel } from './ThreeJS/AnimController';
 
 // ——————————————————————————————————————————————————————————————————————————
 // Variables globales y estados
@@ -50,11 +51,7 @@ function startRecognition() {
     if (isIASpeaking) {
         console.log("IA estaba hablando, pero el usuario inició el reconocimiento. Cancelando voz de IA.");
         const valor = Math.floor(Math.random() * 2) + 1;
-        PlaAnim(valor, {
-            fadeDuration: 0.5,
-            loop: Infinity,
-            onFinished: () => alert("¡Animación terminada!"),
-        });
+        PlayIdel();
         synth.cancel(); // Detiene la síntesis de voz actual
         // Opcional: Si quieres un reseteo más completo de la IA al interrumpirla así,
         // podrías llamar a resetAfterIA() aquí, pero synth.cancel() es lo mínimo necesario.
@@ -320,12 +317,7 @@ function resetAfterIA() {
 //   finalTranscript = ""; // También limpia el finalTranscript al resetear
 
   envCont.style.display = "none";
-  const valor = Math.floor(Math.random() * 2) + 1;
-        PlaAnim(valor, {
-            fadeDuration: 0.5,
-            loop: Infinity,
-            onFinished: () => alert("¡Animación terminada!"),
-        });
+//   PlayIdel();
   StopSendMensaje();
   updateSendButtonState();   
 }
