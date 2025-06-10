@@ -12,7 +12,7 @@ import { NombresAnimaciones } from "./Scene";
 
 let animacionActual = null; // Guarda el índice de la animación activa
 
-export function PlaAnim(i, options = {}) {
+function PlaAnim(i, options = {}) {
   const { fadeDuration = 0.3, loop = Infinity, onFinished = null } = options;
 
   // Validar índice y existencia de la animación
@@ -22,13 +22,20 @@ export function PlaAnim(i, options = {}) {
     i >= NombresAnimaciones.length ||
     !NombresAnimaciones[i]
   ) {
-    console.warn("Animación no encontrada o índice inválido:", i, NombresAnimaciones[i]);
+    console.warn(
+      "Animación no encontrada o índice inválido:",
+      i,
+      NombresAnimaciones[i]
+    );
     return;
   }
 
   // Si la animación ya está activa, no hacer nada
   if (animacionActual === i && NombresAnimaciones[i].isRunning()) {
-    console.log("La animación ya está activa:", NombresAnimaciones[i]._clip?.name);
+    console.log(
+      "La animación ya está activa:",
+      NombresAnimaciones[i]._clip?.name
+    );
     return;
   }
 
@@ -66,4 +73,26 @@ export function PlaAnim(i, options = {}) {
   animacionActual = i;
 }
 
-window.PlaAnim = PlaAnim;
+export function PlayIdel() {
+  console.log("Debe Estar Inactivo");
+
+  const valor = Math.floor(Math.random() * 4);
+  PlaAnim(valor, {
+    fadeDuration: 0.5,
+    loop: Infinity,
+    onFinished: () => alert("¡Animación terminada!"),
+  });
+}
+
+export function PlayTalk(){
+  console.log("Debe Hablar");
+  
+  const valor = Math.floor(Math.random() * 2) + 4;
+  PlaAnim(valor, {
+    fadeDuration: 0.5,
+    loop: Infinity,
+    onFinished: () => alert("¡Animación terminada!"),
+  });
+}
+window.PlayIdel = PlayIdel;
+window.PlayTalk = PlayTalk;
