@@ -1,4 +1,4 @@
-// speak.ts
+import { PlayTalk, PlayIdel } from "./ThreeJS/AnimController";
 
 export const synth = window.speechSynthesis;
 export let isIASpeaking = false; 
@@ -39,12 +39,7 @@ export function readText(
         isIASpeaking = true; 
         window.dispatchEvent(new CustomEvent('toggleAnimation', { detail: true }));
         
-        const valor = Math.floor(Math.random() * 2) + 4;
-        (window as any).PlaAnim(valor, {
-            fadeDuration: 0.5,
-            loop: Infinity,
-            onFinished: () => alert("¡Animación terminada!"),
-        });
+        PlayTalk(); 
     };
 
     utterance.onend = () => {
@@ -53,12 +48,7 @@ export function readText(
         window.dispatchEvent(new CustomEvent('toggleAnimation', { detail: false }));
         window.dispatchEvent(new CustomEvent('iaspeech:ended')); 
        
-        const valor = Math.floor(Math.random() * 2) + 1;
-        (window as any).PlaAnim(valor, {
-            fadeDuration: 0.5,
-            loop: Infinity,
-            onFinished: () => alert("¡Animación terminada!"),
-        });
+        PlayIdel();
     };
 
     utterance.onerror = (event) => {

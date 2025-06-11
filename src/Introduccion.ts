@@ -113,11 +113,11 @@ export async function sendMensajeIA(): Promise<void> {
       };
       messageLabel.innerHTML = `<p class="collectedData">${JSON.stringify(datos, null, 2)}</p>`;
 
-      await fetch('http://localhost:3000/api/robot', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(datos)
-      });
+//       await fetch('http://localhost:3000/api/robot', {
+//         method: 'POST',
+//         headers: { 'Content-Type': 'application/json' },
+//         body: JSON.stringify(datos)
+//       });
 
       readText('¡Perfecto! Ahora puedes preguntarme lo que desees.');
       initialPhase = false;
@@ -159,12 +159,15 @@ function askNext() {
   switch (subPhase) {
     case 0:
       readText('Por favor dime tu nombre.');
+      supDialog.textContent = "Cómo te llamas?";
       break;
     case 1:
       readText('Por favor ingresa tu correo electrónico.');
+      supDialog.textContent = "Cuál es tu correo electrónico?";
       break;
     case 2:
       readText('Por favor ingresa el nombre de la empresa.');
+      supDialog.textContent = "Cuál es el nombre de tu empresa?";
       break;
   }
 }
@@ -178,5 +181,6 @@ export function presentIntroduction() {
   readText('¡Hola! Soy NewRoman, tu asistente virtual y estoy aquí para ayudarte, necesito que me proporciones algunos datos.');
   setTimeout(() => {
     askNext();
+    cajaT.style.display = "flex";
   }, 9000);
 }

@@ -8,12 +8,22 @@ let url = 'http://localhost:11434/api/generate';
 // Copia del historial inicial
 let messageHistory = [...initialMessageHistory];
 
+// Flag de cancelación
+let cancelSendMensaje = false;
+
+// Nueva función para detener la ejecución
+export function StopSendMensaje() {
+  cancelSendMensaje = true;
+}
+
+// Modifica la función principal para chequear el flag
 export async function sendMensajeIANormal(
   userText: string,
   onChunk: (chunk: string) => void,
   onComplete: () => void,
   onError: () => void
 ): Promise<void> {
+  cancelSendMensaje = false; // Reinicia el flag al inicio
   try {
     messageHistory.push({ role: 'user', content: userText });
 
@@ -49,6 +59,11 @@ export async function sendMensajeIANormal(
 
     if (reader) {
       while (true) {
+        if (cancelSendMensaje) {
+          console.log('Ejecución cancelada por el usuario.');
+          onError(); // Puedes llamar a onError o a otro callback si prefieres
+          return;
+        }
         const { value, done } = await reader.read();
         if (done) break;
         const chunk = decoder.decode(value, { stream: true });
@@ -59,11 +74,10 @@ export async function sendMensajeIANormal(
               if (obj.response) {
                 respuestaCompleta += obj.response;
                 const cleanedChunkForDisplay = (marked.parse(respuestaCompleta) as string)
-              .replace(/<[^>]*>/g, ''); // Elimina cualquier etiqueta HTML/XML
-              onChunk(cleanedChunkForDisplay); 
+                  .replace(/<[^>]*>/g, '');
+                onChunk(cleanedChunkForDisplay);
               }
             } catch (e) {
-              // Ignora líneas que no sean JSON válidas
               console.warn("Línea no JSON válida o sin 'response' ignorada:", linea, e);
             }
           }
@@ -96,7 +110,8 @@ function textoLimpioString(texto: string) {
     'VR': 'realidad virtual',
     'RA': 'realidad aumentada',
     'AR': 'realidad aumentada',
-    'IA': 'inteligencia artificial'
+    'IA': 'inteligencia artificial',
+    'Encantado/a': 'Encando o Encantada'
   };
 
   let textoLimpio = texto
