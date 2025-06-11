@@ -1,6 +1,7 @@
 // (Tu archivo actual, que contiene sendMensajeIA, askNext, etc.)
 
 import { readText } from './speak';
+import { showTooltip } from './tooltips';
 // import { sendMensajeIANormal } from './Ollama'; // Comentado según tu ejemplo
 
 let initialPhase = true;
@@ -178,9 +179,18 @@ function clearMessageLabel() {
 }
 
 export function presentIntroduction() {
-  readText('¡Hola! Soy NewRoman, tu asistente virtual y estoy aquí para ayudarte, necesito que me proporciones algunos datos.');
-  setTimeout(() => {
-    askNext();
+  readText(
+    '¡Hola! Soy NewRoman, tu asistente virtual y estoy aquí para ayudarte, necesito que me proporciones algunos datos.'
+  );
+  setTimeout(() => {
+    askNext();
+    // Hacemos visible el contenedor que incluye el micrófono
     cajaT.style.display = "flex";
-  }, 9000);
+
+    // Aquí mostramos el tooltip “Graba aquí”
+    const micIcon = document.getElementById('micIcon');
+    if (micIcon) {
+      showTooltip(micIcon, 'Graba aquí');
+    }
+  }, 9000);
 }

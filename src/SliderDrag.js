@@ -1,5 +1,7 @@
 import { presentIntroduction } from './Introduccion';
 import { startTutorial } from './tutorial';
+import { showTooltip } from './tooltips.js';
+
 
 const thumb           = document.getElementById("sliderCiruclo");
 const track           = document.getElementById("sliderTrack");
@@ -58,6 +60,10 @@ const onDrag = async (e) => {
     // startTutorial();
     transcripcion.style.display = 'flex';
     presentIntroduction();
+    const infoBtn = document.getElementById('infoButton');
+    if (infoBtn) {
+      showTooltip(infoBtn, 'Info');
+    }
     return;
   }
 
