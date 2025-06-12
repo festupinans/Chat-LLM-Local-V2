@@ -135,6 +135,9 @@ export function initScene() {
   scene.add(wallBack);
 
   // Cargar un modelo 3D
+  let mixer = null;
+  const clock = new THREE.Clock();
+
   loadModel("/models/Cyborg.glb")
     .then(({ scene: model, animations }) => {
       scene.add(model);
@@ -148,7 +151,7 @@ export function initScene() {
 
       // Obtener el material emissive del modelo
       // emissiveMaterial = model.children[0].children[2].material;
-      console.log(model);
+      // console.log(model);
 
       // Iniciar o detener la animación según el estado inicial de habla
       if (habla) {
@@ -159,31 +162,17 @@ export function initScene() {
 
       // Verificar si el modelo tiene animaciones
       if (animations && animations.length > 0) {
-        const mixer = new THREE.AnimationMixer(model);
-
-        // Reproducir todas las animaciones en loop
+        mixer = new THREE.AnimationMixer(model);
         for (let i = 0; i < 6; i++) {
           const clip = animations[i];
           const action = mixer.clipAction(clip);
-          // action.play();
-          console.log(action._clip.name);
           NombresAnimaciones.push(action);
         }
-        console.log(NombresAnimaciones);
-
-        // Actualizar el mixer en cada frame
-        const clock = new THREE.Clock();
-        function animate() {
-          const delta = clock.getDelta();
-          mixer.update(delta);
-          requestAnimationFrame(animate);
-        }
-        animate();
       } else {
         console.log("El modelo no tiene animaciones.");
       }
       // presentIntroduction();
-      const valor = Math.floor(Math.random() * 2) + 1;
+      // const valor = Math.floor(Math.random() * 2) + 1;
       PlayIdel();
       document.getElementById("loaderStart").style.display = "none";
       document.getElementById("sliderBody").style.display = "flex";
@@ -203,6 +192,8 @@ export function initScene() {
   // Animación
   function animate() {
     requestAnimationFrame(animate);
+    const delta = clock.getDelta();
+    if (mixer) mixer.update(delta);
     renderer.render(scene, camera);
   }
   animate();
