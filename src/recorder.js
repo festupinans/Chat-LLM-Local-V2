@@ -263,6 +263,7 @@ sendButton.addEventListener("click", () => {
     thinkingWrapper.style.width = "90%";
     thinkingWrapper.style.display = "flex";
     thinkingWrapper.style.justifyContent = "flex-end";
+    thinkingWrapper.id = "cuadroPensando";
     const thinkImg = document.createElement("img");
     thinkImg.src = "Think.gif";
     thinkImg.alt = "IA Pensando...";
@@ -285,12 +286,12 @@ sendButton.addEventListener("click", () => {
           bubble = document.createElement("div");
           bubble.className = "messageIA";
           const p = document.createElement("p");
-          p.textContent = chunk;
+          p.innerHTML = chunk;
           bubble.appendChild(p);
           messageLabel.appendChild(bubble);
         } else {
           const p = bubble.querySelector("p");
-          p.textContent = chunk;
+          p.innerHTML = chunk;
         }
       },
       () => {

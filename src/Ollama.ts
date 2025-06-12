@@ -73,8 +73,7 @@ export async function sendMensajeIANormal(
               const obj = JSON.parse(linea);
               if (obj.response) {
                 respuestaCompleta += obj.response;
-                const cleanedChunkForDisplay = (marked.parse(respuestaCompleta) as string)
-                  .replace(/<[^>]*>/g, '');
+                const cleanedChunkForDisplay = (marked.parse(respuestaCompleta) as string);
                 onChunk(cleanedChunkForDisplay);
               }
             } catch (e) {
