@@ -1,7 +1,7 @@
 // (Tu archivo actual, que contiene sendMensajeIA, askNext, etc.)
 
 import { readText } from './speak';
-import { showTooltip } from './tooltips';
+import { showTooltip, hideAllTooltips } from './tooltips.js';
 // import { sendMensajeIANormal } from './Ollama'; // Comentado según tu ejemplo
 
 let initialPhase = true;
@@ -134,11 +134,6 @@ export async function sendMensajeIA(): Promise<void> {
               cajaD.style.display = "flex"; // Asumiendo que quieres que se muestre como flex
               setTimeout(() => {
                   cajaD.style.display = "none"; // Oculta el div después de 3 segundos
-                  // Cambia el margin-top y height de .cajaT después de que cajaD se oculte
-                  if (cajaT) { 
-                      cajaT.style.marginTop = "-80%";
-                      cajaT.style.height = "22vh";
-                  }
               }, 3000); // 3000 milisegundos = 3 segundos
           }
           hasAnimationRun = true; // Marca que la animación ya se ejecutó
@@ -179,18 +174,70 @@ function clearMessageLabel() {
 }
 
 export function presentIntroduction() {
-  readText(
+    console.log("Initiating normal application introduction after tutorial.");
+
+    // 1. Ensure the main transcription section is visible
+    const transcripcion = document.getElementById("Transcripcion");
+    if (transcripcion) {
+        transcripcion.style.display = 'flex'; // Or 'block', based on your original CSS for this section
+    }
+
+    if(cajaT){
+      cajaT.style.display = 'none'; 
+    }
+
+    // 3. Make the microphone icon visible, reset its image, and z-index
+    const micIcon = document.getElementById('micIcon');
+    if (micIcon) {
+        micIcon.style.display = 'block'; // Restore its block display
+        micIcon.src = 'micro.gif'; // Ensure it's the initial 'Grabar' icon
+        micIcon.style.zIndex = 'auto'; // Reset z-index
+    }
+
+    // 4. Make the info button visible and reset its z-index
+    const infoButton = document.getElementById('infoButton');
+    if (infoButton) {
+        infoButton.style.display = 'block'; // Restore its block display
+        infoButton.style.zIndex = '99999'; // Reset z-index
+    }
+
+    // 5. Ensure the send button container is initially hidden (recorder.js will show it)
+    const sendBtnContainer = document.getElementById('envCont');
+    if (sendBtnContainer) {
+        sendBtnContainer.style.display = 'none'; // Keep it hidden by default, recorder.js handles visibility
+        sendBtnContainer.style.zIndex = 'auto'; // Reset z-index
+    }
+
+    // 7. Hide any other overlays that might still be active from the slider or loader
+    const sliderOverlay = document.getElementById('sliderOverlay');
+    if (sliderOverlay) {
+        sliderOverlay.style.display = 'none';
+    }
+    const loaderStart = document.getElementById('loaderStart');
+    if (loaderStart) {
+        loaderStart.style.display = 'none';
+    }
+
+    // Reset initial text for the main dialog if it's dynamic
+    const supDialog = document.getElementById("supDialog");
+    if (supDialog) {
+        supDialog.textContent = "Responde estas preguntas, por favor.";
+    }
+
+    showTooltip(infoButton, 'instrucciones', 'right');
+
+    readText(
     '¡Hola! Soy NewRoman, tu asistente virtual y estoy aquí para ayudarte, necesito que me proporciones algunos datos.'
   );
   setTimeout(() => {
     askNext();
     // Hacemos visible el contenedor que incluye el micrófono
     cajaT.style.display = "flex";
-
+    cajaT.style.minHeight = "240px"
     // Aquí mostramos el tooltip “Graba aquí”
     const micIcon = document.getElementById('micIcon');
     if (micIcon) {
-      showTooltip(micIcon, 'Graba aquí');
+      showTooltip(micIcon, 'Grabar', 'down');
     }
   }, 9000);
 }

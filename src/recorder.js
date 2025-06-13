@@ -2,7 +2,7 @@
 import { sendMensajeIANormal, StopSendMensaje } from "./Ollama";
 import { synth, isIASpeaking } from "./speak";
 import { PlayIdel } from "./ThreeJS/AnimController";
-import { showTooltip } from "./tooltips.js";
+import { showTooltip, hideAllTooltips, hideSpecificTooltip } from "./tooltips.js";
 let firstMic = true,
   firstStop = true,
   firstCancel = true,
@@ -150,7 +150,7 @@ function updateSendButtonState() {
     if (!isIAThinking && !isIAResponding && finalTranscript.trim() !== "") {
       envCont.style.display = "flex";
       if (firstSend) {
-        showTooltip(sendButton, 'Envía tu mensaje');
+        showTooltip(sendButton, 'Enviar', 'bottom');
         firstSend = false;
       }
     } else {
@@ -183,7 +183,7 @@ function toggleRecognition() {
     micIcon.src = "stopR.gif";
     startRecognition();   
     if (firstStop) {
-      showTooltip(micIcon, "Presiona aquí al finalizar");
+      showTooltip(micIcon, "Escuchando", 'bottom');
       firstStop = false;
     }
     envCont.style.display = "none";
@@ -193,7 +193,7 @@ function toggleRecognition() {
     stopRecognition();
     micIcon.src = "micro.gif";
     if (firstMic) {
-    showTooltip(micIcon, 'Graba aquí');
+    showTooltip(micIcon, 'Grabar', 'down');
     firstMic = false;
   }
     return;
@@ -237,6 +237,7 @@ micIcon.addEventListener(
 // sendButton 'click': maneja INTRODUCCIÓN (3 preguntas) y LLAMA A IA
 // ——————————————————————————————————————————————————————————————————————————
 sendButton.addEventListener("click", () => {
+  hideSpecificTooltip('Enviar');
   if (finalTranscript.trim() === "") return;
   console.log(`Texto enviado:`, finalTranscript);
 
@@ -256,7 +257,7 @@ sendButton.addEventListener("click", () => {
     micIcon.src = "cancelR.gif"; // Micrófono con "X" de cancelar // Mostrar ícono “pensar.gif”
 
     if (firstCancel) {
-      showTooltip(micIcon, 'Cancela la respuesta aquí');
+      showTooltip(micIcon, 'Cancelar pregunta', 'bottom');
       firstCancel = false;
     }
     const thinkingWrapper = document.createElement("div");
@@ -342,10 +343,10 @@ function checkAndShowNewChatButton() {
       newChatButton.src = "nuevoC.png";
       newChatButton.alt = "Nuevo Chat"; // Estilos CSS para posicionamiento
       newChatButton.style.position = "absolute";
-      newChatButton.style.top = "4vh";
-      newChatButton.style.right = "4vw";
+      newChatButton.style.top = "6.7vh";
+      newChatButton.style.right = "7vw";
       newChatButton.style.width = "auto"; // O un tamaño fijo si lo prefieres
-      newChatButton.style.height = "4vh"; // Ajusta el tamaño del botón
+      newChatButton.style.height = "3vh"; // Ajusta el tamaño del botón
       newChatButton.style.cursor = "pointer"; // Indica que es clickeable
       newChatButton.style.zIndex = "1000"; // Asegura que esté por encima de otros elementos
       newChatButton.style.display = "block"; // Asegúrate de que esté visible // Event Listener para recargar la página
@@ -361,7 +362,7 @@ function checkAndShowNewChatButton() {
       console.log("Botón 'Nuevo Chat' mostrado.");
     }
     if (firstNewChat) {
-    showTooltip(newChatButton, 'Nuevo chat aquí');
+    showTooltip(newChatButton, 'Nuevo chat', 'bottom');
     firstNewChat = false;
   }
   }

@@ -1,194 +1,207 @@
-import { presentIntroduction } from './Introduccion';
-import { readText } from './speak';
+// src/tutorial.js
 
-const steps = [
-  { iconId: 'micIcon',  message: '<strong>Pulsa y mantén el botón</strong> mientras hablas. Suelta cuando termines tu mensaje.' },
-  { iconId: 'sendBtn',  message: 'Revisa. Si es lo que quieres, <strong>envíalo</strong>; la IA lo analizará.' },
-  { iconId: 'clearBtn', message: '¿Quieres decirlo diferente? Elige <strong>Borrar</strong> y vuelve a decirlo.' }
+import { showTooltip, hideAllTooltips } from './tooltips.js'; // Asegúrate de que tooltips.js exporte hideAllTooltips
+import { presentIntroduction } from './Introduccion.js'; // Asegúrate de que esta ruta sea correcta
+
+// --- Referencias a elementos del DOM ---
+const tutorialOverlay = document.getElementById('tutorialOverlay');
+const cajaT = document.querySelector('.cajaT');
+const infoButton = document.getElementById('infoButton');
+const micIcon = document.getElementById('micIcon'); // El micrófono que cambia de imagen
+const sendBtnContainer = document.getElementById('envCont'); // Contenedor del botón de enviar
+const skipTutorialBtn = document.getElementById('skipTutorialBtn');
+const otherNewButton = document.getElementById('new'); // El botón 'new' de tu HTML, si existe y lo quieres ocultar durante el tutorial
+
+// --- Variables de estado del tutorial ---
+let tutorialActive = false;
+let tutorialTimeout; // Para poder cancelar el temporizador de la escena actual
+let tutorialSkipped = false; // Bandera para saber si el usuario omitió el tutorial
+let tutorialNewChatButton = null; // Referencia al botón "Nuevo Chat" que el tutorial creará temporalmente
+
+// --- Función para reiniciar el estado de los elementos antes de cada paso o al finalizar ---
+// Asegura que cada escena comience "limpia" y que al final el DOM se quede limpio de elementos del tutorial.
+function resetElementsForStep() {
+    // Ocultar elementos principales del chat
+    if (cajaT) cajaT.style.display = 'none';
+    if (infoButton) infoButton.style.display = 'none';
+    if (micIcon) micIcon.style.display = 'none';
+    if (sendBtnContainer) sendBtnContainer.style.display = 'none';
+
+    // Ocultar el botón "Nuevo Chat" si lo estamos manejando para el tutorial
+    if (tutorialNewChatButton) {
+        tutorialNewChatButton.style.display = 'none';
+        // También lo removemos del DOM para que no interfiera después del tutorial
+        if (tutorialNewChatButton.parentNode) {
+            tutorialNewChatButton.parentNode.removeChild(tutorialNewChatButton);
+        }
+        tutorialNewChatButton = null; // Limpiar la referencia
+    }
+
+    // Si tienes otro botón con id="new" en tu HTML que no es el dinámico de recorder.js,
+    // y quieres asegurarte de que esté oculto durante el tutorial
+    if (otherNewButton) {
+        otherNewButton.style.display = 'none';
+    }
+
+    // Asegurar que los elementos que se muestran en el tutorial tengan un z-index adecuado para el tutorial
+    // (un z-index mayor que el del overlay, que es 900)
+    if (cajaT) cajaT.style.zIndex = '901';
+    if (infoButton) infoButton.style.zIndex = '901';
+    if (micIcon) micIcon.style.zIndex = '901';
+    if (sendBtnContainer) sendBtnContainer.style.zIndex = '901';
+    // El z-index del `tutorialNewChatButton` se establece al crearse.
+
+    // Ocultar todos los tooltips activos para limpiar la pantalla entre escenas
+    hideAllTooltips();
+}
+
+// --- Definición de las escenas del tutorial ---
+// Cada función asíncrona representa una "escena" que durará 4 segundos
+const tutorialSteps = [
+    async () => { // Escena 1: Grabar, Info, Enviar
+        console.log("Tutorial Escena 1: Grabar, Info, Enviar");
+        resetElementsForStep(); // Limpiar antes de mostrar los elementos de esta escena
+
+        // Mostrar elementos de la escena
+        if (cajaT) cajaT.style.display = 'flex'; // Muestra la caja principal de chat
+        if (infoButton) infoButton.style.display = 'block'; // Muestra el botón de información
+        if (micIcon) {
+            micIcon.style.display = 'block'; // Muestra el micrófono
+            micIcon.src = 'public/micro.gif'; // Asegura la imagen correcta
+        }
+        if (sendBtnContainer) sendBtnContainer.style.display = 'flex'; // Muestra el botón de enviar
+
+        // Mostrar tooltips específicos para esta escena
+        if (infoButton) showTooltip(infoButton, "Instrucciones", "right");
+        if (micIcon) showTooltip(micIcon, "Grabar", "bottom");
+        if (sendBtnContainer) showTooltip(sendBtnContainer, "Enviar", "right");
+
+        await waitFor(4000); // Duración de la escena
+    },
+    async () => { // Escena 2: Escuchando, Info, Enviar (repetir)
+        console.log("Tutorial Escena 2: Escuchando, Info, Enviar");
+        resetElementsForStep(); // Limpiar para la siguiente escena
+
+        // Mostrar elementos (los mismos que la escena 1, solo cambia el micrófono)
+        if (cajaT) cajaT.style.display = 'flex';
+        if (infoButton) infoButton.style.display = 'block';
+        if (micIcon) {
+            micIcon.style.display = 'block';
+            micIcon.src = 'public/stopR.gif'; // Cambia la imagen del micrófono
+        }
+        if (sendBtnContainer) sendBtnContainer.style.display = 'flex';
+
+        // Mostrar tooltips (se repiten, pero el de micIcon cambia)
+        if (infoButton) showTooltip(infoButton, "Instrucciones", "right");
+        if (micIcon) showTooltip(micIcon, "Escuchando", "bottom"); // Nuevo tooltip para el micrófono
+        if (sendBtnContainer) showTooltip(sendBtnContainer, "Enviar", "right");
+
+        await waitFor(4000);
+    },
+    async () => { // Escena 3: Cancelar, Nuevo Chat, Info, Enviar
+        console.log("Tutorial Escena 3: Cancelar, Nuevo Chat, Info, Enviar");
+        resetElementsForStep(); // Limpiar para la última escena
+
+        // Mostrar elementos (los mismos, más el botón "Nuevo Chat", y cambio de mic)
+        if (cajaT) cajaT.style.display = 'flex';
+        if (infoButton) infoButton.style.display = 'block';
+        if (micIcon) {
+            micIcon.style.display = 'block';
+            micIcon.src = 'public/cancelR.gif'; // Cambia la imagen del micrófono a "Cancelar"
+        }
+        if (sendBtnContainer) sendBtnContainer.style.display = 'flex';
+
+        // --- CREAR Y MOSTRAR EL BOTÓN "NUEVO CHAT" ESPECÍFICO PARA EL TUTORIAL ---
+        if (!tutorialNewChatButton) { // Solo crearlo si no existe ya
+            tutorialNewChatButton = document.createElement("img");
+            tutorialNewChatButton.id = "tutorialNewChatButton"; // ID único para el botón del tutorial
+            tutorialNewChatButton.src = "public/nuevoC.png"; // Ruta de tu imagen
+            tutorialNewChatButton.alt = "Nuevo Chat";
+            tutorialNewChatButton.style.position = "absolute";
+            tutorialNewChatButton.style.top = "6.7vh"; // Misma posición que en recorder.js
+            tutorialNewChatButton.style.right = "7vw"; // Misma posición
+            tutorialNewChatButton.style.width = "auto";
+            tutorialNewChatButton.style.height = "3vh";
+            tutorialNewChatButton.style.cursor = "pointer";
+            tutorialNewChatButton.style.zIndex = "901"; // Asegura que esté por encima del overlay
+            document.body.appendChild(tutorialNewChatButton); // Añadirlo al body
+            console.log("Botón 'Nuevo Chat' del tutorial creado y mostrado.");
+
+            // Opcional: Puedes añadir un listener si quieres que haga algo durante el tutorial,
+            // por ejemplo, omitir el tutorial.
+            // tutorialNewChatButton.addEventListener('click', () => {
+            //     skipTutorialBtn.click(); // Simula un clic en el botón de omitir
+            // });
+        }
+        if (tutorialNewChatButton) tutorialNewChatButton.style.display = "block"; // Asegurarse de que esté visible
+
+        // Mostrar tooltips
+        if (infoButton) showTooltip(infoButton, "Instrucciones", "right");
+        if (micIcon) showTooltip(micIcon, "Cancelar pregunta", "bottom");
+        if (sendBtnContainer) showTooltip(sendBtnContainer, "Enviar", "right");
+        if (tutorialNewChatButton) showTooltip(tutorialNewChatButton, "Nuevo Chat", "bottom"); // Tooltip para el botón del tutorial
+
+        await waitFor(4000);
+    }
 ];
 
-let tutorialStep = -1;
-let overlay, textEl, nextBtn, skipBtn, iconsContainer, transcripcion, micOverlay, nuevoOverlay;
-const originalPlacement = {};
-const originalPointer   = {};
+// --- Helper para esperar (pausar la ejecución de forma no bloqueante) ---
+function waitFor(ms) {
+    return new Promise(resolve => {
+        // Almacenamos el ID del setTimeout para poder cancelarlo si se omite el tutorial
+        tutorialTimeout = setTimeout(resolve, ms);
+    });
+}
 
-// Parsea mensaje con <strong> en un array de {char, bold}
-function parseMessage(html) {
-  const parts = html.split(/(<strong>|<\/strong>)/);
-  let bold = false;
-  const result = [];
-  for (let part of parts) {
-    if (part === '<strong>') bold = true;
-    else if (part === '</strong>') bold = false;
-    else {
-      for (let ch of part) result.push({ ch, bold });
+// --- Función principal para iniciar el tutorial ---
+export async function startTutorial() {
+    if (tutorialActive) return; // Evita que el tutorial se inicie si ya está activo
+    tutorialActive = true;
+    tutorialSkipped = false; // Reinicia la bandera de omitido al inicio
+
+    // Mostrar el overlay que cubre todo
+    if (tutorialOverlay) tutorialOverlay.style.display = 'block';
+    // Mostrar el botón para omitir el tutorial
+    if (skipTutorialBtn) skipTutorialBtn.style.display = 'block';
+
+    // Iterar sobre cada paso del tutorial
+    for (let i = 0; i < tutorialSteps.length; i++) {
+        if (tutorialSkipped) { // Si el usuario omite el tutorial, salimos del bucle
+            break;
+        }
+        await tutorialSteps[i](); // Ejecuta la función de la escena y espera su duración
     }
-  }
-  return result;
+
+    // Una vez que el tutorial termina (o se omite), llamamos a endTutorial
+    endTutorial();
 }
 
-// Máquina de escribir que respeta negrita via spans
-async function typewriter(el, html) {
-  el.innerHTML = '';
-  const seq = parseMessage(html);
-  let currentBold = seq[0]?.bold || false;
-  let span = document.createElement('span');
-  if (currentBold) span.classList.add('bold');
-  el.appendChild(span);
+// --- Función para finalizar el tutorial ---
+function endTutorial() {
+    console.log("Tutorial finalizado.");
+    tutorialActive = false; // Desactiva el estado del tutorial
 
-  for (let { ch, bold } of seq) {
-    if (bold !== currentBold) {
-      currentBold = bold;
-      span = document.createElement('span');
-      if (currentBold) span.classList.add('bold');
-      el.appendChild(span);
-    }
-    span.textContent += ch;
-    await new Promise(r => setTimeout(r, 50));
-  }
+    // Ocultar el overlay y el botón de omitir
+    if (tutorialOverlay) tutorialOverlay.style.display = 'none';
+    if (skipTutorialBtn) skipTutorialBtn.style.display = 'none';
+
+    // Asegurarse de que todos los tooltips estén ocultos
+    hideAllTooltips();
+
+    // Resetear los elementos a su estado por defecto (ocultos o removidos del DOM)
+    // Esto también se encargará de remover el botón "Nuevo Chat" temporal del tutorial.
+    resetElementsForStep();
+
+    // Finalmente, llamar a la función de introducción normal de la aplicación
+    presentIntroduction();
 }
 
-// Limpia las etiquetas para la voz
-function stripTags(html) {
-  return html.replace(/<[^>]+>/g, '');
-}
-
-function measureHidden(id) {
-  const elem = document.getElementById(id);
-  const toRestore = [];
-  let cur = elem;
-  while (cur && cur !== document.body) {
-    const s = getComputedStyle(cur);
-    if (s.display === 'none') {
-      toRestore.push({ el: cur, disp: cur.style.display, vis: cur.style.visibility });
-      cur.style.display    = 'block';
-      cur.style.visibility = 'hidden';
-    }
-    cur = cur.parentElement;
-  }
-  const rect = elem.getBoundingClientRect();
-  toRestore.forEach(({ el, disp, vis }) => {
-    el.style.display    = disp;
-    el.style.visibility = vis;
-  });
-  return rect;
-}
-
-function restoreAllIcons() {
-  for (let { iconId } of steps) {
-    const icon  = document.getElementById(iconId);
-    const place = originalPlacement[iconId];
-    if (!icon || !place) continue;
-
-    icon.classList.remove('tutorial-icon');
-    icon.style.position      = '';
-    icon.style.left          = '';
-    icon.style.top           = '';
-    icon.style.display       = '';
-    icon.style.pointerEvents = originalPointer[iconId];
-
-    if (place.nextSibling) place.parent.insertBefore(icon, place.nextSibling);
-    else                    place.parent.appendChild(icon);
-  }
-}
-
-export async function startTutorial(config = {}) {
-  overlay        = document.getElementById('tutorialOverlay');
-  textEl         = document.getElementById('tutorialText');
-  nextBtn        = document.getElementById('tutorialNext');
-  iconsContainer = document.getElementById('tutorialIcons');
-  transcripcion  = document.getElementById('Transcripcion');
-  micOverlay     = document.getElementById('micOverlay');
-  nuevoOverlay     = document.getElementById('new');
-
-  // Guardar posiciones y desactivar clicks en iconos
-  for (let { iconId } of steps) {
-    const icon = document.getElementById(iconId);
-    originalPlacement[iconId] = { parent: icon.parentNode, nextSibling: icon.nextSibling };
-    originalPointer[iconId] = icon.style.pointerEvents;
-    icon.style.pointerEvents = 'none';
-  }
-
-  tutorialStep           = -1;
-  overlay.style.display  = 'block';
-  overlay.style.opacity  = '1';
-  overlay.style.zIndex   = '999';
-
-  if (!document.getElementById('tutorialSkip')) {
-    skipBtn = document.createElement('button');
-    skipBtn.id = 'tutorialSkip';
-    overlay.appendChild(skipBtn);
-  } else {
-    skipBtn = document.getElementById('tutorialSkip');
-  }
-
-  if (config.nextSize) nextBtn.style.cssText += `width:${config.nextSize.width};height:${config.nextSize.height};`;
-  if (config.skipSize) skipBtn.style.cssText += `width:${config.skipSize.width};height:${config.skipSize.height};`;
-
-  nextBtn.disabled = true;
-  nextBtn.onclick  = advanceStep;
-  skipBtn.onclick  = () => endTutorial(true);
-
-  const intro = 'Hola, mi nombre es NewRoman. Espero te encuentres muy bien. Ahora te guiaré por un breve tutorial.';
-  readText(intro);
-  await typewriter(textEl, intro);
-  nextBtn.disabled = false;
-}
-
-async function advanceStep() {
-  nextBtn.disabled = true;
-
-  if (tutorialStep >= 0 && tutorialStep < steps.length) {
-    const prevId = steps[tutorialStep].iconId;
-    const prev   = document.getElementById(prevId);
-    const place  = originalPlacement[prevId];
-    prev.classList.remove('tutorial-icon');
-    prev.style.position = '';
-    prev.style.left     = '';
-    prev.style.top      = '';
-    prev.style.display  = '';
-    if (place.nextSibling) place.parent.insertBefore(prev, place.nextSibling);
-    else                    place.parent.appendChild(prev);
-  }
-
-  tutorialStep++;
-  if (tutorialStep >= steps.length) return endTutorial(false);
-
-  iconsContainer.innerHTML = '';
-  const { iconId, message } = steps[tutorialStep];
-  const icon = document.getElementById(iconId);
-  const rect = measureHidden(iconId);
-
-  overlay.appendChild(icon);
-  icon.classList.add('tutorial-icon');
-
-  readText(stripTags(message));
-  await typewriter(textEl, message);
-
-  const tr = textEl.getBoundingClientRect();
-  icon.style.left    = `${tr.left + tr.width/2 - rect.width/2}px`;
-  icon.style.top     = `${tr.bottom + 20}px`;
-  icon.style.display = 'block';
-
-  nextBtn.disabled = false;
-}
-
-function endTutorial(omitir) {
-  restoreAllIcons();
-
-  overlay.style.opacity = '0';
-  overlay.style.zIndex  = '0';
-  nextBtn.disabled      = true;
-  nextBtn.onclick       = null;
-  skipBtn.onclick       = null;
-
-  micOverlay.style.display = 'block';
-  nuevoOverlay.style.display = 'block';
-  micOverlay.addEventListener('click', () => {
-    micOverlay.style.display    = 'none';
-    overlay.style.display       = 'none';
-    transcripcion.style.display = 'flex';
-  }, { once: true });
-
-  presentIntroduction();
+// --- Listener para el botón de omitir el tutorial ---
+if (skipTutorialBtn) {
+    skipTutorialBtn.addEventListener('click', () => {
+        console.log("Tutorial omitido.");
+        tutorialSkipped = true; // Establece la bandera de omitido
+        clearTimeout(tutorialTimeout); // Cancela el setTimeout actual (detiene la espera de la escena)
+        endTutorial(); // Finaliza el tutorial inmediatamente
+    });
 }

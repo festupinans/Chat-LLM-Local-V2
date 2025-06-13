@@ -2,153 +2,179 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>NewRoman</title>
-</head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NewRoman</title>
+    <link rel="stylesheet" href="/style.css"> </head>
 
 <body>
-  <div class="three" id="app" style="top: 0;"></div>
-  <div class="logo">
-    <img src="public/logo.png">
-  </div>
-  <img src="nuevo.png" alt="Micrófono" id="new">
-
-  <img src="info.png" alt="Información" id="infoButton">
-
-  <div id="infoModal">
-    <div class="info-modal-content">
-      <div class="info-modal-left">
-        <div class="info-item">
-          <div style="display: flex; flex-direction: column;"><img src="public/micro.gif" alt="Grabar"> <span
-              style="margin-top: 2em; color: #110C2B;">Grabar Pregunta</span></div>
-        </div>
-        <div class="info-item">
-          <div style="display: flex; flex-direction: column;"><img src="public/stopR.gif" alt="Escuchando"> <span
-              style="margin-top: 2em; color: #110C2B;">Grabando/Escuchando</span></div>
-        </div>
-        <div class="info-item">
-          <div style="display: flex; flex-direction: column;"><img src="public/cancelR.gif" alt="Cancelar"> <span
-              style="margin-top: 2em; color: #110C2B;">Cancelar Pregunta</span></div>
-        </div>
-      </div>
-      <div class="info-modal-divider"></div>
-      <div class="info-modal-right">
-        <div class="info-item">
-          <div style="display: flex; flex-direction: column;"><img src="public/enviar.png" alt="Enviar"> <span
-              style="margin-top: 2em; color: #110C2B;">Enviar Pregunta</span></div>
-        </div>
-        <div class="info-item">
-          <div style="display: flex; flex-direction: column;"><img src="public/nuevoC.png" alt="Nuevo Chat"> <span
-              style="margin-top: 2em; color: #110C2B;">Nuevo Chat</span></div>
-        </div>
-      </div>
+    <div class="three" id="app" style="top: 0;"></div>
+    <div class="logo">
+        <img src="public/logo.png">
     </div>
-  </div>
-  <section class="column" id="slider-background">
-    <div class="loaderStart" id="loaderStart">
-      <img src="spinner.gif" alt="" srcset="">
-    </div>
-    <div class="sliderBody" id="sliderBody" style="display: none;">
-      <div class="sliderTrack" id="sliderTrack">
-        <div class="sliderCiruclo" id="sliderCiruclo">
-          <img src="/public/flecha.webp" alt="" class="sliderCirculoImagen">
+    <img src="nuevo.png" alt="Micrófono" id="new">
+
+    <img src="info.png" alt="Información" id="infoButton">
+
+    <div id="infoModal">
+        <div class="info-modal-content">
+            <p class="grab-text"><span>Pulsa</span><br>para hablar</p>
+            <div class="info-actions-row">
+                <div class="info-action">
+                    <div class="img">
+                        <img src="public/micro.gif" alt="Grabar">
+                    </div>
+                    <div class="textT">
+                        <span>Grabar</span>
+                    </div>
+                </div>
+                <div class="info-action">
+                    <div class="img">
+                        <img src="public/stopR.gif" alt="Escuchando">
+                    </div>
+                    <div class="textT">
+                        <span>Escuchando</span>
+                    </div>
+                </div>
+                <div class="info-action">
+                    <div class="img">
+                        <img src="public/cancelR.gif" alt="Cancelar">
+                    </div>
+                    <div class="textT">
+                        <span>Cancelar<br>Pregunta</span>
+                    </div>
+                </div>
+                <div class="info-action-divider"></div>
+                <div class="info-action">
+                    <div class="img1">
+                        <img src="public/enviar.png" alt="Enviar">
+                    </div>
+                    <div class="textT">
+                        <span>Enviar<br>pregunta</span>
+                    </div>
+                </div>
+                <div class="info-action">
+                    <div class="img1">
+                        <img src="public/nuevoC.png" alt="Nuevo Chat">
+                    </div>
+                    <div class="textT">
+                        <span>Nuevo<br>chat</span>
+                    </div>
+                </div>
+            </div>
+            <img id="closeModal" src="public/next.png" alt="Cerrar" class="info-modal-close-btn" />
         </div>
-      </div>
-      <h1 class="sliderTexto">Quiero hablar contigo</h1>
-      <img src="/public/flechas.webp" alt="" class="sliderImagen" />
     </div>
-  </section>
-  <img src="micro.gif" alt="Micrófono" id="micOverlay">
-  <section class="transcription" id="Transcripcion">
-    <div class="cajaD">
-      <h2 id="supDialog">
-        Responde estas preguntas, por favor.
-      </h2>
-    </div>
-    <div class="cajaT" style="display: none;">
-      <div class="Text Respuesta" id="messageLabel"></div>
-      <div class="botones">
-        <img src="micro.gif" id="micIcon" alt="Micrófono">
-      </div>
-      <div class="expandWrapper" id="envCont">
-        <img src="enviar.png" id="sendBtn" alt="Enviar">
-      </div>
-    </div>
-  </section>
 
-  <div id="tutorialOverlay">
-    <div id="tutorialText"></div>
-    <div id="tutorialIcons">
-    </div>
-    <button id="tutorialNext"></button>
-  </div>
+    <section class="column" id="slider-background">
+        <div class="loaderStart" id="loaderStart">
+            <img src="spinner.gif" alt="" srcset="">
+        </div>
+        <div id="sliderOverlay" class="slider-overlay"></div>
+        <div class="sliderBody" id="sliderBody" style="display: none;">
+            <div class="sliderTrack" id="sliderTrack">
+                <div class="sliderCiruclo" id="sliderCiruclo">
+                    <img src="/public/flecha.webp" alt="Flecha" class="sliderCirculoImagen" id="flechaIcon">
+                    <img src="/public/iniciar.png" alt="Iniciar" class="sliderCirculoImagen" id="iniciarIcon">
+                </div>
+            </div>
+            <h1 class="sliderTexto">Quiero hablar contigo</h1>
+            <img src="/public/flechas.webp" alt="" class="sliderImagen" />
+        </div>
+    </section>
 
-  <script>
-    let btn;
-    let btn2;
+    <section class="transcription" id="Transcripcion">
+        <div class="bloque">
+            <div class="cajaD">
+                <h2 id="supDialog">
+                    Responde estas preguntas, por favor.
+                </h2>
+            </div>
+            <div class="cajaT" style="display: none;">
+                <div class="Text Respuesta" id="messageLabel">
+                    </div>
+                <div class="line"></div>
+                <img src="micro.gif" id="micIcon" alt="Micrófono">
+                <div class="expandWrapper" id="envCont">
+                    <img src="enviar.png" id="sendBtn" alt="Enviar">
+                </div>
+            </div>
+        </div>
+    </section>
 
-    document.addEventListener('DOMContentLoaded', () => {
-      const expandIcon = document.getElementById('expandIcon');
-      const expandMenu = document.getElementById('expandMenu');
-      let menuOpen = false;
+    <div id="tutorialOverlay" class="tutorial-overlay">
+        </div>
 
-      // Código existente para expandIcon y expandMenu
-      if (expandIcon && expandMenu) {
-        expandIcon.addEventListener('click', () => {
-          expandIcon.style.opacity = '0';
-          setTimeout(() => {
-            expandIcon.src = menuOpen ? 'expandir.png' : 'cerrar.png';
-            menuOpen = !menuOpen;
-            expandMenu.classList.toggle('open', menuOpen);
-            expandIcon.style.opacity = '1';
-          }, 400);
+    <img id="skipTutorialBtn" src="next.png" alt="Omitir Tutorial" class="skip-tutorial-btn" style="display: none;">
+
+
+    <script>
+        let btn;
+        let btn2;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const expandIcon = document.getElementById('expandIcon');
+            const expandMenu = document.getElementById('expandMenu');
+            const closeModal = document.getElementById('closeModal');
+            let menuOpen = false;
+
+            if (closeModal) {
+                closeModal.addEventListener('click', () => {
+                    modalVisible = false;
+                    infoModal.style.bottom = '-100vh';
+                });
+            }
+
+            if (expandIcon && expandMenu) {
+                expandIcon.addEventListener('click', () => {
+                    expandIcon.style.opacity = '0';
+                    setTimeout(() => {
+                        expandIcon.src = menuOpen ? 'expandir.png' : 'cerrar.png';
+                        menuOpen = !menuOpen;
+                        expandMenu.classList.toggle('open', menuOpen);
+                        expandIcon.style.opacity = '1';
+                    }, 400);
+                });
+            }
+
+            const clearBtn = document.getElementById('clearBtn');
+            if (clearBtn) {
+                clearBtn.addEventListener('click', borrarTextArea);
+            }
+
+            const newEl = document.getElementById('new');
+            if (newEl) {
+                newEl.addEventListener('click', () => {
+                    window.location.reload();
+                });
+            }
+
+            const infoButton = document.getElementById('infoButton');
+            const infoModal = document.getElementById('infoModal');
+            let modalVisible = false;
+
+            if (infoButton && infoModal) {
+                infoButton.addEventListener('click', () => {
+                    modalVisible = !modalVisible;
+                    infoModal.style.bottom = modalVisible ? '0' : '-100vh';
+                });
+            }
         });
-      }
 
-      // Aquí agregamos el listener directamente al botón clearBtn
-      const clearBtn = document.getElementById('clearBtn');
-      if (clearBtn) {
-        clearBtn.addEventListener('click', borrarTextArea);
-      }
+        function borrarTextArea() {
+            const transcript = document.getElementById('transcript');
+            const messageLabel = document.getElementById('messageLabel');
 
-      const newEl = document.getElementById('new');
-      if (newEl) {
-        newEl.addEventListener('click', () => {
-          window.location.reload();
-        });
-      }
+            if (transcript) transcript.value = '';
+            if (messageLabel) messageLabel.innerHTML = '';
+        }
+    </script>
 
-      // AÑADIR ESTE CÓDIGO JS AQUÍ para el modal de información
-      const infoButton = document.getElementById('infoButton');
-      const infoModal = document.getElementById('infoModal');
-      let modalVisible = false;
-
-      if (infoButton && infoModal) {
-        infoButton.addEventListener('click', () => {
-          modalVisible = !modalVisible;
-          // Controlamos la propiedad 'bottom' directamente para la animación
-          infoModal.style.bottom = modalVisible ? '0' : '-25vh';
-        });
-      }
-      // FIN DEL CÓDIGO JS A AÑADIR
-
-    });
-
-    function borrarTextArea() {
-      const transcript = document.getElementById('transcript');
-      const messageLabel = document.getElementById('messageLabel');
-
-      if (transcript) transcript.value = '';
-      if (messageLabel) messageLabel.innerHTML = '';
-    }
-  </script>
-
-  <script type="module" src="/src/main.js"></script>
-  <script type="module" src="/src/Ollama.ts"></script>
-  <script type="module" src="/src/recorder.js"></script>
-  <script type="module" src="/src/SliderDrag.js"></script>
-</body>
+    <script type="module" src="/src/main.js"></script>
+    <script type="module" src="/src/Ollama.ts"></script>
+    <script type="module" src="/src/recorder.js"></script>
+    <script type="module" src="/src/SliderDrag.js"></script>
+    <script type="module" src="/src/tutorial.js"></script> </body>
 
 </html>

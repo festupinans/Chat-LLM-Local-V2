@@ -20,7 +20,7 @@
 }
 
 @font-face {
-  font-family: 'Work Sans';
+  font-family: 'Work Sans Light';
   src: url('../fonts/WorkSans-Light.ttf') format('truetype');
   font-weight: 300;
   font-style: normal;
@@ -69,8 +69,8 @@ body {
 
 .logo {
   position: absolute;
-  top: 2vh;
-  height: 2.4vh;
+  top: 3vh;
+  height: 2.75vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -103,37 +103,43 @@ section.column {
   max-height: 100vh; */
 }
 
+.bloque{
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: auto;
+  margin-top: 16vh;
+  margin-left: 8vw;
+}
+
 .transcription {
   display: none;
   width: 100vw;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  /* gap: 1lh; */
-
+  height: 100vh;
+  justify-content: start;
+  align-items: start;
   position: relative;
+  
 }
 
 .cajaD {
-  margin-top: -100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 49vw;
+  width: 51vw;
   line-height: 1;
-  height: 14vh;
-  border: 1px solid #6F00FF;
+  height: auto;
+  border: 1.9px solid rgba(105, 15, 223, 0.288);
   background: #9FA0DC4D;
-  backdrop-filter: blur(16.277387619018555px);
+  backdrop-filter: blur(20px);
   border-top-left-radius: 6vw;
-  border-top-right-radius: 6vw;
+  border-top-right-radius: 0;
   border-bottom-left-radius: 6vw;
-  border-bottom-right-radius: 0;
-  left: 2vw;
-  position: absolute;
+  border-bottom-right-radius: 6vw;
   -webkit-backdrop-filter: blur(2px);
+  margin-bottom: 2em;
 
 }
 
@@ -141,34 +147,46 @@ section.column {
   font-family: 'Work Sans';
   color: #6F00FF;
   font-weight: 600;
-  font-size: 2.3em;
-  padding: 1em 1em;
+  font-size: 3.5em;
+  padding: 0.2em 1.5em;
 }
 
 .cajaT {
-  margin-top: -30%;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   align-items: center;
-  width: 49vw;
-  height: 17vh;
-  border: 1px solid #4C005E;
-  background: rgba(217, 217, 217, 0.30);
-  backdrop-filter: blur(10px);
+  width: 51vw;
+  min-height: 190px;
+  max-height: 600px;
+  height: auto;
+  border: 2.9px solid rgba(105, 15, 223, 0.288);
+  background: #fffdfd73;
+  backdrop-filter: blur(15px);
   border-top-left-radius: 6vw;
   border-top-right-radius: 0;
   border-bottom-left-radius: 6vw;
   border-bottom-right-radius: 6vw;
-  left: 2vw;
-  position: absolute;
   -webkit-backdrop-filter: blur(2px);
+  padding: 1rem 0;
+  box-sizing: border-box;
+}
+
+.line{
+  border-bottom: 1px solid rgba(0, 0, 0, 0.30);
+  bottom: 20%;
+  position: absolute;
+  width: 85%;
+  margin-bottom: 2em;
 }
 
 .Text {
-  width: 80%;
-  height: 55%;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.30);
-  padding: 3%;
+    width: 80%;
+    height: auto;
+    min-height: 100px;
+    max-height: 300px;
+    margin-bottom: 25%;
+    overflow: auto;
 }
 
 .messageBubble {
@@ -264,24 +282,23 @@ section.column {
 
 /* Wrapper para el ícono de expandir */
 .expandWrapper {
-  position: relative;
-  width: 100%;
-  display: none;
-  justify-content: end;
-  margin-right: 15%;
-  margin-bottom: 5%;
+    position: absolute;
+    width: 100%;
+    display: none;
+    justify-content: end;
+    margin-right: 15%;
+    bottom: .9em;
 }
 
 /* Iconos todos al mismo tamaño */
 #micIcon {
-  height: 8vh;
-  width: 15vw;
-  object-fit: contain;
-  cursor: pointer;
-  transition: transform 0.4s ease, opacity 0.4s ease;
-  position: absolute;
-  bottom: -4em;
-  margin-left: -2em;
+      height: 9vh;
+    width: 9vw;
+    object-fit: contain;
+    cursor: pointer;
+    transition: transform 0.4s ease, opacity 0.4s ease;
+    position: absolute;
+    bottom: -5em;
 }
 
 #expandIcon {
@@ -295,7 +312,7 @@ section.column {
 
 #sendBtn,
 #clearBtn {
-  width: 6vw;
+  width: 5.3vw;
   object-fit: contain;
   cursor: pointer;
   transition: transform 0.4s ease, opacity 0.4s ease;
@@ -470,13 +487,22 @@ button:focus-visible {
 
 #slider-background {
   width: 100vw;
-  background: #000000;
-  background: linear-gradient(0deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%);
-
+  height: 100vh;
+  /* Asegura que ocupe toda la altura de la ventana */
+  position: fixed;
+  /* Mantiene el fondo fijo en la ventana */
+  top: 0;
+  left: 0;
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
+  /* Alinea el sliderBody a la derecha */
   align-items: center;
-
+  z-index: 50;
+  /* Controla el orden de apilamiento */
+  /* Fondo inicial. JavaScript lo animará. */
+  background: linear-gradient(rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, .8) 100%);
+  transition: background 0.5s ease-out;
+  /* Transición suave para el cambio de fondo global */
 }
 
 .assistant {
@@ -487,77 +513,168 @@ button:focus-visible {
   overflow-y: auto;
 }
 
-.sliderBody {
-  width: 45vw;
-  height: 6vh;
-  border-radius: 20vw;
-  border-color: #ffffff;
-  border-width: 1px;
-  border-style: solid;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.00) -122.92%, rgba(255, 255, 255, 0.15) -22.18%, rgba(255, 255, 255, 0.30) 100%);
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-  backdrop-filter: blur(8.5px);
-  -webkit-backdrop-filter: blur(8.5px);
-  display: flex;
-  justify-content: end;
-  align-items: center;
-  flex-direction: row;
-  padding: 0 1.5lh;
-  z-index: 10;
-  margin-bottom: 20vh;
+.slider-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 999;
+  /* Asegúrate de que esté detrás del sliderBody pero sobre el fondo */
+  /* background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 100%); */
+  pointer-events: none;
+  /* Para que no interfiera con los clics */
+  transition: opacity 0.5s ease-out;
+  opacity: 1;
 }
 
-.sliderCiruclo {
-  width: 80px;
-  height: 80px;
-  background: #110C2B;
+.sliderBody {
+  position: absolute !important;
+  padding: 1.5em 1em;
+  top: 70%;
+  display: flex;
+  align-items: center;
+  width: 80%;
+  /* Ancho del contenedor del slider */
+  max-width: 450px;
+  /* Ancho máximo para pantallas grandes */
+  margin-right: 5%;
+  /* Margen derecho para alinearlo a la derecha */
+  position: relative;
+  /* Necesario para que el texto se posicione correctamente */
+  overflow: hidden;
+  /* **CRUCIAL** para el efecto "ascensor" del texto */
+  height: 60px;
+  /* Altura del contenedor */
+  border-radius: 70px;
+  /* Bordes redondeados del contenedor */
+  border: 1px solid #6f00ff;
+  /* Bordes redondeados del contenedor */
+  ;
+
+  background: linear-gradient(30deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.2) 50%);
+  box-shadow: -2.461px 0px 4.921px 0px rgba(201, 201, 201, 0.10) inset, 12.303px -12.303px 29.528px 0px rgba(255, 255, 255, 0.05) inset, -12.303px 12.303px 29.528px 0px rgba(255, 255, 255, 0.05) inset;
+  /* Efecto de desenfoque */
+  backdrop-filter: blur(20px);
+
+  /* Transiciones para que JavaScript las manipule suavemente */
+  transition: background 0.3s ease-out, border-image 0.3s ease-out, box-shadow 0.3s ease-out, backdrop-filter 0.3s ease-out;
+}
+
+#iniciarIcon {
+  opacity: 0;
+}
+
+/* .sliderBody::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 1.5px;
+  border-radius: inherit;
+  background: linear-gradient(50deg, #ffffff00, #ffffff80, #6f00ff);
+  -webkit-mask: 
+    linear-gradient(#fff 0 0) content-box, 
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  z-index: 0;
+} */
+
+#sliderCiruclo {
+  width: 70px;
+  /* Diámetro del círculo */
+  height: 70px;
   border-radius: 50%;
+  position: absolute;
+  left: 0;
+  /* Posición inicial, JavaScript lo moverá */
   display: flex;
   justify-content: center;
   align-items: center;
-  position: absolute;
-  margin-left: 1lh;
+  cursor: grab;
+  /* Indica que es arrastrable */
+
+  /* Color de fondo inicial del círculo (cambiará de #110C2B a #6F00FF) */
+  background-color: #110C2B;
+
+  /* Transiciones para que JavaScript las manipule */
+  transition: left 0.3s ease-out, background-color 0.3s ease-out;
+  /* `overflow: hidden` es importante para que los iconos dentro del círculo se recorten */
+  overflow: hidden;
+  z-index: 1;
 }
 
 
 .sliderImagen {
-  width: 16%;
+  width: 8%;
+  z-index: 0;
 }
 
 .sliderCirculoImagen {
-  height: 60%;
-  transition: opacity 0.3s ease;
+  width: 30%;
+  /* Tamaño del icono dentro del círculo */
+  height: 30%;
+  object-fit: contain;
+  /* Asegura que la imagen se ajuste sin distorsionarse */
+  position: absolute;
+  /* Para poder controlar su posición y opacidad */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  /* Centra la imagen */
+  transition: opacity 0.3s ease-out;
+  /* Transición suave para la opacidad */
+  pointer-events: none;
+  /* Asegura que no interfieran con el arrastre del círculo */
 }
 
+
 .sliderTexto {
-  margin-left: 10%;
-  font-size: calc(.9em + 1.3vw);
-  transition: opacity 0.3s ease;
+  position: absolute;
+  /* Esencial para el efecto de desplazamiento (ascensor) */
+  font-size: 1.5em;
+  font-weight: 400;
+  font-family: 'Work Sans';
   color: #fff;
+  /* Color del texto */
   text-align: center;
   font-weight: bold;
   width: 100%;
+  /* Ocupa el ancho completo para el desplazamiento */
+  white-space: nowrap;
+  /* Evita que el texto se rompa en varias líneas */
+  text-overflow: ellipsis;
+  /* Opcional: añade puntos suspensivos si el texto es muy largo */
+  left: 0;
+  /* Asegura que el texto esté alineado para el desplazamiento */
+  transform: translateY(0);
+  /* Posición inicial del texto (no desplazado) */
+
+  /* Transiciones: JavaScript las manipulará */
+  transition: transform 0.3s ease-out, opacity 0.3s ease-out;
 }
 
+
 .sliderTrack {
-  width: 95%;
-  position: absolute;
+  width: 100%;
+  /* Ocupa todo el ancho del sliderBody */
+  height: 100%;
+  /* Ocupa toda la altura del sliderBody */
+  background-color: transparent;
+  /* El track en sí no tiene fondo visible */
+  position: relative;
   display: flex;
   align-items: center;
-  justify-content: start;
-  /* padding: 0 1.5lh; */
 }
 
 /*INFO*/
 /* Estilos para el botón de información */
 #infoButton {
   position: absolute;
-  top: 5vh;
-  left: 6vw;
+  top: 7vh;
+  left: 8vw;
   width: auto;
-  /* O un tamaño fijo si lo prefieres, ej: 40px */
-  height: 3.5vh;
-  /* Ajusta el tamaño del botón, ej: 40px */
+  height: 2.8vh;
   cursor: pointer;
   z-index: 1001;
   /* Asegura que esté por encima de otros elementos */
@@ -567,106 +684,117 @@ button:focus-visible {
 /* Estilos para el modal de información */
 #infoModal {
   position: fixed;
-  bottom: -25vh;
-  /* Oculto inicialmente, se deslizará hacia arriba */
+  bottom: -100vh;
   left: 0;
   width: 100%;
-  height: 15vh;
-  background: #9B53F980;
-  /* Color con transparencia */
+  height: 100vh;
+  background: linear-gradient(180deg, rgba(17, 12, 43, 0.80) 0%, rgba(17, 12, 43, 0.97) 50%);
   border-top-left-radius: 30px;
   border-top-right-radius: 30px;
-  /* Box-shadow exacto proporcionado */
   box-shadow: -2.17px 0px 4.341px 0px rgba(201, 201, 201, 0.10) inset,
     10.852px -10.852px 26.044px 0px rgba(255, 255, 255, 0.05) inset,
     -10.852px 10.852px 26.044px 0px rgba(255, 255, 255, 0.05) inset;
-  backdrop-filter: blur(16.277387619018555px);
-  -webkit-backdrop-filter: blur(16.277387619018555px);
-  /* Para compatibilidad con Safari */
+  backdrop-filter: blur(16.277px);
+  -webkit-backdrop-filter: blur(16.277px);
   z-index: 1000;
-  /* Por debajo del botón si es necesario, pero por encima de la mayoría */
   display: flex;
-  /* Para centrar el contenido */
   justify-content: center;
   align-items: center;
   transition: bottom 0.5s ease-in-out;
-  /* Animación de deslizamiento */
   overflow: hidden;
-  /* Asegura que nada se desborde durante la animación */
 }
 
-/* Contenido interno del modal para centrado y layout */
+.grab-text{
+  width: 100%;
+  text-align: start;
+  margin-left: 8em;
+  color: #FFF;
+font-family: "Work Sans";
+font-size: 1.4rem;
+}
+.grab-text span{
+  font-weight: 800;
+}
+
+
 .info-modal-content {
-  display: flex;
+  position: relative;
   width: 100%;
   height: 100%;
+  padding: 2em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
-  /* Centra los paneles dentro del modal */
-  align-items: center;
 }
 
-.info-modal-left {
-  width: 65%;
-  height: 100%;
+.info-actions-row {
   display: flex;
-  justify-content: space-between;
-  /* Centra los items verticalmente */
+  justify-content: space-around;
   align-items: center;
-  /* Centra los items horizontalmente */
-  padding: 3em;
+  flex-wrap: wrap;
+  width: 100%;
+  max-width: 90%;
 }
 
-.info-modal-right {
-  width: 35%;
-  height: 100%;
+.info-action {
   display: flex;
-  justify-content: space-between;
-  /* Centra los items verticalmente */
+  flex-direction: column;
   align-items: center;
-  /* Centra los items horizontalmente */
-  padding: 3em;
+  margin: 1em;
+  width: 90px; /* ancho uniforme para mantener alineación */
 }
 
-.info-item {
-  display: flex;
-  align-items: center;
-  /* Alinea ícono y texto */
-  margin-bottom: 10px;
-  /* Espacio entre los elementos */
-  color: white;
-  /* Color del texto */
-  font-size: 0.9em;
-  /* Tamaño del texto */
-  font-family: 'Work Sans', sans-serif;
-  /* Usar tu fuente definida */
-  text-align: center;
-}
-
-.info-item:last-child {
-  margin-bottom: 0;
-  /* No hay margen inferior para el último elemento en cada columna */
-}
-
-.info-item img {
-  width: auto;
-  /* O un tamaño fijo si lo prefieres, ej: 30px */
-  height: 3vh;
-  /* Tamaño del ícono, ej: 30px */
-  margin-right: 5px;
-  /* Espacio entre ícono y texto */
+.info-action .img {
+  height: 120px;
+  width: 120px;
   object-fit: contain;
-  /* Asegura que la imagen se vea bien */
 }
 
-/* Línea divisora */
-.info-modal-divider {
-  width: 1px;
-  height: 80%;
-  /* Altura de la línea divisora */
-  background-color: rgba(255, 255, 255, 0.2);
-  /* Color y transparencia de la línea */
+.info-action .textT{
+  height: 5vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
+.info-action .img1 {
+  height: 60px;
+  width: 60px;
+  object-fit: contain;
+}
+
+.info-action .img img, .info-action .img1 img{
+  height: 100%;
+  width: 100%;
+}
+
+.info-action span {
+  margin-top: 0.8em;
+  color: #FFF;
+  text-align: center;
+  font-family: "Work Sans";
+  font-size: 1.3em;
+}
+
+/* Botón de cerrar en parte inferior derecha */
+.info-modal-close-btn {
+  position: absolute;
+  bottom: 5%;
+    right: 5%;
+  height: 5vh;
+  width: auto;
+  cursor: pointer;
+}
+
+.info-action-divider {
+    width: 1px; /* El ancho de la línea */
+    background-color: rgba(255, 255, 255, 0.3); /* Color blanco con transparencia */
+    height: 100%; /* **CRUCIAL:** Esto hará que la línea ocupe toda la altura disponible dentro de su contenedor flex (`.info-actions-row`) */
+    margin: 0 1em; /* Margen a los lados para separarla de los iconos, ajústalo si es necesario */
+    flex-shrink: 0; /* Evita que la línea se encoja si el espacio es limitado */
+}
 
 @keyframes spin {
   0% {
@@ -698,122 +826,56 @@ button:focus-visible {
 
 }
 
-/* ===== Tutorial Overlay ===== */
+/*Tutorial*/
+/* --- Overlay del Tutorial --- */
 #tutorialOverlay {
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: #110C2BE5;
-  display: none;
-  z-index: 1000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(180deg, rgba(17, 12, 43, 0.80) 0%, rgba(17, 12, 43, 0.97) 50%);
+    z-index: 900; /* Detrás de los elementos que queremos mostrar, pero delante de todo lo demás */
+    display: none; /* Inicialmente oculto */
 }
 
-/* Texto superior, solo letra blanca */
-#tutorialText {
-  position: absolute;
-  top: 10%;
-  width: 70%;
-  margin-left: 15%;
-  text-align: center;
-  font-size: calc(1.1em + 1.2vw);
-  color: #fff;
-  pointer-events: none;
+/* --- Elementos que deben estar por encima del overlay del tutorial --- */
+/* Asegúrate de que estos elementos tengan un z-index más alto que #tutorialOverlay */
+#cajaT,
+#micIcon,
+#infoButton,
+#envCont, /* El contenedor del botón de enviar */
+#new, /* El botón de "Nuevo Chat" que ya existe */
+#sendBtn /* Aunque #sendBtn está dentro de #envCont, es bueno ser explícito si es necesario */ {
+    z-index: 901; /* Mayor que el z-index del overlay */
 }
 
-#tutorialIcons {
-  position: absolute;
-  top: calc(10% + 2rem);
-  /* por ejemplo 2rem debajo del texto */
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  gap: 2rem;
-  z-index: 2001;
+/* Estilos para el botón de "Nuevo Chat" si lo generas con JS y quieres que se vea durante el tutorial */
+/* Si ya existe en HTML con id="new", entonces #new es suficiente para el z-index */
+/* Si lo generas dinámicamente como en recorder.js, necesitarás el id="newChatButton" */
+#newChatButton { /* Si lo generas dinámicamente */
+    position: absolute; /* Asegura que el z-index funcione */
+    z-index: 901; /* Mayor que el z-index del overlay */
+    /* Tus otros estilos de posicionamiento para #newChatButton */
+    top: 6.7vh; /* Como lo tienes en recorder.js */
+    right: 7vw; /* Como lo tienes en recorder.js */
+    height: 3vh;
+    width: auto;
 }
 
-/* Estilo genérico para los iconos del tutorial */
-#tutorialIcons img {
-  width: 10vw;
-  /* ajústalo a tu tamaño */
-  height: 10vh;
-  object-fit: contain;
+
+/* --- Botón para omitir el tutorial --- */
+.skip-tutorial-btn {
+    position: fixed;
+    bottom: 5%;
+    right: 5%;
+    width: 40px; /* Ajusta el tamaño según necesites */
+    height: auto;
+    z-index: 950; /* Por encima del overlay y los elementos del tutorial */
+    cursor: pointer;
+    transition: opacity 0.3s ease-in-out;
 }
 
-#tutorialText span.bold {
-  font-weight: 700;
-}
-
-/* Cuando un icono está en la tutorial, lo agrandamos y no clicable */
-.tutorial-icon {
-  position: absolute;
-  display: block;
-  z-index: 2000;
-  width: 8vw !important;
-  /* antes 48px */
-  height: 8vh !important;
-  pointer-events: none;
-  /* deshabilita clic mientras dure el tutorial */
-}
-
-/* Botón Siguiente deshabilitado */
-#tutorialNext:disabled {
-  opacity: 0.5;
-  cursor: default;
-}
-
-/* Spotlight icon */
-#tutorialSpotlight {
-  display: block;
-  position: absolute;
-  width: 50px;
-  height: 50px;
-  pointer-events: none;
-  z-index: 2001;
-}
-
-/* Botón Next en esquina inferior derecha */
-#tutorialNext {
-  position: absolute;
-  right: 1%;
-  bottom: 5%;
-  width: 7vw;
-  height: 4vh;
-  background: url('/public/next.png') no-repeat center/contain;
-  border: none;
-  cursor: pointer;
-  z-index: 1001;
-}
-
-#tutorialSkip {
-  position: absolute;
-  margin: 0;
-  left: 0;
-  bottom: 1%;
-  height: 12vh;
-  /* Si tienes un icono “skip.png”, úsalo; si no, usa un fondo sólido y texto */
-  background: url('/public/omitir.png') no-repeat center/contain;
-  /* Si no usas imagen, descomenta estas dos líneas y ajusta colores: */
-  /* background: rgba(255,255,255,0.1);
-  color: #fff;
-  */
-  border: none;
-  cursor: pointer;
-  font-size: 1rem;
-  z-index: 1001;
-}
-
-/* Opcional: al pasar el ratón un ligero efecto */
-#tutorialSkip:hover,
-#tutorialNext:hover {
-  opacity: 0.8;
-}
-
-.tutorial-icon {
-  position: absolute;
-  z-index: 2000;
-  display: none;
-}
 
 .loaderStart {
   position: absolute;
@@ -833,17 +895,14 @@ button:focus-visible {
 .tooltip {
   position: absolute;
   display: inline-block;
-  border: 1px solid #6f00ff;
-  background: #9fa0dc4d;
-  backdrop-filter: blur(16.277387619018555px);
-  -webkit-backdrop-filter: blur(2px);
-  border-radius: 20px;
+  border: 1px solid #6F00FF;
+  background: #9B53F9;;
+  border-radius: 15px;
   padding: 0.5em 1em;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-    font-family: 'Work Sans';
-  color: #6F00FF;
-  font-weight: 600;
-  font-size: 2.3em;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  color: #FFF;
+  font-weight: 300;
+  font-family: 'Work Sans Light';
   z-index: 10000;
   opacity: 0;
   pointer-events: none;
@@ -856,12 +915,14 @@ button:focus-visible {
 .tooltip::before {
   content: "";
   position: absolute;
-  bottom: 100%;            /* justo encima de la caja */
+  bottom: 100%;
+  /* justo encima de la caja */
   left: 50%;
   transform: translateX(-50%);
-  border-width: 7px;       /* un poco más grande */
+  border-width: 7px;
+  /* un poco más grande */
   border-style: solid;
-  border-color: transparent transparent #333 transparent;
+  border-color: transparent transparent #6F00FF transparent;
   /* colocarlo bajo el triángulo blanco */
   z-index: -2;
 }
@@ -870,12 +931,14 @@ button:focus-visible {
 .tooltip::after {
   content: "";
   position: absolute;
-  bottom: calc(100% - 1px);/* sube 1px para quedar sobre el de borde */
+  bottom: calc(100% - 1px);
+  /* sube 1px para quedar sobre el de borde */
   left: 50%;
   transform: translateX(-50%);
-  border-width: 6px;       /* tamaño del “pico” real */
+  border-width: 6px;
+  /* tamaño del “pico” real */
   border-style: solid;
-  border-color: transparent transparent #fff transparent;
+  border-color: transparent transparent #9B53F9 transparent;
   z-index: -1;
 }
 
@@ -886,10 +949,71 @@ button:focus-visible {
 
 /* Animación de flotación */
 @keyframes float {
-  0%   { transform: translateY(0); }
-  50%  { transform: translateY(-5px); }
-  100% { transform: translateY(0); }
+  0% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-5px);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
 }
+
+.tooltip-top::before,
+.tooltip-top::after {
+  bottom: auto;
+  top: 100%;
+  border-color: #6F00FF transparent transparent transparent;
+}
+.tooltip-top::after {
+  border-color: #9B53F9 transparent transparent transparent;
+  top: calc(100% - 1px);
+}
+
+.tooltip-bottom::before,
+.tooltip-bottom::after {
+  top: auto;
+  bottom: 100%;
+  border-color: transparent transparent #6F00FF transparent;
+}
+.tooltip-bottom::after {
+  border-color: transparent transparent #9B53F9 transparent;
+  bottom: calc(100% - 1px);
+}
+
+.tooltip-right::before,
+.tooltip-right::after {
+  top: 50%;
+  left: -14px;
+  transform: translateY(-50%);
+  border-width: 7px;
+  border-style: solid;
+  border-color: transparent #6F00FF transparent transparent;
+}
+.tooltip-right::after {
+  left: -13px;
+  border-width: 6px;
+  border-color: transparent #9B53F9 transparent transparent;
+}
+
+.tooltip-left::before,
+.tooltip-left::after {
+  top: 50%;
+  right: -14px;
+  transform: translateY(-50%);
+  border-width: 7px;
+  border-style: solid;
+  border-color: transparent transparent transparent #6F00FF;
+}
+.tooltip-left::after {
+  right: -13px;
+  border-width: 6px;
+  border-color: transparent transparent transparent #9B53F9;
+}
+
 
 
 @media screen and (max-width: 930px) and (orientation: portrait) {
@@ -930,10 +1054,6 @@ button:focus-visible {
     border-color: #ffffff;
     border-width: 1px;
     border-style: solid;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.00) -122.92%, rgba(255, 255, 255, 0.15) -22.18%, rgba(255, 255, 255, 0.30) 100%);
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-    backdrop-filter: blur(8.5px);
-    -webkit-backdrop-filter: blur(8.5px);
 
     display: flex;
     justify-content: end;
