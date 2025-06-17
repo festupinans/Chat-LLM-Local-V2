@@ -206,7 +206,7 @@ section.column {
 
 .messageBubble p.final {
   margin: 0;
-  padding: 1rem .5rem 1rem .5rem;
+  padding: 1rem 2rem 1rem 2rem;
   font-size: calc(.6em + 1vw);
   color: #000 !important;
   font-family: "Work Sans";
@@ -677,6 +677,7 @@ button:focus-visible {
   height: 2.8vh;
   cursor: pointer;
   z-index: 1001;
+  display: none;
   /* Asegura que esté por encima de otros elementos */
   /* Asegúrate de que info.png esté en la raíz o ajusta la ruta */
 }

@@ -303,6 +303,7 @@ sendButton.addEventListener("click", () => {
       },
       () => {
         // IA cancelada o error
+        thinkingWrapper.style.display = "none";
         avisador = true;
         resetAfterIA(); // Si hay un error, reseteamos manualmente.
       }
@@ -322,7 +323,6 @@ function resetAfterIA() {
   micIcon.src = "micro.gif"; // Volver al icono de micrófono normal
   micIcon.style.marginLeft = "auto";
   //   finalTranscript = ""; // También limpia el finalTranscript al resetear
-
   envCont.style.display = "none";
   PlayIdel();
   StopSendMensaje();

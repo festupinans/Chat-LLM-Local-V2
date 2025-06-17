@@ -227,7 +227,7 @@ export function presentIntroduction() {
     showTooltip(infoButton, 'instrucciones', 'right');
 
     readText(
-    '¡Hola! Soy NewRoman, tu asistente virtual y estoy aquí para ayudarte, necesito que me proporciones algunos datos.'
+    '¡Hola! Soy Neo, tu asistente virtual y estoy aquí para ayudarte, necesito que me proporciones algunos datos.'
   );
   setTimeout(() => {
     askNext();
