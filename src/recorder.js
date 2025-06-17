@@ -2,7 +2,7 @@
 import { sendMensajeIANormal, StopSendMensaje } from "./Ollama";
 import { synth, isIASpeaking } from "./speak";
 import { PlayIdel } from "./ThreeJS/AnimController";
-import { showTooltip, hideAllTooltips, hideSpecificTooltip } from "./tooltips.js";
+import { showTooltip, hideAllTooltips} from "./tooltips.js";
 let firstMic = true,
   firstStop = true,
   firstCancel = true,
@@ -237,7 +237,7 @@ micIcon.addEventListener(
 // sendButton 'click': maneja INTRODUCCIÓN (3 preguntas) y LLAMA A IA
 // ——————————————————————————————————————————————————————————————————————————
 sendButton.addEventListener("click", () => {
-  hideSpecificTooltip('Enviar');
+  hideAllTooltips();
   if (finalTranscript.trim() === "") return;
   console.log(`Texto enviado:`, finalTranscript);
 
