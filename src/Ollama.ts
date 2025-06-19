@@ -2,10 +2,26 @@
 import { messageHistory as initialMessageHistory } from './Parametros';
 import { readText } from './speak';
 import { marked } from 'marked';
-import { blog1, blog2, blog3, blog4, blog5 } from './Json/Blogs';
+import { blog5 } from './Json/Blogs';
 import { embeddingData } from './DataLoader'; // Asegúrate de exportar tu array de embeddings desde DataLoader
 
-let url = 'http://localhost:11434/api/generate';
+
+
+let base = 'localhost:11434/'; 
+let url = base + 'api/generate';
+let urlEmbed = base + 'api/embed';
+
+function actualizarBaseUrl() {
+  const nuevaUrl = window.prompt("Introduce la nueva URL base:", base);
+  if (nuevaUrl && nuevaUrl.trim() !== "") {
+    base = nuevaUrl.trim();
+    alert(`URL base actualizada a: ${base}`);
+  } else {
+    alert(`Se mantiene la URL base: ${base}`);
+  }
+}
+actualizarBaseUrl();
+
 
 // Copia del historial inicial
 let messageHistory = [...initialMessageHistory];
@@ -35,7 +51,7 @@ export async function sendMensajeIANormal(
     // Construye el prompt incluyendo el contexto relevante
     const historialComoTexto = messageHistory.map(msg => `${msg.role === 'user' ? 'Usuario' : 'Asistente'}: ${msg.content}`).join('\n');
     const prompt = `Contexto relevante:\n${contexto}\n\n${historialComoTexto}\nUsuario: ${userText}`;
-
+    console.time('Respuesta IA');
     const response = await fetch(url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -43,8 +59,7 @@ export async function sendMensajeIANormal(
         model: 'gemma3:4b',
         prompt: prompt,
         temperature: 0.7,
-        // En `generate`, `max_tokens` es `num_predict`. -1 a menudo significa sin límite.
-        num_predict: -1,
+        // num_predict: -1,
         stream: true // Activa el modo streaming
       }),
     });
@@ -66,7 +81,10 @@ export async function sendMensajeIANormal(
           return;
         }
         const { value, done } = await reader.read();
-        if (done) break;
+        if (done) {
+          console.timeEnd('Respuesta IA');
+          break
+        };
         const chunk = decoder.decode(value, { stream: true });
         chunk.split('\n').forEach(linea => {
           if (linea.trim() !== '') {
@@ -96,7 +114,7 @@ export async function sendMensajeIANormal(
         });
       }
     }
-    
+
     respuestaCompleta = respuestaCompleta
       .replace(/<think>[\s\S]*?<\/think>/g, '')
       .replace(/<[^>]*>/g, '') // Elimina cualquier otra etiqueta HTML/XML
@@ -104,10 +122,10 @@ export async function sendMensajeIANormal(
 
     messageHistory.push({ role: 'assistant', content: respuestaCompleta.trim() || '[Respuesta vacía]' });
     let t = textoLimpioString(respuestaCompleta);
-    
+
     // *** ¡Aquí está el cambio! Agrega 'await' ***
-    await readText(t); 
-    
+    await readText(t);
+
     console.log(t);
     onComplete(); // Llama al callback de completado
   } catch (error) {
@@ -126,7 +144,7 @@ export async function embeddingInformation(
   const texto = blog5;
 
   // Llama al endpoint de embeddings
-  const response = await fetch('http://localhost:11434/api/embed', {
+  const response = await fetch(urlEmbed, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
@@ -168,8 +186,9 @@ export async function obtenerContextoRelevante(
   pregunta: string,
   topK: number = 1 // Puedes ajustar para traer más de un contexto si lo deseas
 ): Promise<string[]> {
+  console.time('Embedding pregunta');
   // 1. Genera el embedding de la pregunta
-  const response = await fetch('http://localhost:11434/api/embed', {
+  const response = await fetch(urlEmbed, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
@@ -182,7 +201,9 @@ export async function obtenerContextoRelevante(
   }
   const data = await response.json();
   const preguntaEmbedding = data.embeddings[0];
+  console.timeEnd('Embedding pregunta');
 
+  console.time('Comparación de similitud');
   // 2. Calcula la similitud con cada embedding almacenado
   const resultados = embeddingData
     .map(item => ({
@@ -191,9 +212,14 @@ export async function obtenerContextoRelevante(
     }))
     .sort((a, b) => b.similitud - a.similitud)
     .slice(0, topK);
+  console.timeEnd('Comparación de similitud');
+
 
   // Devuelve los textos más relevantes
-  return resultados.map(r => r.texto);
+  const textosRelevantes = resultados.map(r => r.texto);
+
+
+  return textosRelevantes;
 }
 
 function textoLimpioString(texto: string) {

@@ -1,7 +1,7 @@
 // (Tu archivo actual, que contiene sendMensajeIA, askNext, etc.)
 
 import { readText } from './speak';
-import { showTooltip, hideAllTooltips } from './tooltips.js';
+import { showTooltip } from './tooltips.js';
 // import { sendMensajeIANormal } from './Ollama'; // Comentado según tu ejemplo
 
 let initialPhase = true;
@@ -11,7 +11,7 @@ const collected: { name?: string; email?: string; empresa?: string } = {};
 let hasAnimationRun = false; 
 
 // Apuntamos al div que contendrá siempre un <p>
-const transcriptTA = document.getElementById('transcript')  as HTMLTextAreaElement;
+// const transcriptTA = document.getElementById('transcript')  as HTMLTextAreaElement;
 const messageLabel = document.getElementById('messageLabel') as HTMLDivElement;
 
 // NUEVAS REFERENCIAS DOM: Necesitas que estos elementos existan en tu HTML
@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 const senBtn       = document.getElementById('sendBtn')  as HTMLButtonElement;
-const clearBtn     = document.getElementById('clearBtn') as HTMLButtonElement; 
+// const clearBtn     = document.getElementById('clearBtn') as HTMLButtonElement; 
 
 document.addEventListener('DOMContentLoaded', () => {
   resetAll();
@@ -190,7 +190,7 @@ export function presentIntroduction() {
     const micIcon = document.getElementById('micIcon');
     if (micIcon) {
         micIcon.style.display = 'block'; // Restore its block display
-        micIcon.src = 'micro.gif'; // Ensure it's the initial 'Grabar' icon
+        // micIcon.src = 'micro.gif'; // Ensure it's the initial 'Grabar' icon
         micIcon.style.zIndex = 'auto'; // Reset z-index
     }
 

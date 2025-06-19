@@ -1,7 +1,7 @@
 import { readText } from './speak';
 import { messageHistory as initialMessageHistory } from './Parametros';
 
-const API_CHAT = 'http://192.168.1.11:41343/v1/chat/completions';
+// const API_CHAT = 'http://192.168.1.11:41343/v1/chat/completions';
 let messageHistory = [...initialMessageHistory];
 
 let initialPhase = true;
@@ -10,7 +10,7 @@ const collected: { name?: string; email?: string; empresa?: string } = {};
 
 // DOM
 const senBtn       = document.getElementById('sendBtn')  as HTMLButtonElement;
-const clearBtn     = document.getElementById('clearBtn') as HTMLButtonElement;
+// const clearBtn     = document.getElementById('clearBtn') as HTMLButtonElement;
 const messageLabel = document.getElementById('messageLabel') as HTMLDivElement;
 
 document.addEventListener('DOMContentLoaded', () => {
