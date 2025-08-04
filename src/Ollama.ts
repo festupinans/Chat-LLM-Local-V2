@@ -42,9 +42,13 @@ export async function sendMensajeIANormal(
       body: JSON.stringify({
         model: 'gemma3:4b',
         prompt: prompt,
-        temperature: 0.7,
-        // En `generate`, `max_tokens` es `num_predict`. -1 a menudo significa sin límite.
-        num_predict: -1,
+        temperature: 0.5, // Reducido para respuestas más consistentes
+        // Limita las respuestas a máximo 150 tokens (~100-120 palabras)
+        num_predict: 100,
+        // Parámetros adicionales para respuestas más controladas
+        top_p: 0.9, // Nucleus sampling - reduce palabras menos probables
+        top_k: 40, // Limita las opciones de palabras siguientes
+        repeat_penalty: 1.1, // Evita repeticiones excesivas
         stream: true // Activa el modo streaming
       }),
     });
@@ -74,7 +78,11 @@ export async function sendMensajeIANormal(
               const obj = JSON.parse(linea);
               if (obj.response) {
                 respuestaCompleta += obj.response;
-                const cleanedChunkForDisplay = (marked.parse(respuestaCompleta) as string);
+                // Limpiar el texto antes de enviarlo al HTML
+                let textoLimpio = respuestaCompleta
+                  // .replace(/<think>[\s\S]*?<\/think>/g, '')
+                  .replace(/^Asistente:\s*/i, ''); // Elimina "Asistente:" al inicio
+                const cleanedChunkForDisplay = (marked.parse(textoLimpio) as string);
                 onChunk(cleanedChunkForDisplay);
               }
               // Si es el final del stream, imprime estadísticas
@@ -102,6 +110,8 @@ export async function sendMensajeIANormal(
       .replace(/<[^>]*>/g, '') // Elimina cualquier otra etiqueta HTML/XML
       .replace(/^Asistente:\s*/i, ''); // Elimina "Asistente:" al inicio
 
+    console.log('Respuesta completa:', respuestaCompleta);
+
     messageHistory.push({ role: 'assistant', content: respuestaCompleta.trim() || '[Respuesta vacía]' });
     let t = textoLimpioString(respuestaCompleta);
     
@@ -110,6 +120,7 @@ export async function sendMensajeIANormal(
     
     console.log(t);
     onComplete(); // Llama al callback de completado
+    console.log(messageHistory);
   } catch (error) {
     console.error('Error en sendMensajeIANormal:', error);
     onError(); // Llama al callback de error
@@ -203,12 +214,14 @@ function textoLimpioString(texto: string) {
     'RA': 'realidad aumentada',
     'AR': 'realidad aumentada',
     'IA': 'inteligencia artificial',
-    'Encantado/a': 'Encando o Encantada'
+    'Encantado/a': 'Encando o Encantada',
+    'Asistente:': ''
   };
 
   let textoLimpio = texto
     .replace(/\*\*(.*?)\*\*/g, '$1') // Elimina ** negritas **
     .replace(/`(.*?)`/g, '$1')     // Elimina `código`
+    .replace(/\*/g, '')            // Elimina asteriscos individuales
     .replace(/[\p{Emoji_Presentation}\p{Extended_Pictographic}]/gu, ''); // Elimina emojis
 
   // Reemplazos dinámicos
