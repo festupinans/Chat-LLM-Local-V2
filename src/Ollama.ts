@@ -42,13 +42,13 @@ export async function sendMensajeIANormal(
       body: JSON.stringify({
         model: 'gemma3:4b',
         prompt: prompt,
-        temperature: 0.5, // Reducido para respuestas más consistentes
+        temperature: 0.7, // Reducido para respuestas más consistentes
         // Limita las respuestas a máximo 150 tokens (~100-120 palabras)
-        num_predict: 100,
+        // num_predict: 100,
         // Parámetros adicionales para respuestas más controladas
-        top_p: 0.9, // Nucleus sampling - reduce palabras menos probables
-        top_k: 40, // Limita las opciones de palabras siguientes
-        repeat_penalty: 1.1, // Evita repeticiones excesivas
+        top_p: 0.95, // Nucleus sampling - reduce palabras menos probables
+        top_k: 50, // Limita las opciones de palabras siguientes
+        // repeat_penalty: 1.1, // Evita repeticiones excesivas
         stream: true // Activa el modo streaming
       }),
     });

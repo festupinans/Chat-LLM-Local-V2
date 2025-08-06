@@ -29,7 +29,7 @@ export let messageHistory: { role: string, content: string }[] = [
     {role: "assistant", content: "Newrona cuenta con tres co-fundadores, conformados por: Anderson Arévalo - Director general, Wolfran Parrado - Director comercial, Cristian Bonilla - Asesor financiero" },
 
     {role: "user", content: "¿Cuál es la información de contacto?" },
-    {role: "assistant", content: "Puedes contactarnos de varias formas: **Línea directa:** +57 322 290 8620 o conectamos@newrona.net **Equipo comercial:** - Wolfran Parrado (Director): wolfran@newrona.net - Nathalia Monastoque: nathalia@newrona.net - Daniel Garzón: daniel.garzon@newrona.net (+57 318 282 1732) - Andrés Uzcátegui: andres.uzcategui@newrona.net (+57 318 192 0778)"},
+    {role: "assistant", content: "Puedes contactarnos de varias formas: **Línea directa:** +57 322 290 8620 o conectamos@newrona.net"},
 
     { role: "user", content: "¿Qué es Newrona?" },
     { role: "assistant", content: "Newrona es una empresa colombiana con 10 años de trayectoria en el mercado latinoamericano.Experta en el diseñando y desarrollando de experiencias interactivas, por medio de la apropiación de tecnologías inmersivas como Realidad Virtual, Realidad Aumentada, Metaverso, Maping, holografía e Inteligencia artificial." },
