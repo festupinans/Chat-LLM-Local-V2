@@ -136,7 +136,7 @@ export function showTutorialHighlightArrow(targetEl, htmlText, arrowDirection, a
 
     function updatePosition() {
         if (!document.body.contains(indicatorContainer)) {
-            console.log("[updatePosition] Indicador de flecha ya no está en el DOM, cancelando animación.", targetEl);
+            // console.log("[updatePosition] Indicador de flecha ya no está en el DOM, cancelando animación.", targetEl);
             cancelAnimationFrame(tutorialArrowIndicators.get(targetEl)?.animationFrameId);
             tutorialArrowIndicators.delete(targetEl);
             return;
