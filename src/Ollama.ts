@@ -215,14 +215,16 @@ function textoLimpioString(texto: string) {
     'AR': 'realidad aumentada',
     'IA': 'inteligencia artificial',
     'Encantado/a': 'Encando o Encantada',
-    'Asistente:': ''
+    'Asistente:': '',
+    'COP' : 'Pesos colombianos'
   };
 
   let textoLimpio = texto
     .replace(/\*\*(.*?)\*\*/g, '$1') // Elimina ** negritas **
     .replace(/`(.*?)`/g, '$1')     // Elimina `código`
     .replace(/\*/g, '')            // Elimina asteriscos individuales
-    .replace(/[\p{Emoji_Presentation}\p{Extended_Pictographic}]/gu, ''); // Elimina emojis
+    .replace(/[\p{Emoji_Presentation}\p{Extended_Pictographic}]/gu, '') // Elimina emojis
+    .replace(/\$/g, ''); // Elimina signo de dollar
 
   // Reemplazos dinámicos
   for (const [clave, valor] of Object.entries(reemplazos)) {
