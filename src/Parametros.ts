@@ -29,6 +29,7 @@ export let messageHistory: { role: string, content: string }[] = [
         - Aliados estrategicos: "Trabajamos con la Cámara de Comercio de Bogotá, XRCol, XR Latam y AMCHAM en iniciativas de innovación y adopción de tecnologías inmersivas."
         - Empresas: "Hemos trabajado con más de 100 marcas en diferentes sectores."
         - Fundadores: Anderson Arévalo (Director general), Wolfran Parrado (Director comercial), Cristian Bonilla (Asesor financiero).
+        - Equipo: Contamos con un equipo de más de 30 personas.
         - Contacto: +57 322 290 8620, conectamos@newrona.net
         - Experiencia: 10 años en el mercado latinoamericano.
         - Áreas: Gerencia, Administración, Comercial y Diseño & Desarrollo.
