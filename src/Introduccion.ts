@@ -324,34 +324,33 @@ async function handleFormSubmit(event: Event) {
     email: emailInput.value,
     empresa: empresaInput.value
   };
-  activateNormalChat();
-  
-  // try {
-  //   // Enviar los datos al endpoint y esperar la respuesta
-  //   const response = await fetch('http://localhost:3000/api/robot', {
-  //     method: 'POST',
-  //     headers: { 'Content-Type': 'application/json' },
-  //     body: JSON.stringify(datos)
-  //   });
 
-  //   // Verificar si la respuesta fue exitosa (códigos 200-299)
-  //   if (response.ok) {
-  //     console.log("Data enviada correctamente");
-  //     // Si todo sale bien, habilita el chat
-  //     activateNormalChat();
-  //   } else {
-  //     // Si hay un error del servidor, lo manejamos aquí
-  //     console.error('Error del servidor:', response.status, response.statusText);
-  //     readText('Hubo un problema al guardar tus datos. Por favor, inténtalo de nuevo.');
-  //     // Puedes volver a mostrar el formulario si lo deseas
-  //     // introFormContainer.style.display = 'flex';
-  //   }
-  // } catch (error) {
-  //   // Si hay un error de red (ej. el servidor no está en línea), lo capturamos aquí
-  //   console.error('Error de red al enviar los datos:', error);
-  //   readText('No se pudo conectar con el servidor. Por favor, revisa tu conexión e inténtalo de nuevo.');
-  //   // introFormContainer.style.display = 'flex';
-  // }
+  try {
+    // Enviar los datos al endpoint y esperar la respuesta
+    const response = await fetch('http://localhost:3000/api/robot', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(datos)
+    });
+
+    // Verificar si la respuesta fue exitosa (códigos 200-299)
+    if (response.ok) {
+      console.log("Data enviada correctamente");
+      // Si todo sale bien, habilita el chat
+      activateNormalChat();
+    } else {
+      // Si hay un error del servidor, lo manejamos aquí
+      console.error('Error del servidor:', response.status, response.statusText);
+      readText('Hubo un problema al guardar tus datos. Por favor, inténtalo de nuevo.');
+      // Puedes volver a mostrar el formulario si lo deseas
+      // introFormContainer.style.display = 'flex';
+    }
+  } catch (error) {
+    // Si hay un error de red (ej. el servidor no está en línea), lo capturamos aquí
+    console.error('Error de red al enviar los datos:', error);
+    readText('No se pudo conectar con el servidor. Por favor, revisa tu conexión e inténtalo de nuevo.');
+    // introFormContainer.style.display = 'flex';
+  }
 }
 
 // NUEVA FUNCIÓN: Centraliza la activación del chat normal
