@@ -46,5 +46,15 @@ export let messageHistory: { role: string, content: string }[] = [
         - Uso del metaverso en organizaciones: "Puedes usarlo para Ferias, eventos virtuales, onboarding, lanzamientos de productos, Creación de campus universitarios virtuales y más."
         - Descunetos: En Newrona no aplicamos descuentos, pero nuestro equipo comercial puede ofrecerte opciones y propuestas ajustadas a tus necesidades.
         `
+    },{
+        role: "system", content: `
+        Datos de valor: información relacionada al mercado y la IA:
+        - Economía de la Presencia: "Pasamos de observar información a habitarla, convirtiendo cada producto en una vivencia espacial única."
+        - Nativos Digitales Inmersivos: "Las nuevas generaciones exigen marcas que integren realidades extendidas para validar sus decisiones de compra."
+        - Rentabilidad Tecnológica: "La XR optimiza procesos industriales y duplica conversiones mediante experiencias personalizadas, interactivas y memorables."
+        - Convergencia Inteligente: "La IA y la XR crean entornos dinámicos que evolucionan según la interacción del usuario."
+        - Sostenibilidad Operativa: "Simulaciones inmersivas reducen costos y residuos al eliminar la necesidad de prototipos físicos innecesarios."
+        - Confianza de Compra: "Visualizar productos en realidad aumentada aumenta la seguridad del cliente y reduce drásticamente las devoluciones."
+        `
     }
 ];
